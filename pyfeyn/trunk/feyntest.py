@@ -6,14 +6,15 @@ from pyx import *
 c = canvas.canvas()
 fd = FeynDiagram()
 
-p1 = Point(-1,-1)
-p2 = FilledPoint(1,1)
+p1 = FilledPoint(-1, -1, 0.15)
+p1.fillstyle([color.rgb.blue])
+p2 = FilledPoint(1, 1, 0.15)
 line = Line(p1, p2)
-line.addstyles([style.linewidth.Thin, style.linewidth.Thick])
+line.arcThru(Point(-0.2, 12))
 
-fd.add("l1", line)
-fd.add("p1", p1)
-fd.add("p2", p2)
+fd.add(line)
+fd.add(p1)
+fd.add(p2)
 
 fd.draw(c)
 c.writeEPSfile("test")
