@@ -111,7 +111,9 @@ class Line:
 
             ## If gradients match, then we have a straight line, so bypass the complexity
             if n13 == n23:
-                StraightLine(self.p1, self.p2).draw(canvas)
+                line = StraightLine(self.p1, self.p2)
+                line.style(self.styles)
+                line.draw(canvas)
                 return
 
             ## Otherwise work out conjugate gradients and midpoints
@@ -166,9 +168,9 @@ class Line:
 
             
             if crossproductZcoord < 0:
-                line = path.path( path.moveto(*(self.p1.pos())), path.arc(*arcargs) )
+                line = path.path( path.moveto(*(self.p1.pos())), path.arc(*arcargs))
             else:
-                line = path.path( path.moveto(*(self.p1.pos())), path.arcn(*arcargs) )
+                line = path.path( path.moveto(*(self.p1.pos())), path.arcn(*arcargs))
         canvas.stroke(line, self.styles)
 
 
