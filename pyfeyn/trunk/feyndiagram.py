@@ -104,8 +104,10 @@ class Line:
             line = path.path( path.moveto(*(self.p1.pos())), path.lineto(*(self.p2.pos())) )
         else:
             ## Work out line gradients
-            n13 = (self.p1.y() - self.__arcthrupoint.y()) / (self.p1.x() - self.__arcthrupoint.x())
-            n23 = (self.p2.y() - self.__arcthrupoint.y()) / (self.p2.x() - self.__arcthrupoint.x())
+            try: n13 = (self.p1.y() - self.__arcthrupoint.y()) / (self.p1.x() - self.__arcthrupoint.x())
+            except ZeroDivisionError: n13 = 1e100
+            try: n23 = (self.p2.y() - self.__arcthrupoint.y()) / (self.p2.x() - self.__arcthrupoint.x())
+            except ZeroDivisionError: n23 = 1e100
 
             ## If gradients match, then we have a straight line, so bypass the complexity
             if n13 == n23:
