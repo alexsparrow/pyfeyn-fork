@@ -15,14 +15,14 @@ class FeynDiagram:
 
 class Point:
     "Base class for all pointlike objects in Feynman diagrams"
-    xpos = 0
-    ypos = 0
-    radius = 1
+    xpos = 0.0
+    ypos = 0.0
+    radius = 0.0
 
     def __init__(self, xpos, ypos, rad=0.01):
-        self.xpos = xpos
-        self.ypos = ypos
-        self.radius = rad
+        self.xpos = float(xpos)
+        self.ypos = float(ypos)
+        self.radius = float(rad)
 
     def draw(self, canvas):
         canvas.stroke(path.circle(self.xpos, self.ypos, self.radius))
@@ -44,6 +44,10 @@ class Point:
 
     def pos(self):
         return self.xpos, self.ypos
+
+
+class Blob(Point):
+    pass
 
 
 class FilledPoint(Point):
@@ -94,8 +98,10 @@ class Line:
             line = path.path( path.moveto(*(self.p1.pos())), path.lineto(*(self.p2.pos())) )
         else:
             #self.__arcthrupoint.draw(canvas)
-            m13 = -1 / (( self.p1.y() - self.__arcthrupoint.y() ) / ( self.p1.x() - self.__arcthrupoint.x() ))
-            m23 = -1 / (( self.p2.y() - self.__arcthrupoint.y() ) / ( self.p2.x() - self.__arcthrupoint.x() ))
+            n13 = (self.p1.y() - self.__arcthrupoint.y()) / (self.p1.x() - self.__arcthrupoint.x())
+            n23 = (self.p2.y() - self.__arcthrupoint.y()) / (self.p2.x() - self.__arcthrupoint.x())
+            m13 = - 1.0 / n13
+            m23 = - 1.0 / n23
             #print m13, m23
             mid13 = self.p1.midpoint(self.__arcthrupoint)
             mid23 = self.p2.midpoint(self.__arcthrupoint)
@@ -122,9 +128,16 @@ class Line:
             #StraightLine(arccenter, Point(arccenter.x() - 1, arccenter.y() - tangent2)).draw(canvas)
             arcangle1 = arccenter.arg(self.p1)
             arcangle2 = arccenter.arg(self.p2)
-            #print arcradius, arcangle1, arcangle2
+            arcangle3 = arccenter.arg(self.__arcthrupoint)
+            #print arcradius, arcangle1, arcangle2, arcangle3
             arcargs = (arccenter.x(), arccenter.y(), arcradius, arcangle1, arcangle2)
-            if arcangle1 < arcangle2:
+
+            ## Calculate cross product to determine direction of arc
+            vec12 = [self.p2.x()-self.p1.x(), self.p2.y()-self.p1.y(), 0.0]
+            vec13 = [self.__arcthrupoint.x()-self.p1.x(), self.__arcthrupoint.y()-self.p1.y(), 0.0]
+            crossproductZcoord = vec12[0]*vec13[1] - vec12[1]*vec13[0]
+            #print crossproductZcoord
+            if crossproductZcoord < 0:
                 line = path.path( path.moveto(*(self.p1.pos())), path.arc(*arcargs) )
             else:
                 line = path.path( path.moveto(*(self.p1.pos())), path.arcn(*arcargs) )
