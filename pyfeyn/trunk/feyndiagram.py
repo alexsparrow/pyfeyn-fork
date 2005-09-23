@@ -68,6 +68,7 @@ class FilledPoint(Point):
         self.fillstyles = self.fillstyles + stylelist
 
     def draw(self, canvas):
+        canvas.fill(path.circle(self.xpos, self.ypos, self.radius), [color.rgb.white])
         canvas.fill(path.circle(self.xpos, self.ypos, self.radius), self.fillstyles)
         canvas.stroke(path.circle(self.xpos, self.ypos, self.radius), self.strokestyles)
         
@@ -206,3 +207,22 @@ class DecoratedLine(Line):
 
     def strikeThru(self):
         pass
+
+
+class Arrow(deco.deco, attr.attr):
+    "Arrow for Feynman diagram lines"
+    def __init__(self, pos=0.5, size=6*unit.v_pt, angle=45, constriction=0.8):
+        self.pos = pos
+        self.size = size
+        self.angle = angle
+        self.constriction = constriction
+        
+    def decorate(self, dp):
+        dp.ensurenormpath()
+        constrictionlen = self.size*self.constriction*math.cos(self.angle*math.pi/360.0)
+        arrowtopos = self.pos*dp.path.arclen()+0.5*self.size
+        arrowtopath = dp.path.split(arrowtopos)[0]
+        arrowpath = deco._arrowhead(arrowtopath, self.size, 45, constrictionlen, 1)
+        dp.ornaments.fill(arrowpath)
+        return dp
+    
