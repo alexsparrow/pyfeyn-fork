@@ -14,6 +14,8 @@ line = Line(p1, p2)
 line.arcThru(Point(3, 0))
 line.style([Arrow(0.5)])
 
+path.circle(1,1,1).stroke(c, trafo.scale(1.0, 2.0))
+
 fd.add(line)
 fd.add(p1)
 fd.add(p2)
