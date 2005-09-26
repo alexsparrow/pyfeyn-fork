@@ -23,15 +23,12 @@ class Point:
     "Base class for all pointlike objects in Feynman diagrams"
     xpos = 0.0
     ypos = 0.0
-    radius = 0.0
 
-    def __init__(self, xpos, ypos, rad=0.01):
-        self.xpos = float(xpos)
-        self.ypos = float(ypos)
-        self.radius = float(rad)
+    def __init__(self, xpos, ypos):
+        self.setpos(xpos, ypos)
 
     def draw(self, canvas):
-        canvas.stroke(path.circle(self.xpos, self.ypos, self.radius))
+        pass
 
     def midpoint(self, otherpoint):
         return StraightLine(self, otherpoint).midpoint()
@@ -51,31 +48,60 @@ class Point:
     def pos(self):
         return self.xpos, self.ypos
 
+    def setpos(self, xpos, ypos):
+        self.xpos = float(xpos)
+        self.ypos = float(ypos)
 
-class Blob(Point):
-    pass
 
-
-class FilledPoint(Point):
-    "Filled point"
+class Blob:
     fillstyles = [color.rgb.white]
     strokestyles = [color.rgb.black]
+    trafos = []
+    #def __init__(self, centre):
 
     def strokestyle(self, stylelist):
         self.strokestyles = self.strokestyles + stylelist
+        return self
 
     def fillstyle(self, stylelist):
         self.fillstyles = self.fillstyles + stylelist
+        return self
+
+    def trafo(self, trafolist):
+        self.trafos = self.trafos + trafolist
+        return self
+
+
+class Circle(Blob):
+    def __init__(self, xpos, ypos, rad):
+        self.centre = Point(xpos, ypos)
+        self.radius = float(rad)
 
     def draw(self, canvas):
-        canvas.fill(path.circle(self.xpos, self.ypos, self.radius), [color.rgb.white])
-        canvas.fill(path.circle(self.xpos, self.ypos, self.radius), self.fillstyles)
-        canvas.stroke(path.circle(self.xpos, self.ypos, self.radius), self.strokestyles)
-        
-        
-class Vertex(Point):
-    pass
+        canvas.fill(path.circle(self.centre.x(), self.centre.y(), self.radius), [color.rgb.white])
+        canvas.fill(path.circle(self.centre.x(), self.centre.y(), self.radius), self.fillstyles)
+        #canvas.fill(path.circle(self.xpos, self.ypos, self.radius), self.fillstyles)
+        canvas.stroke(path.circle(self.centre.x(), self.centre.y(), self.radius), self.strokestyles)
 
+
+class Ellipse(Blob):
+    def __init__(self, xpos, ypos, xrad, yrad):
+        self.centre = Point(xpos, ypos)
+        self.xrad = float(xrad)
+        self.yrad = float(yrad)
+
+    def draw(self, canvas):
+        canvas.fill(path.circle(self.centre.x(), self.centre.y(), 1.0),
+                    [color.rgb.white] + [trafo.scale(self.xrad, self.yrad, self.centre.x(), self.centre.y())]
+                    + self.fillstyles)
+        #canvas.fill(path.circle(self.xpos, self.ypos, self.radius), self.fillstyles)
+        canvas.stroke(path.circle(self.centre.x(), self.centre.y(), 1.0),
+                      [trafo.scale(self.xrad, self.yrad, self.centre.x(), self.centre.y())]
+                      + self.strokestyles)
+
+
+#############################
+        
 
 class Line:
     "Base class for all objects which connect points in Feynman diagrams"
@@ -92,13 +118,16 @@ class Line:
 
     def arcThru(self, arcpoint):
         self.__arcthrupoint = arcpoint
+        return self
     
     def set3D(self, choice):
         self.is3D = choice
+        return self
 
     def style(self, stylelist):
         self.styles = self.styles + stylelist
-
+        return self
+        
     def draw(self, canvas):
         line = None
         if self.__arcthrupoint == None:
