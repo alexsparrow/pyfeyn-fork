@@ -19,4 +19,6 @@ fd.add( Circle(p2.x(), p2.y(), 0.5).fillstyle([color.rgb.blue]) )
 fd.add( e1 )
 fd.draw(c)
 
+c.stroke( path.path( path.moveto(0,0), path.lineto(4,0) ), [deformer.cycloid(0.25, 21, skipfirst=0, skiplast=0)] )
+
 c.writeEPSfile("test")
