@@ -127,11 +127,10 @@ class Line:
     def style(self, stylelist):
         self.styles = self.styles + stylelist
         return self
-        
-    def draw(self, canvas):
-        line = None
+
+    def path(self):
         if self.__arcthrupoint == None:
-            line = path.path( path.moveto(*(self.p1.pos())), path.lineto(*(self.p2.pos())) )
+            return path.path( path.moveto(*(self.p1.pos())), path.lineto(*(self.p2.pos())) )
         else:
             ## Work out line gradients
             try: n13 = (self.p1.y() - self.__arcthrupoint.y()) / (self.p1.x() - self.__arcthrupoint.x())
@@ -141,10 +140,7 @@ class Line:
 
             ## If gradients match, then we have a straight line, so bypass the complexity
             if n13 == n23:
-                line = StraightLine(self.p1, self.p2)
-                line.style(self.styles)
-                line.draw(canvas)
-                return
+                return StraightLine(self.p1, self.p2)
 
             ## Otherwise work out conjugate gradients and midpoints
             try: m13 = - 1.0 / n13
@@ -196,18 +192,20 @@ class Line:
             #print crossproductZcoord
 
             if crossproductZcoord < 0:
-                line = path.path( path.moveto(*(self.p1.pos())), path.arc(*arcargs))
+                return path.path( path.moveto(*(self.p1.pos())), path.arc(*arcargs))
             else:
-                line = path.path( path.moveto(*(self.p1.pos())), path.arcn(*arcargs))
-        canvas.stroke(line, self.styles)
+                return path.path( path.moveto(*(self.p1.pos())), path.arcn(*arcargs))
+        
+    def draw(self, canvas):
+        canvas.stroke(self.path(), self.styles)
 
 
 class StraightLine(Line):
     """A straight line. I'm not sure this is a really useful idea since
     it's only really useful for convenience in geom calcs. Clearly breaks
     inheritance semantics for methods like Line.arcThru()."""
-def length(self):
-    return math.hypot(self.p1.x()-self.p2.x(), self.p1.y()-self.p2.y())
+    def length(self):
+        return math.hypot(self.p1.x()-self.p2.x(), self.p1.y()-self.p2.y())
 
     def intercept(self):
         return self.p1.y() - self.tangent() * self.p1.x()
@@ -241,7 +239,18 @@ class DecoratedLine(Line):
 
 class Gluon(DecoratedLine):
     """A line with a cycloid deformation"""
-    
+    #c.stroke( path.path( path.moveto(0,0), path.lineto(4,0) ), [deformer.cycloid(0.25, 21, skipfirst=0, skiplast=0)] )
+    arcradius = 0.25
+
+    ## Need to think about how to do this nicely using the connectors to take account
+    ## of the size of the blobs being connected
+
+    def draw(self, canvas):
+        canvas.stroke(self.path(), self.styles +
+                      [ deformer.cycloid(self.arcradius,
+                                         int(1.5 * unit.tocm(self.path().arclen()) / self.arcradius),
+                                         skipfirst=0, skiplast=0) ])
+        
 
 class Arrow(deco.deco, attr.attr):
     "Arrow for Feynman diagram lines"
