@@ -195,8 +195,6 @@ class Line:
             crossproductZcoord = vec12[0]*vec13[1] - vec12[1]*vec13[0]
             #print crossproductZcoord
 
-
-            
             if crossproductZcoord < 0:
                 line = path.path( path.moveto(*(self.p1.pos())), path.arc(*arcargs))
             else:
@@ -205,8 +203,11 @@ class Line:
 
 
 class StraightLine(Line):
-    def length(self):
-        return math.hypot(self.p1.x()-self.p2.x(), self.p1.y()-self.p2.y())
+    """A straight line. I'm not sure this is a really useful idea since
+    it's only really useful for convenience in geom calcs. Clearly breaks
+    inheritance semantics for methods like Line.arcThru()."""
+def length(self):
+    return math.hypot(self.p1.x()-self.p2.x(), self.p1.y()-self.p2.y())
 
     def intercept(self):
         return self.p1.y() - self.tangent() * self.p1.x()
@@ -227,7 +228,7 @@ class StraightLine(Line):
         
 
 class DecoratedLine(Line):
-    "Base class for spring and sine-like lines"
+    """Base class for spring and sine-like lines"""
     def invert(self):
         pass
 
@@ -237,6 +238,10 @@ class DecoratedLine(Line):
     def strikeThru(self):
         pass
 
+
+class Gluon(DecoratedLine):
+    """A line with a cycloid deformation"""
+    
 
 class Arrow(deco.deco, attr.attr):
     "Arrow for Feynman diagram lines"
