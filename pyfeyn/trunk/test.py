@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 
-from feyndiagram import *
-from pyx import *
+from feyn import *
+#from pyx import *
 
 c = canvas.canvas()
 fd = FeynDiagram()
@@ -18,4 +18,4 @@ fd.add( Circle(p2.x(), p2.y(), 0.5).fillstyle([color.rgb.blue]) )
 fd.add( e1 )
 fd.draw(c)
 
-c.writeEPSfile("test")
+c.writeEPSfile("thetest")
