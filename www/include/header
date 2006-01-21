@@ -1,11 +1,19 @@
 <table><tr>
-  <td style="vertical-align:top; padding-top:0.5em;">
+  <td class="noprint" style="vertical-align:top; padding-top:0.5em;">
     <ul class="nowrap" style="background:#eec; border:#cca 5px solid; padding:1em; padding-left:2em; margin-right:2em;">
-      <li style="list-style-type:none; font-weight:bolder;"><em>pyfeyn</em></li>
+    <strong><em>pyfeyn</em></strong>
       <li><a href="/pyfeyn">Home</a></li>
-      <li><a href="/pyfeyn/cvs/">CVS</a></li>
       <li><a href="/pyfeyn/svn/">Subversion</a></li>
-      <li><a href="/pyfeyn/bugtrack/">Tracker/Wiki</a></li>
+      <li><a href="/pyfeyn/bugtrack/">Tracker</a>
+        <ul style="padding-left:0.8em">
+          <li style="font-size:smaller"><a href="/pyfeyn/bugtrack/roadmap/">Milestones</a></li>
+          <li style="font-size:smaller"><a href="/pyfeyn/bugtrack/report/1">All tickets</a></li>
+          <li style="font-size:smaller"><a href="/pyfeyn/bugtrack/report/3">MS tickets</a></li>
+          <li style="font-size:smaller"><a href="/pyfeyn/bugtrack/timeline">Timeline</a></li>
+        </ul>
+      </li>
+      <li><a href="/pyfeyn/bugtrack/wiki/">Wiki</a></li>
+      <li><a href="/pyfeyn/downloads">Downloads</a></li>
       <li><a href="mailto:pyfeyn@cedar.ac.uk">Contact</a></li>
     </ul>
   </td>
