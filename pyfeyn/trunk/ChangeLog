@@ -1,3 +1,14 @@
+2006-06-22  Georg von Hippel <gmv22@cantab.net>, <vonhippg@uregina.ca>
+
+        * Fixed Arrow code to work with PyX 0.9
+        * Split code into submodules for convenience
+	* Removed StraightLine class, moved trig. code into Point class
+        * Added hepnames module
+        * Added Photon line class
+	* Added Support for tadpole-type loops into Line class
+	* Added TexLabel decorator
+	* Added DecoratedPoint class
+
 2005-09-23  Andy Buckley  <andy@insectnation.org>
 
 	* Added Arrow class, courtest of Andre Wobst.
