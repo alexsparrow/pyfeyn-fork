@@ -26,11 +26,17 @@ class Point:
         return self.y() - self.tangent(otherpoint) * self.x()
 
     def tangent(self,otherpoint):
-        return (otherpoint.y() - self.y()) / (otherpoint.x() - self.x())
+        if otherpoint.x() != self.x():
+           return (otherpoint.y() - self.y()) / (otherpoint.x() - self.x())
+        else:
+           return 999. # An arbitrary large number to replace infinity
 
     def arg(self, otherpoint):
-        arg = math.atan( (otherpoint.y() - self.y()) /
-                         (otherpoint.x() - self.x()) )
+        if otherpoint.x() != self.x():
+           arg = math.atan( (otherpoint.y() - self.y()) /
+                            (otherpoint.x() - self.x()) )
+        else:
+            arg = math.pi/2.
         # Handle tangent sign ambiguity
         if otherpoint.x() < self.x():
             arg = arg + math.pi
@@ -59,7 +65,7 @@ class DecoratedPoint(Point):
         if mark is not None:
            self.mark = mark(xpos,ypos,size)
         else:
-           self.mark = pyx.box.rect(xpos-size,ypos-size,2*size,2*size)
+           self.mark = pyx.box.rect(xpos,ypos,0,0)
         self.fillstyles = fillstyles
         self.strokestyles = strokestyles
 

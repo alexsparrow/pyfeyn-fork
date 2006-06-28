@@ -39,10 +39,13 @@ class Circle(Blob):
 ##### Ellipse class (a kind of Blob) #####
 
 class Ellipse(Blob):
-    def __init__(self, xpos, ypos, xrad, yrad):
+    def __init__(self, xpos, ypos, xrad, yrad=None):
         self.centre = Point(xpos, ypos)
         self.xrad = float(xrad)
-        self.yrad = float(yrad)
+        if yrad:
+           self.yrad = float(yrad)
+        else:
+           self.yrad = self.xrad
 
     def draw(self, canvas):
         canvas.fill(pyx.path.circle(self.centre.x(), self.centre.y(), 1.0),
@@ -56,3 +59,4 @@ class Ellipse(Blob):
                       + self.strokestyles)
 
 
+NamedBlob = {"circle":Circle, "ellipse":Ellipse}

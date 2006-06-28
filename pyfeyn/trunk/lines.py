@@ -78,8 +78,6 @@ class Line:
 
             ## Get the angles required for drawing the arc
             arcradius = arccenter.distance(self.__arcthrupoint)
-            tangent1 = arccenter.tangent(self.p1)
-            tangent2 = arccenter.tangent(self.p2)
             arcangle1 = arccenter.arg(self.p1)
             arcangle2 = arccenter.arg(self.p2)
             arcangle3 = arccenter.arg(self.__arcthrupoint)
@@ -124,9 +122,6 @@ class Gluon(DecoratedLine):
         self.elasticity = value
         return self
 
-    ## Need to think about how to do this nicely using the connectors to take account
-    ## of the size of the blobs being connected
-
     def draw(self, canvas):
         needwindings = self.elasticity * \
                        pyx.unit.tocm(self.path().arclen()) / self.arcradius
@@ -147,5 +142,11 @@ class Photon(DecoratedLine):
              [pyx.deformer.cycloid(self.arcradius,
                   int(1.5 * pyx.unit.tocm(self.path().arclen()) / self.arcradius),
                   skipfirst=0, skiplast=0, turnangle=0) ])
+
+
+
+
+
+NamedLine = {"photon":Photon,"gluon":Gluon,"fermion":DecoratedLine}
 
  
