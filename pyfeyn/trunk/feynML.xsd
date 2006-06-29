@@ -5,7 +5,7 @@
 	xmlns:xml="http://www.w3.org/XML/1998/namespace"
 	elementFormDefault="qualified"
 	attributeFormDefault="unqualified"
-	version="feynml 0.1">
+	version="feynml 0.2">
 
 <!-- get access to the xml: attribute groups for xml:lang -->
 <xsd:import namespace="http://www.w3.org/XML/1998/namespace" 
@@ -21,6 +21,30 @@
 <!-- ID Reference type -->
 <xsd:simpleType name="idref.type">
   <xsd:restriction base="xsd:NMTOKEN"/>
+</xsd:simpleType>
+
+<!-- Boolean type -->
+<xsd:simpleType name="boolean.type">
+  <xsd:restriction base="xsd:NMTOKEN">
+          <xsd:enumeration value="1"/>
+          <xsd:enumeration value="0"/>
+          <xsd:enumeration value="true"/>
+          <xsd:enumeration value="false"/>
+          <xsd:enumeration value="yes"/>
+          <xsd:enumeration value="no"/>
+   </xsd:restriction>
+</xsd:simpleType>
+
+<!-- TeX string type -->
+<xsd:simpleType name="texstring.type">
+  <xsd:restriction base="xsd:string"/>
+</xsd:simpleType>
+
+<!-- Style string type -->
+<xsd:simpleType name="style.type">
+   <xsd:restriction base="xsd:string">
+          <xsd:pattern value="((line-colou?r|line-style):.+;)+"/>
+   </xsd:restriction>
 </xsd:simpleType>
 
 <!-- Blob shape Type  -->
@@ -58,6 +82,8 @@
 <!-- Global Attributes -->
 <xsd:attributeGroup name="global-atts">
 		<xsd:attribute name="id" type="id.type" use="required" />
+                <xsd:attribute name="label" type="texstring.type"/>
+                <xsd:attribute name="style" type="style.type"/> 
 </xsd:attributeGroup>
 
 <!-- Standard XML Attributes -->
@@ -66,44 +92,57 @@
 		<xsd:attribute ref="xml:space"/>
 </xsd:attributeGroup>
 
-<!-- Point Attributes (x,y)  -->
+<!-- Point Attributes -->
 <xsd:attributeGroup name="point-atts">
                 <xsd:attribute name="x" type="xsd:double"/>
                 <xsd:attribute name="y" type="xsd:double"/>
 </xsd:attributeGroup>
 
+<!-- Line Attributes -->
+<xsd:attributeGroup name="line-atts">
+                <xsd:attribute name="type" type="line-type.type"/>
+                <xsd:attribute name="bend" type="xsd:double"/>
+</xsd:attributeGroup>
+
+<!-- ***** Root element ***** -->
+<xsd:element name="feynml">
+   <xsd:complexType>
+      <xsd:sequence>
+         <xsd:element ref="head" minOccurs="0" maxOccurs="1"/>
+         <xsd:element ref="diagram" minOccurs="1" maxOccurs="1"/>
+      </xsd:sequence>
+         <xsd:attributeGroup ref="xml-atts"/>
+   </xsd:complexType>
+</xsd:element>
 
 <!-- ***** Structural elements ***** -->
 
-<!-- Graph Attributes -->
-<xsd:attributeGroup name="graph-atts">
-		<xsd:attribute name="legs" type="xsd:nonNegativeInteger"/>
-                <xsd:attribute name="loops" type="xsd:nonNegativeInteger"/>
+<!-- Diagram Attributes -->
+<xsd:attributeGroup name="diagram-atts">
+      <xsd:attribute name="id" type="id.type"/>
+      <xsd:attribute name="legs" type="xsd:nonNegativeInteger"/>
+      <xsd:attribute name="loops" type="xsd:nonNegativeInteger"/>
 </xsd:attributeGroup>
-<!-- Graph type -->
-<xsd:complexType name="graph.type">
+<!-- Diagram type -->
+<xsd:complexType name="diagram.type">
    <xsd:sequence>
-      <xsd:element ref="head" minOccurs="0" maxOccurs="1"/>
       <xsd:choice minOccurs="0" maxOccurs="unbounded"> 
             <xsd:element ref="vertex"/>
-	    <xsd:element ref="line"/>
+	    <xsd:element ref="propagator"/>
             <xsd:element ref="leg"/>
             <xsd:element ref="blob"/>
+            <xsd:element ref="label"/>
       </xsd:choice>
    </xsd:sequence>
-      <xsd:attributeGroup ref="xml-atts"/>
-      <xsd:attributeGroup ref="graph-atts"/>
+      <xsd:attributeGroup ref="diagram-atts"/>
 </xsd:complexType>
-<!-- Graph Element -->
-<xsd:element name="graph" type="graph.type"/>
+<!-- Diagram Element -->
+<xsd:element name="diagram" type="diagram.type"/>
 
 
 <!-- Vertex Attributes -->
 <!-- Vertex type -->
 <xsd:complexType name="vertex.type">
-   <xsd:sequence>
-      <xsd:element name="layout" minOccurs="0" maxOccurs="1" type="vertex-layout.type"/>
-   </xsd:sequence>
       <xsd:attributeGroup ref="global-atts"/>
       <xsd:attributeGroup ref="point-atts"/>
 </xsd:complexType>
@@ -111,36 +150,30 @@
 <xsd:element name="vertex" type="vertex.type"/>
 
 
-<!-- Line Attributes -->
-<xsd:attributeGroup name="line-atts">
+<!-- Propagator Attributes -->
+<xsd:attributeGroup name="propagator-atts">
     <xsd:attribute name="source" type="idref.type" use="required"/>
     <xsd:attribute name="target" type="idref.type" use="required"/>
-    <xsd:attribute name="type" type="line-type.type" use="required"/>
 </xsd:attributeGroup>
-<!-- Line type -->
-<xsd:complexType name="line.type">
-   <xsd:sequence>
-      <xsd:element name="layout" minOccurs="0" maxOccurs="1" type="line-layout.type"/>
-   </xsd:sequence>
+<!-- Propagator type -->
+<xsd:complexType name="propagator.type">
       <xsd:attributeGroup ref="global-atts"/>
       <xsd:attributeGroup ref="line-atts"/>
+      <xsd:attributeGroup ref="propagator-atts"/>
 </xsd:complexType>
-<!-- Line Element -->
-<xsd:element name="line" type="line.type"/>
+<!-- Propagator Element -->
+<xsd:element name="propagator" type="propagator.type"/>
 
 
 <!-- Leg attributes -->
 <xsd:attributeGroup name="leg-atts">
     <xsd:attribute name="target" type="idref.type" use="required"/>
-    <xsd:attribute name="type" type="line-type.type" use="required"/>
 </xsd:attributeGroup>
 <!-- Leg type -->
 <xsd:complexType name="leg.type">
-   <xsd:sequence>
-      <xsd:element name="layout" minOccurs="0" maxOccurs="1" type="leg-layout.type"/>
-   </xsd:sequence>
       <xsd:attributeGroup ref="global-atts"/>
       <xsd:attributeGroup ref="point-atts"/>
+      <xsd:attributeGroup ref="line-atts"/>
       <xsd:attributeGroup ref="leg-atts"/>
 </xsd:complexType>
 <!-- Leg Element -->
@@ -149,15 +182,11 @@
 
 <!-- Blob Element -->
 <xsd:attributeGroup name="blob-atts">
-                <xsd:attribute name="shape" type="blob-shape.type" use="required"/>
-                <xsd:attribute name="radius" type="xsd:positiveInteger"/>
+   <xsd:attribute name="shape" type="blob-shape.type" use="required"/>
+   <xsd:attribute name="radius" type="xsd:positiveInteger"/>
 </xsd:attributeGroup>
 <!-- Blob type -->
 <xsd:complexType name="blob.type">
-   <xsd:sequence>
-      <xsd:element ref="connect" minOccurs="0" maxOccurs="unbounded"/>
-      <xsd:element name="layout" minOccurs="0" maxOccurs="1" type="blob-layout.type"/>
-   </xsd:sequence>
       <xsd:attributeGroup ref="global-atts"/>
       <xsd:attributeGroup ref="point-atts"/>
       <xsd:attributeGroup ref="blob-atts"/>
@@ -166,6 +195,7 @@
 <xsd:element name="connect">
    <xsd:complexType>
       <xsd:attributeGroup ref="global-atts"/>
+      <xsd:attribute name="blob" type="idref.type"/>
       <xsd:attribute name="dir" type="angle.type"/> 
    </xsd:complexType>
 </xsd:element>
@@ -173,42 +203,10 @@
 <xsd:element name="blob" type="blob.type"/>
 
 
-<!-- ***** Layout-related elements ***** -->
-
-<!-- Vertex Layout type -->
-<xsd:complexType name="vertex-layout.type">
-   <xsd:sequence><xsd:choice minOccurs="0" maxOccurs="unbounded">
-      <xsd:element ref="label"/>
-   </xsd:choice></xsd:sequence>
-</xsd:complexType>
-<!-- Line Layout type -->
-<xsd:complexType name="line-layout.type">
-   <xsd:sequence><xsd:choice minOccurs="0" maxOccurs="unbounded">
-      <xsd:element ref="label"/>
-      <xsd:element name="arcthru" maxOccurs="1" type="point.type"/>
-   </xsd:choice></xsd:sequence>
-</xsd:complexType>
-<!-- Leg Layout type -->
-<xsd:complexType name="leg-layout.type">
-   <xsd:sequence><xsd:choice minOccurs="0" maxOccurs="unbounded">
-      <xsd:element ref="label"/>
-   </xsd:choice></xsd:sequence>
-</xsd:complexType>
-<!-- Blob Layout type -->
-<xsd:complexType name="blob-layout.type">
-   <xsd:sequence><xsd:choice minOccurs="0" maxOccurs="unbounded">
-      <xsd:element ref="label"/>
-   </xsd:choice></xsd:sequence>
-</xsd:complexType>
-
-<!-- Point type -->
-<xsd:complexType name="point.type">
-	 <xsd:attributeGroup ref="point-atts"/>
-</xsd:complexType>
-
-<!-- Label type -->
+<!-- Free-floating Label type -->
 <xsd:complexType name="label.type">
          <xsd:attributeGroup ref="point-atts"/>
+         <xsd:attribute name="text" type="texstring.type"/>
 </xsd:complexType>
 <!-- Label Element -->
 <xsd:element name="label" type="label.type"/>

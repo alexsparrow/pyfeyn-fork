@@ -16,7 +16,7 @@ class FeynDiagram:
             obj.draw(canvas)
 
     def to_xml(self):
-        root = xml.Element("graph")
+        root = xml.Element("diagram")
         for obj in self.__objs:
             root.append(obj.to_xml())
         return xml.tostring(root).replace(">",">\n")

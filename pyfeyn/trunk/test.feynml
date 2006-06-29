@@ -1,15 +1,16 @@
-<graph>
-  <vertex id="v1" x="-1" y="0"/>
-  <vertex id="v2" x="1" y="0"/>
-  <leg id="l1" x="-2" y="0" target="v1" type="fermion"/>
-  <leg id="l2" x="2" y="0" target="v2" type="fermion"/>
-  <line id="p1" source="v1" target="v2" type="photon">
-    <layout>
-      <arcthru x="0" y="1"/>
-      <label />
-    </layout>
-  </line>
-  <line id="p2" source="v2" target="v1" type="fermion"/>
-  <blob id="blob0" x="0" y="0" shape="circle" />
-</graph>
+<feynml>
+  <head>
+    <meta name="Creator" value="G. von Hippel"/>
+    <meta name="Info" value="Part of the feynML test suite"/>
+  </head>
+  <diagram>
+    <vertex id="v1" x="-1" y="0"/>
+    <vertex id="v2" x="1" y="0"/>
+    <leg id="l1" x="-2" y="0" target="v1" type="fermion"/>
+    <leg id="l2" x="2" y="0" target="v2" type="fermion"/>
+    <propagator id="p1" source="v1" target="v2" type="photon" bend="1"/>
+    <propagator id="p2" source="v2" target="v1" type="fermion"/>
+    <blob id="blob0" x="0" y="0" shape="circle" />
+  </diagram>
+</feynml>
 

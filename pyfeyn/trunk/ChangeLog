@@ -1,3 +1,9 @@
+2006-06-29  Georg von Hippel <gmv22@cantab.net>, <vonhippg@uregina.ca>
+
+	* Improved feynML Schema to look more like proposed
+	* Corresponding changes to feynML code
+	* Added bend method to lines (autmoatically finds an arcpoint)
+
 2006-06-28  Georg von Hippel <gmv22@cantab.net>, <vonhippg@uregina.ca>
 
 	* Fixed some divide-by-zero bugs in points.py

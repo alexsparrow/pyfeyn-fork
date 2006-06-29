@@ -24,7 +24,7 @@ l1 = NamedLine["gluon"](p1, p2).arcThru(Point(3, 0)).style([Arrow(),TeXLabel(hep
 l2 = NamedLine["photon"](p2,p1).arcThru(Point(0,-3)).style([Arrow(),TeXLabel(hepnames_dict["photon"])])
 l3 = Gluon(p2, p3).style([Arrow()])
 l4 = Photon(p1, p3).style([Arrow()])
-l5 = Gluon(p5, p6).arcThru(Point(-1,-1)).style([TeXLabel("$\\bar{\\mathbf{q}}$",displace=-0.5)]).tension(1.2)
+l5 = Gluon(p5, p6).bend(-1).style([TeXLabel("$\\bar{\\mathbf{q}}$",displace=-0.5)]).tension(1.2)
 loop1 = Line(p3, p3).arcThru(Point(1.5,1.5)).style([Arrow(),TeXLabel("$"+hepnames_dict["pi+"]+"(k)$",pos=0.66,displace=0.2)])
 print " and blobs."
 c1 = Circle(p1.x(), p1.y(), 0.5).fillstyle([pyx.color.rgb.red])

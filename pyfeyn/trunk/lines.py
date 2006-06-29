@@ -24,6 +24,14 @@ class Line:
     def arcThru(self, arcpoint):
         self.__arcthrupoint = arcpoint
         return self
+
+    def bend(self, amount):
+        middle = self.p1.midpoint(self.p2)
+        normal = (middle.y()-self.p1.y(),self.p1.x()-middle.x())
+        arcpoint = Point(middle.x()+amount*normal[0],
+                         middle.y()+amount*normal[1])
+        self.__arcthrupoint = arcpoint
+        return self
     
     def set3D(self, choice):
         self.is3D = choice
@@ -101,14 +109,11 @@ class Line:
         canvas.stroke(self.path(), self.styles)
 
     def to_xml(self):
-        ele = xml.Element("line",
+        ele = xml.Element("propagator",
               {"id":"P%s"%md5.md5(str((self.p1.xpos,self.p1.ypos,self.p2.xpos,self.p2.ypos,self.__arcthrupoint and (self.__arcthrupoint.xpos,self.__arcthrupoint.ypos)))).hexdigest(),
                "source":"V%s"%md5.md5(str((self.p1.xpos,self.p1.ypos))).hexdigest(), 
                "target":"V%s"%md5.md5(str((self.p2.xpos,self.p2.ypos))).hexdigest(),
                "type":hasattr(self,"linetype") and self.linetype or "fermion"})
-        if self.__arcthrupoint:
-           sub = xml.SubElement(ele,"layout")
-           subsub = xml.SubElement(sub,"arcthru",{"x":str(self.__arcthrupoint.xpos),"y":str(self.__arcthrupoint.ypos)})
         #xml.dump(ele)
         return ele
 
