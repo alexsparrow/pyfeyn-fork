@@ -1,5 +1,7 @@
 import pyx
 import math
+import md5
+import elementtree.ElementTree as xml
 
 from points import Point
 from deco import Coil
@@ -98,6 +100,18 @@ class Line:
     def draw(self, canvas):
         canvas.stroke(self.path(), self.styles)
 
+    def to_xml(self):
+        ele = xml.Element("line",
+              {"id":"P%s"%md5.md5(str((self.p1.xpos,self.p1.ypos,self.p2.xpos,self.p2.ypos,self.__arcthrupoint and (self.__arcthrupoint.xpos,self.__arcthrupoint.ypos)))).hexdigest(),
+               "source":"V%s"%md5.md5(str((self.p1.xpos,self.p1.ypos))).hexdigest(), 
+               "target":"V%s"%md5.md5(str((self.p2.xpos,self.p2.ypos))).hexdigest(),
+               "type":hasattr(self,"linetype") and self.linetype or "fermion"})
+        if self.__arcthrupoint:
+           sub = xml.SubElement(ele,"layout")
+           subsub = xml.SubElement(sub,"arcthru",{"x":str(self.__arcthrupoint.xpos),"y":str(self.__arcthrupoint.ypos)})
+        #xml.dump(ele)
+        return ele
+
 ##### DecoratedLine base class #####        
 
 class DecoratedLine(Line):
@@ -111,12 +125,15 @@ class DecoratedLine(Line):
     def strikeThru(self):
         pass
 
+
+
 ##### Specific kinds of DecoratedLine #####
 
 class Gluon(DecoratedLine):
     """A line with a cycloid deformation"""
     arcradius = 0.25
     elasticity = 1.38268
+    linetype = "gluon"
 
     def tension(self, value):
         self.elasticity = value
@@ -133,16 +150,17 @@ class Gluon(DecoratedLine):
                skiplast=0.5*deficit*self.arcradius) ])
 
 
+
 class Photon(DecoratedLine):
     """A line with a sinoid deformation"""
     arcradius = 0.25
+    linetype = "photon"
 
     def draw(self, canvas):
         canvas.stroke(self.path(), self.styles +
              [pyx.deformer.cycloid(self.arcradius,
                   int(1.5 * pyx.unit.tocm(self.path().arclen()) / self.arcradius),
                   skipfirst=0, skiplast=0, turnangle=0) ])
-
 
 
 

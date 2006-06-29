@@ -1,3 +1,10 @@
+2006-06-28  Georg von Hippel <gmv22@cantab.net>, <vonhippg@uregina.ca>
+
+	* Fixed some divide-by-zero bugs in points.py
+	* Added feynML as a W3C XML Schema
+	* Added feynML reader support module
+	* Added rudimentary feynML writing support to feyn submodules
+
 2006-06-22  Georg von Hippel <gmv22@cantab.net>, <vonhippg@uregina.ca>
 
         * Fixed Arrow code to work with PyX 0.9

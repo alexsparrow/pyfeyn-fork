@@ -1,4 +1,5 @@
 import pyx
+import elementtree.ElementTree as xml
 import math
 
 ##### FeynDiagram class #####
@@ -14,4 +15,8 @@ class FeynDiagram:
         for obj in self.__objs:
             obj.draw(canvas)
 
-
+    def to_xml(self):
+        root = xml.Element("graph")
+        for obj in self.__objs:
+            root.append(obj.to_xml())
+        return xml.tostring(root).replace(">",">\n")

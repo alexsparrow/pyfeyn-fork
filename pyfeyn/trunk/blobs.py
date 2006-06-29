@@ -1,4 +1,6 @@
 import pyx
+import elementtree.ElementTree as xml
+import md5
 import math
 
 from points import Point
@@ -24,12 +26,20 @@ class Blob:
         self.trafos = self.trafos + trafolist
         return self
 
+    def to_xml(self):
+        ele = xml.Element("blob",{"id":"V%s"%md5.md5(str((self.centre.xpos,self.centre.ypos))).hexdigest(),"x":str(self.centre.xpos), "y":str(self.centre.ypos), "shape": hasattr(self,"blobshape") and self.blobshape or "circle"})
+        #xml.dump(ele)
+        return ele
+
+
 ##### Circle class (a kind of Blob) #####
 
 class Circle(Blob):
+
     def __init__(self, xpos, ypos, rad):
         self.centre = Point(xpos, ypos)
         self.radius = float(rad)
+        self.blobshape = "circle"
 
     def draw(self, canvas):
         canvas.fill(pyx.path.circle(self.centre.x(), self.centre.y(), self.radius), [pyx.color.rgb.white])
@@ -39,6 +49,7 @@ class Circle(Blob):
 ##### Ellipse class (a kind of Blob) #####
 
 class Ellipse(Blob):
+
     def __init__(self, xpos, ypos, xrad, yrad=None):
         self.centre = Point(xpos, ypos)
         self.xrad = float(xrad)
@@ -46,6 +57,7 @@ class Ellipse(Blob):
            self.yrad = float(yrad)
         else:
            self.yrad = self.xrad
+        self.blobshape = "ellipse"
 
     def draw(self, canvas):
         canvas.fill(pyx.path.circle(self.centre.x(), self.centre.y(), 1.0),

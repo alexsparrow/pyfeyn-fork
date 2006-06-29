@@ -1,4 +1,6 @@
 import pyx
+import elementtree.ElementTree as xml
+import md5
 import math
 
 
@@ -56,6 +58,12 @@ class Point:
         self.xpos = float(xpos)
         self.ypos = float(ypos)
 
+    def to_xml(self):
+        ele = xml.Element("vertex",{"id":"V%s"%md5.md5(str((self.xpos,self.ypos))).hexdigest(),"x":str(self.xpos), "y":str(self.ypos)})
+        #xml.dump(ele)
+        return ele
+
+
 ##### Decorated Point class #####
 
 class DecoratedPoint(Point):
@@ -65,7 +73,7 @@ class DecoratedPoint(Point):
         if mark is not None:
            self.mark = mark(xpos,ypos,size)
         else:
-           self.mark = pyx.box.rect(xpos,ypos,0,0)
+           self.mark = pyx.box.rect(xpos-0.5*size,ypos-0.5*size,size,size)
         self.fillstyles = fillstyles
         self.strokestyles = strokestyles
 

@@ -28,7 +28,7 @@
   <xsd:restriction base="xsd:NMTOKEN">
 	  <xsd:enumeration value="rectangle"/>
 	  <xsd:enumeration value="circle"/>
-	  <xsd:enumeration value="ellipsis"/>
+	  <xsd:enumeration value="ellipse"/>
    </xsd:restriction>
 </xsd:simpleType>
 

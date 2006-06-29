@@ -56,3 +56,5 @@ print "Writing to file..."
 
 c.writeEPSfile("thetest")
 
+print fd.to_xml()
+
