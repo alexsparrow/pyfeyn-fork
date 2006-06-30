@@ -1,3 +1,10 @@
+2006-06-30  Georg von Hippel <gmv22@cantab.net>, <vonhippg@uregina.ca>
+
+	* Added rudimentary style support to feynML read/write functions
+        * Added label support to feynML read/write functions
+        * Added a new class for labels attached to points rather than lines
+	* Improved interface of DecoratedPoint class
+
 2006-06-29  Georg von Hippel <gmv22@cantab.net>, <vonhippg@uregina.ca>
 
 	* Improved feynML Schema to look more like proposed

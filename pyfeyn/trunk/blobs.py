@@ -12,18 +12,17 @@ class Blob:
     fillstyles = [pyx.color.rgb.white]
     strokestyles = [pyx.color.rgb.black]
     trafos = []
-    #def __init__(self, centre):
 
     def strokestyle(self, stylelist):
-        self.strokestyles = self.strokestyles + stylelist
+        self.strokestyles.append(stylelist)
         return self
 
     def fillstyle(self, stylelist):
-        self.fillstyles = self.fillstyles + stylelist
+        self.fillstyles.append(stylelist)
         return self
 
     def trafo(self, trafolist):
-        self.trafos = self.trafos + trafolist
+        self.trafos.append(trafolist)
         return self
 
     def to_xml(self):
@@ -35,11 +34,17 @@ class Blob:
 ##### Circle class (a kind of Blob) #####
 
 class Circle(Blob):
+    "A circular blob"
+#    fillstyles = [pyx.color.rgb.white] # inherited
+#    strokestyles = [pyx.color.rgb.black] # inherited
+#    trafos = [] # inherited
+#    centre
+#    radius
+    blobshape = "circle"
 
     def __init__(self, xpos, ypos, rad):
         self.centre = Point(xpos, ypos)
         self.radius = float(rad)
-        self.blobshape = "circle"
 
     def draw(self, canvas):
         canvas.fill(pyx.path.circle(self.centre.x(), self.centre.y(), self.radius), [pyx.color.rgb.white])
@@ -49,6 +54,14 @@ class Circle(Blob):
 ##### Ellipse class (a kind of Blob) #####
 
 class Ellipse(Blob):
+    "An elliptical blob"
+#    fillstyles = [pyx.color.rgb.white] # inherited
+#    strokestyles = [pyx.color.rgb.black] # inherited
+#    trafos = [] # inherited
+#    centre
+#    xrad
+#    yrad
+    blobshape = "ellipse"
 
     def __init__(self, xpos, ypos, xrad, yrad=None):
         self.centre = Point(xpos, ypos)
@@ -57,7 +70,6 @@ class Ellipse(Blob):
            self.yrad = float(yrad)
         else:
            self.yrad = self.xrad
-        self.blobshape = "ellipse"
 
     def draw(self, canvas):
         canvas.fill(pyx.path.circle(self.centre.x(), self.centre.y(), 1.0),
@@ -71,4 +83,5 @@ class Ellipse(Blob):
                       + self.strokestyles)
 
 
+# A dictionary to map feynML blob shape choices to blob classes
 NamedBlob = {"circle":Circle, "ellipse":Ellipse}

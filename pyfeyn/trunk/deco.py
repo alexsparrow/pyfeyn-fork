@@ -43,6 +43,28 @@ class TeXLabel(pyx.deco.deco, pyx.attr.attr):
                                    math.sin(self.angle*math.pi/180))
         dp.ornaments.insert(t)
 
+class FreeTeXLabel(pyx.deco.deco, pyx.attr.attr):
+    """TeX label for Feynman diagram points"""
+    # Needed because normpath will break if called on point-like paths
+    def __init__(self, text, x, y, size=pyx.text.size.normalsize, displace=0, angle=0, textattrs=[]):
+        self.pos = (x,y)
+        self.size = size
+        self.displace = displace
+        self.angle = angle
+        self.text = text
+        self.textattrs = textattrs
+
+    def decorate(self, dp, texrunner):
+        x, y = self.pos 
+        textattrs = pyx.attr.mergeattrs([pyx.text.boxhalign.center,
+                                         pyx.text.valign.middle] +
+                                        [self.size] + self.textattrs)
+        t = texrunner.text(x,y,self.text,textattrs)
+        t.linealign(self.displace, math.cos(self.angle*math.pi/180),
+                                   math.sin(self.angle*math.pi/180))
+        dp.ornaments.insert(t)
+
+
 ##### Coil decorator class #####
 
 class Coil(pyx.deformer.deformer):

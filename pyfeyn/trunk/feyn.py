@@ -18,6 +18,7 @@ from diagrams import FeynDiagram
 
 from points import Point
 from points import DecoratedPoint
+from points import NamedMark
 
 from blobs import Blob
 from blobs import Circle
@@ -32,5 +33,6 @@ from lines import NamedLine
 
 from deco import Arrow
 from deco import TeXLabel
+from deco import FreeTeXLabel
 from deco import Coil
 

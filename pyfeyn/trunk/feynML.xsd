@@ -12,6 +12,7 @@
 	schemaLocation="http://www.w3.org/2001/xml.xsd"/>
 
 
+
 <!-- ***** General type declarations ***** -->
 
 <!-- ID type -->
@@ -43,7 +44,7 @@
 <!-- Style string type -->
 <xsd:simpleType name="style.type">
    <xsd:restriction base="xsd:string">
-          <xsd:pattern value="((line-colou?r|line-style):.+;)+"/>
+          <xsd:pattern value="((mark-shape|mark-size|fill-style|line-style):.+;)+"/>
    </xsd:restriction>
 </xsd:simpleType>
 
@@ -77,6 +78,7 @@
 </xsd:simpleType>
 
 
+
 <!-- ***** General attribute declarations ***** -->
 
 <!-- Global Attributes -->
@@ -104,16 +106,22 @@
                 <xsd:attribute name="bend" type="xsd:double"/>
 </xsd:attributeGroup>
 
+
+
 <!-- ***** Root element ***** -->
+
+<!-- FeynML root element -->
 <xsd:element name="feynml">
    <xsd:complexType>
       <xsd:sequence>
          <xsd:element ref="head" minOccurs="0" maxOccurs="1"/>
-         <xsd:element ref="diagram" minOccurs="1" maxOccurs="1"/>
+         <xsd:element ref="diagram" minOccurs="1" maxOccurs="unbounded"/>
       </xsd:sequence>
          <xsd:attributeGroup ref="xml-atts"/>
    </xsd:complexType>
 </xsd:element>
+
+
 
 <!-- ***** Structural elements ***** -->
 
@@ -131,6 +139,7 @@
 	    <xsd:element ref="propagator"/>
             <xsd:element ref="leg"/>
             <xsd:element ref="blob"/>
+            <xsd:element ref="connect"/>
             <xsd:element ref="label"/>
       </xsd:choice>
    </xsd:sequence>
@@ -183,7 +192,7 @@
 <!-- Blob Element -->
 <xsd:attributeGroup name="blob-atts">
    <xsd:attribute name="shape" type="blob-shape.type" use="required"/>
-   <xsd:attribute name="radius" type="xsd:positiveInteger"/>
+   <xsd:attribute name="radius" type="xsd:double"/>
 </xsd:attributeGroup>
 <!-- Blob type -->
 <xsd:complexType name="blob.type">

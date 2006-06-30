@@ -10,8 +10,11 @@ from deco import Coil
 
 class Line:
     "Base class for all objects which connect points in Feynman diagrams"
+#    p1
+#    p2
     styles = []
     __arcthrupoint = None
+    bendamount = 0
     is3D = False
     
     def __init__(self, point1, point2):
@@ -23,6 +26,7 @@ class Line:
 
     def arcThru(self, arcpoint):
         self.__arcthrupoint = arcpoint
+        self.bendamount = None
         return self
 
     def bend(self, amount):
@@ -31,6 +35,7 @@ class Line:
         arcpoint = Point(middle.x()+amount*normal[0],
                          middle.y()+amount*normal[1])
         self.__arcthrupoint = arcpoint
+        self.bendamount = amount
         return self
     
     def set3D(self, choice):
@@ -109,11 +114,13 @@ class Line:
         canvas.stroke(self.path(), self.styles)
 
     def to_xml(self):
-        ele = xml.Element("propagator",
-              {"id":"P%s"%md5.md5(str((self.p1.xpos,self.p1.ypos,self.p2.xpos,self.p2.ypos,self.__arcthrupoint and (self.__arcthrupoint.xpos,self.__arcthrupoint.ypos)))).hexdigest(),
-               "source":"V%s"%md5.md5(str((self.p1.xpos,self.p1.ypos))).hexdigest(), 
+        attribs = {"id":"P%s"%md5.md5(str((self.p1.xpos,self.p1.ypos,self.p2.xpos,self.p2.ypos,self.__arcthrupoint and (self.__arcthrupoint.xpos,self.__arcthrupoint.ypos)))).hexdigest(),
+               "source":"V%s"%md5.md5(str((self.p1.xpos,self.p1.ypos))).hexdigest(),
                "target":"V%s"%md5.md5(str((self.p2.xpos,self.p2.ypos))).hexdigest(),
-               "type":hasattr(self,"linetype") and self.linetype or "fermion"})
+               "type":hasattr(self,"linetype") and self.linetype or "fermion"}
+        if self.bendamount:
+           attribs["bend"] = str(self.bendamount)
+        ele = xml.Element("propagator",attribs)
         #xml.dump(ele)
         return ele
 
@@ -136,6 +143,12 @@ class DecoratedLine(Line):
 
 class Gluon(DecoratedLine):
     """A line with a cycloid deformation"""
+#    p1 # inherited
+#    p2 # inherited
+#    styles = [] # inherited
+#    __arcthrupoint = None # inherited
+#    bendamount = 0 # inherited
+#    is3D = False # inherited
     arcradius = 0.25
     elasticity = 1.38268
     linetype = "gluon"
@@ -158,6 +171,12 @@ class Gluon(DecoratedLine):
 
 class Photon(DecoratedLine):
     """A line with a sinoid deformation"""
+#    p1 # inherited
+#    p2 # inherited
+#    styles = [] # inherited
+#    __arcthrupoint = None # inherited
+#    bendamount = 0 # inherited
+#    is3D = False # inherited
     arcradius = 0.25
     linetype = "photon"
 
@@ -169,7 +188,7 @@ class Photon(DecoratedLine):
 
 
 
-
+# A dictionary for mapping feynML line types to line classes
 NamedLine = {"photon":Photon,"gluon":Gluon,"fermion":DecoratedLine}
 
  
