@@ -7,7 +7,7 @@ if float(pyx.version.version)<0.9:
     print "Warning: PyFeyn may not work with PyX versions older than 0.9 !"
 
 pyx.text.defaulttexrunner.set(mode="latex")
-if pyx.pykpathsea.find_file("hepnicenames.sty",None):
+if pyx.pykpathsea.find_file("hepnicenames.sty", pyx.pykpathsea.kpse_tex_format):
    pyx.text.defaulttexrunner.preamble(r"\usepackage{hepnicenames}")
 else:
    print "Warning: hepnames LaTeX package not found!"
