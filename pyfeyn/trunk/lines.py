@@ -124,8 +124,8 @@ class Line:
         #xml.dump(ele)
         return ele
 
-##### DecoratedLine base class #####        
 
+##### DecoratedLine base class #####        
 class DecoratedLine(Line):
     """Base class for spring and sine-like lines"""
     def invert(self):
@@ -188,7 +188,7 @@ class Photon(DecoratedLine):
 
 
 
-# A dictionary for mapping feynML line types to line classes
+# A dictionary for mapping FeynML line types to line classes
 NamedLine = {"photon":Photon,"gluon":Gluon,"fermion":DecoratedLine}
 
  
