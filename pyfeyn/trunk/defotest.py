@@ -2,28 +2,36 @@ from pyx import *
 from math import sin, cos
 
 c = canvas.canvas()
-mypath = path.curve(0.0, 0.0, 10.0, 30.0, 30.0, 30.0, 40.0, 0.0)
-omega  = 200.0
-numsegs = 100
-mag = 2.0*unit.t_cm
+
+mypath = path.curve(0.0*unit.cm, 0.0*unit.cm,
+                    2.0*unit.cm, 6.0*unit.cm,
+                    6.0*unit.cm, 6.0*unit.cm,
+                    8.0*unit.cm, 0.0*unit.cm)
+#mypath = path.line(0.0*unit.cm, 0.0*unit.cm, 10.0*unit.cm, 0.0*unit.cm,)
+
+omega  = 5.0
+numsegs = 50
+mag = 0.3*unit.cm
 
 arclength = mypath.arclen()
+#print arclength/unit.cm
 lenperseg = arclength/float(numsegs)
 lengths = [i*lenperseg for i in range(0,numsegs+1)]
 
+gradfactor = lenperseg / 3.0
 prevpos = mypath.atbegin()
-prevgrad = (0,0) # fix!
-controlfactor = arclength.t / 3.0
-for l in lengths:
+prevgrad = mypath.rotation(0.0).apply(gradfactor,
+                                      gradfactor * omega * mag / unit.cm)
+for l in lengths[1:]:
     tr = mypath.trafo(l)
     rot = mypath.rotation(l)
     start = prevpos
-    end = tr.apply(0.0*unit.t_cm, mag * sin(omega * l / unit.t_cm))
-    grad = rot.apply(1.0*unit.t_cm, omega * mag * cos(omega * l / unit.t_cm))
-    #print "pos =", end[0], end[1]
-    #print "grad =", grad[0], grad[1]
-    m1 = [prevpos[i] + controlfactor * prevgrad[i] for i in [0,1]]
-    m2 = [end[i] - controlfactor * grad[i] for i in [0,1]]
+    end = tr.apply(0.0*unit.cm, mag * sin(omega * l / unit.cm))
+    grad1 = prevgrad
+    grad2 = rot.apply(gradfactor,
+                      gradfactor * omega * mag / unit.cm * cos(omega * l / unit.cm))
+    m1 = [start[i] + grad1[i] for i in [0,1]]
+    m2 = [end[i]   - grad2[i] for i in [0,1]]
     ###
     s1 = start + end
     line = path.line(*s1)
@@ -35,15 +43,15 @@ for l in lengths:
     ###
     c1 = path.circle(m1[0], m1[1], 0.05)
     c2 = path.circle(m2[0], m2[1], 0.05)
-    c.fill(c1, [color.rgb.red])
-    c.stroke(c1)
-    c.stroke(c2)
     l1 = path.line(start[0], start[1], m1[0], m1[1])
     l2 = path.line(end[0], end[1], m2[0], m2[1])
     #c.stroke(l1)
     #c.stroke(l2)
+    c.fill(c1, [color.rgb.red])
+    c.stroke(c1)
+    #c.stroke(c2)
     ###
     prevpos = end
-    prevgrad = grad
+    prevgrad = grad2
 
 c.writePDFfile("defotest")

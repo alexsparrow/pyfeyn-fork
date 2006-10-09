@@ -7,6 +7,7 @@ numsegs = 50
 mag = 2.0*unit.cm
 
 arclength = 10.0*unit.cm
+#print arclength
 lenperseg = arclength/float(numsegs)
 lengths = [i*lenperseg for i in range(0,numsegs+1)]
 
