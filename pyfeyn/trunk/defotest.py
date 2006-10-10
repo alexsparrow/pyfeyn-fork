@@ -9,22 +9,34 @@ mypath = path.curve(0.0*unit.cm, 0.0*unit.cm,
                     8.0*unit.cm, 0.0*unit.cm)
 #mypath = path.line(0.0*unit.cm, 0.0*unit.cm, 10.0*unit.cm, 0.0*unit.cm,)
 
-omega  = 5.0
+#def deform:
+#    gradfactor, gradfactor * omega * mag / unit.cm * cos(omega * l / unit.cm
+
+numhalfperiods = 19
 numsegs = 50
 mag = 0.3*unit.cm
+straightlen1 = 1.0*unit.cm
+straightlen2 = 1.0*unit.cm
 
-arclength = mypath.arclen()
-#print arclength/unit.cm
+pathsegs = mypath.split([straightlen1, mypath.arclen() - straightlen2])
+newpath = pathsegs[0]
+
+mysubpath = pathsegs[1]
+arclength = mysubpath.arclen()
 lenperseg = arclength/float(numsegs)
 lengths = [i*lenperseg for i in range(0,numsegs+1)]
 
+## Calc omega specifically for this function (period length = 
+omega = 3.14 * unit.cm / arclength * numhalfperiods
+#print omega
+
 gradfactor = lenperseg / 3.0
-prevpos = mypath.atbegin()
-prevgrad = mypath.rotation(0.0).apply(gradfactor,
+prevpos = mysubpath.atbegin()
+prevgrad = mysubpath.rotation(0.0).apply(gradfactor,
                                       gradfactor * omega * mag / unit.cm)
 for l in lengths[1:]:
-    tr = mypath.trafo(l)
-    rot = mypath.rotation(l)
+    tr = mysubpath.trafo(l)
+    rot = mysubpath.rotation(l)
     start = prevpos
     end = tr.apply(0.0*unit.cm, mag * sin(omega * l / unit.cm))
     grad1 = prevgrad
@@ -39,7 +51,8 @@ for l in lengths[1:]:
     ###
     s2 = (start[0], start[1], m1[0], m1[1], m2[0], m2[1], end[0], end[1])
     curve = path.curve(*s2)
-    c.stroke(curve)
+    newpath = newpath << curve
+    #c.stroke(curve)
     ###
     c1 = path.circle(m1[0], m1[1], 0.05)
     c2 = path.circle(m2[0], m2[1], 0.05)
@@ -53,5 +66,8 @@ for l in lengths[1:]:
     ###
     prevpos = end
     prevgrad = grad2
+
+newpath = newpath << pathsegs[2]
+c.stroke(newpath, [color.rgb.black])
 
 c.writePDFfile("defotest")
