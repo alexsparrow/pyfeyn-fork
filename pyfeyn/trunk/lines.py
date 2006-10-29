@@ -6,19 +6,20 @@ from points import Point
 from deco import Coil
 
 
-##### Line base class
+## Line base class
 class Line:
     "Base class for all objects which connect points in Feynman diagrams"
-    styles = []
-    __arcthrupoint = None
-    bendamount = 0
-    is3D = False
     
     def __init__(self, point1, point2):
         self.p1 = point1
         self.p2 = point2
+        self.styles = []
+        self.__arcthrupoint = None
+        self.bendamount = 0
+        self.is3D = False
     
     def arrows(self):
+        ## TODO!
         pass
 
     def arcThru(self, arcpoint):
@@ -108,6 +109,18 @@ class Line:
                                       path.arcn(*arcargs))
         
     def draw(self, canvas):
+        p1path = self.p1.path()
+        p2path = self.p2.path()
+        if p1path:
+            as, bs = p1path.intersect(self.path())
+            ix, iy = p1path.at(as[0])
+            canvas.fill(path.circle(ix, iy, 1.0), [color.rgb.green])
+            ## TODO: split path here and only deform the central section
+        if p2path: 
+            as, bs = p2path.intersect(self.path())
+            ix, iy = p2path.at(as[0])
+            canvas.fill(path.circle(ix, iy, 1.0), [color.rgb.blue])
+            ## TODO: split path here and only deform the central section
         canvas.stroke(self.path(), self.styles)
 
     def to_xml(self):
@@ -122,7 +135,7 @@ class Line:
         return ele
 
 
-##### DecoratedLine base class #####        
+## DecoratedLine base class
 class DecoratedLine(Line):
     """Base class for spring and sine-like lines"""
     def invert(self):

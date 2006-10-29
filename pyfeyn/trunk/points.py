@@ -1,21 +1,20 @@
 import pyx
 import elementtree.ElementTree as xml
-import md5
+import md5 ## TODO: remove
 import math
 
 
-##### Point base class #####
-
+## Point base class
 class Point:
     "Base class for all pointlike objects in Feynman diagrams"
-#    xpos 
-#    ypos 
-
     def __init__(self, xpos, ypos):
         self.setpos(xpos, ypos)
 
     def draw(self, canvas):
         pass
+
+    def path(self):
+        return None
 
     def midpoint(self, otherpoint):
         return Point( (self.x() + otherpoint.x()) / 2.0,
@@ -31,7 +30,7 @@ class Point:
         if otherpoint.x() != self.x():
            return (otherpoint.y() - self.y()) / (otherpoint.x() - self.x())
         else:
-           return 9999. # An arbitrary large number to replace infinity
+           return 9999. ## An arbitrary large number to replace infinity
 
     def arg(self, otherpoint):
         if otherpoint.x() != self.x():
@@ -39,10 +38,10 @@ class Point:
                             (otherpoint.x() - self.x()) )
         else:
             arg = math.pi/2.
-        # Handle tangent sign ambiguity
+        ## Handle tangent sign ambiguity
         if otherpoint.x() < self.x():
             arg = arg + math.pi
-        # Convert to degrees
+        ## Convert to degrees
         return math.degrees(arg)
  
     def x(self):
@@ -64,18 +63,11 @@ class Point:
         return ele
 
 
-##### Decorated Point class #####
-
+## Decorated point class
 class DecoratedPoint(Point):
     "Class for a point drawn with a marker"
-#    xpos # inherited
-#    ypos # inherited
-#    marker
-#    radius
-#    fillstyles
-#    strokestyles
-
-    def __init__(self, xpos, ypos, mark=None, size=4*pyx.unit.t_pt, fillstyles=[pyx.color.rgb.black], strokestyles=[pyx.color.rgb.black]):
+    def __init__(self, xpos, ypos, mark=None, size=4*pyx.unit.t_pt,
+                 fillstyles=[pyx.color.rgb.black], strokestyles=[pyx.color.rgb.black]):
         self.setpos(xpos, ypos)
         if mark is not None:
            self.marker = mark
@@ -86,7 +78,10 @@ class DecoratedPoint(Point):
         self.fillstyles = [x for x in fillstyles] # lists are mutable --
         self.strokestyles = [x for x in strokestyles] # hence make a copy!
 
-    def mark(self,mark,size=None):
+    def path(self):
+        return self.marker(self.xpos, self.ypos, self.radius).path()
+
+    def mark(self, mark, size=None):
         self.marker = mark
         if size is not None:
            self.radius = size
@@ -107,10 +102,8 @@ class DecoratedPoint(Point):
         return self
 
     def draw(self, canvas):
-        canvas.fill(self.marker(self.xpos,self.ypos,self.radius).path(),
-                    self.fillstyles)
-        canvas.stroke(self.marker(self.xpos,self.ypos,self.radius).path(),
-                      self.strokestyles)
+        canvas.fill(self.path(), self.fillstyles)
+        canvas.stroke(self.path(), self.strokestyles)
 
     def to_xml(self):
         ele = Point.to_xml(self)

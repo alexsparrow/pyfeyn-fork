@@ -12,7 +12,8 @@ import elementtree.ElementTree as xml
 ##### FeynDiagram class #####
 class FeynDiagram:
     "Objects for holding a set of Feynman diagram components"
-    __objs = []
+    def __init__(self, objects = []):
+        self.__objs = objects
 
     def add(self, *objs):
         for obj in objs:
