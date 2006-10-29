@@ -35,8 +35,8 @@ l5 = Gluon(p5, p6).bend(-1).style([TeXLabel("$\\bar{\\mathbf{q}}$",displace=-0.5
 loop1 = Line(p3, p3).arcThru(Point(1.5,1.5)).style([Arrow(),TeXLabel("$"+hepnames_dict["pi+"]+"(k)$",pos=0.66,displace=0.2)])
 print "and blobs."
 # some blobs with styles applied
-c1 = Circle(p1.x(), p1.y(), 0.5).fillstyle([pyx.color.rgb.red])
-e1 = Ellipse(0, 0, 0.5, 1.0).fillstyle([pyx.pattern.hatched135])
+c1 = Circle(p1.x(), p1.y(), 0.5).fillstyle(pyx.color.rgb.red)
+e1 = Ellipse(0, 0, 0.5, 1.0).fillstyle(pyx.pattern.hatched135)
 
 print "Drawing them:"
 print " points,",
@@ -65,5 +65,5 @@ print "Writing to file..."
 
 c.writeEPSfile("thetest")
 
-print fd.to_xml()
+#print fd.toXML()
 
