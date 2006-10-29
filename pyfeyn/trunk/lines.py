@@ -1,17 +1,14 @@
-import pyx
-import math
-import md5
+from pyx import *
+import math, md5
 import elementtree.ElementTree as xml
 
 from points import Point
 from deco import Coil
 
-##### Line base class #####  
 
+##### Line base class
 class Line:
     "Base class for all objects which connect points in Feynman diagrams"
-#    p1
-#    p2
     styles = []
     __arcthrupoint = None
     bendamount = 0
@@ -49,8 +46,8 @@ class Line:
     def path(self):
         if self.__arcthrupoint == None:
             ## This is a simple straight line
-            return pyx.path.path( pyx.path.moveto(*(self.p1.pos())),
-                                  pyx.path.lineto(*(self.p2.pos())) )
+            return path.path( path.moveto(*(self.p1.pos())),
+                                  path.lineto(*(self.p2.pos())) )
         elif (self.p1.x()==self.p2.x() and self.p1.y()==self.p2.y()):
             ## This is a tadpole-type loop and needs special care;
             ## we shall assume that the arcthrupoint is meant to be
@@ -60,7 +57,7 @@ class Line:
             arcangle1 = arccenter.arg(self.p1)
             arcangle2 = arccenter.arg(self.p1)+360
             arcargs = (arccenter.x(), arccenter.y(), arcradius, arcangle1, arcangle2)
-            return pyx.path.path( pyx.path.arc(*arcargs) )
+            return path.path( path.arc(*arcargs) )
         else:
             ## Work out line gradients
             try: n13 = (self.p1.y() - self.__arcthrupoint.y()) / (self.p1.x() - self.__arcthrupoint.x())
@@ -71,8 +68,8 @@ class Line:
             ## If gradients match,
             ## then we have a straight line, so bypass the complexity
             if n13 == n23:
-                return pyx.path.path( pyx.path.moveto(*(self.p1.pos())),
-                                      pyx.path.lineto(*(self.p2.pos())) )
+                return path.path( path.moveto(*(self.p1.pos())),
+                                      path.lineto(*(self.p2.pos())) )
 
             ## Otherwise work out conjugate gradients and midpoints
             try: m13 = - 1.0 / n13
@@ -104,11 +101,11 @@ class Line:
             crossproductZcoord = vec12[0]*vec13[1] - vec12[1]*vec13[0]
 
             if crossproductZcoord < 0:
-                return pyx.path.path( pyx.path.moveto(*(self.p1.pos())),
-                                      pyx.path.arc(*arcargs))
+                return path.path( path.moveto(*(self.p1.pos())),
+                                      path.arc(*arcargs))
             else:
-                return pyx.path.path( pyx.path.moveto(*(self.p1.pos())),
-                                      pyx.path.arcn(*arcargs))
+                return path.path( path.moveto(*(self.p1.pos())),
+                                      path.arcn(*arcargs))
         
     def draw(self, canvas):
         canvas.stroke(self.path(), self.styles)
@@ -159,11 +156,11 @@ class Gluon(DecoratedLine):
 
     def draw(self, canvas):
         needwindings = self.elasticity * \
-                       pyx.unit.tocm(self.path().arclen()) / self.arcradius
+                       unit.tocm(self.path().arclen()) / self.arcradius
         intwindings = int(needwindings)
         deficit = needwindings-intwindings
         canvas.stroke(self.path(), self.styles +
-             [ pyx.deformer.cycloid(self.arcradius, intwindings,
+             [ deformer.cycloid(self.arcradius, intwindings,
                skipfirst=0.5*deficit*self.arcradius,
                skiplast=0.5*deficit*self.arcradius) ])
 
@@ -182,8 +179,8 @@ class Photon(DecoratedLine):
 
     def draw(self, canvas):
         canvas.stroke(self.path(), self.styles +
-             [pyx.deformer.cycloid(self.arcradius,
-                  int(1.5 * pyx.unit.tocm(self.path().arclen()) / self.arcradius),
+             [deformer.cycloid(self.arcradius,
+                  int(1.5 * unit.tocm(self.path().arclen()) / self.arcradius),
                   skipfirst=0, skiplast=0, turnangle=0) ])
 
 
