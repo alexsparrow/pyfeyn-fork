@@ -35,4 +35,3 @@ from deco import Arrow
 from deco import TeXLabel
 from deco import FreeTeXLabel
 from deco import Coil
-

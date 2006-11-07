@@ -2,6 +2,7 @@ from pyx import *
 import math, md5
 import elementtree.ElementTree as xml
 
+from diagrams import FeynDiagram
 from points import Point
 from deco import Coil
 
@@ -49,7 +50,7 @@ class Line:
             ## This is a simple straight line
             return path.path( path.moveto(*(self.p1.pos())),
                                   path.lineto(*(self.p2.pos())) )
-        elif (self.p1.x()==self.p2.x() and self.p1.y()==self.p2.y()):
+        elif (self.p1.x() == self.p2.x() and self.p1.y()==self.p2.y()):
             ## This is a tadpole-type loop and needs special care;
             ## we shall assume that the arcthrupoint is meant to be
             ## the antipode of the basepoint
@@ -107,21 +108,36 @@ class Line:
             else:
                 return path.path( path.moveto(*(self.p1.pos())),
                                       path.arcn(*arcargs))
-        
-    def draw(self, canvas):
+
+    def getVisiblePath(self):
         p1path = self.p1.path()
         p2path = self.p2.path()
+        splitpoints = []
         if p1path:
             as, bs = p1path.intersect(self.path())
+            splitpoints.append(bs[0])
             ix, iy = p1path.at(as[0])
-            canvas.fill(path.circle(ix, iy, 1.0), [color.rgb.green])
-            ## TODO: split path here and only deform the central section
+            FeynDiagram.currentCanvas.fill(path.circle(ix, iy, 0.1), [color.rgb.green])
         if p2path: 
             as, bs = p2path.intersect(self.path())
+            splitpoints.append(bs[0])
             ix, iy = p2path.at(as[0])
-            canvas.fill(path.circle(ix, iy, 1.0), [color.rgb.blue])
-            ## TODO: split path here and only deform the central section
-        canvas.stroke(self.path(), self.styles)
+            FeynDiagram.currentCanvas.fill(path.circle(ix, iy, 0.1), [color.rgb.blue])
+        ## Split path here and only deform the central section
+        subpaths = self.path().split(splitpoints)
+        #print subpaths
+        vispath = self.path()
+        if len(subpaths) == 1:
+            vispath = subpaths[0]
+        elif len(subpaths) == 3:
+            vispath = subpaths[1]
+        FeynDiagram.currentCanvas.stroke(vispath, [color.rgb.red])
+        return vispath
+        
+    def draw(self, canvas):
+        path = self.getVisiblePath()
+        print self.styles
+        canvas.stroke(path, self.styles)
 
     def to_xml(self):
         attribs = {"id":"P%s"%md5.md5(str((self.p1.xpos,self.p1.ypos,self.p2.xpos,self.p2.ypos,self.__arcthrupoint and (self.__arcthrupoint.xpos,self.__arcthrupoint.ypos)))).hexdigest(),
@@ -168,14 +184,19 @@ class Gluon(DecoratedLine):
         return self
 
     def draw(self, canvas):
+        self.getVisiblePath()
         needwindings = self.elasticity * \
-                       unit.tocm(self.path().arclen()) / self.arcradius
+                       unit.tocm(self.getVisiblePath().arclen()) / self.arcradius
+        ## Get the whole number of windings and make sure that it's odd so we
+        ## don't get a weird double-back thing
         intwindings = int(needwindings)
+        if intwindings % 2 == 0:
+            intwindings -= 1
         deficit = needwindings-intwindings
-        canvas.stroke(self.path(), self.styles +
+        canvas.stroke(self.getVisiblePath(), self.styles +
              [ deformer.cycloid(self.arcradius, intwindings,
-               skipfirst=0.5*deficit*self.arcradius,
-               skiplast=0.5*deficit*self.arcradius) ])
+               skipfirst=0.0*deficit*self.arcradius,
+               skiplast=0.0*deficit*self.arcradius) ])
 
 
 
@@ -191,10 +212,11 @@ class Photon(DecoratedLine):
     linetype = "photon"
 
     def draw(self, canvas):
-        canvas.stroke(self.path(), self.styles +
-             [deformer.cycloid(self.arcradius,
-                  int(1.5 * unit.tocm(self.path().arclen()) / self.arcradius),
-                  skipfirst=0, skiplast=0, turnangle=0) ])
+        path = self.getVisiblePath()
+        canvas.stroke(path, self.styles +
+                      [deformer.cycloid(Photon.arcradius,
+                                        int(1.5 * unit.tocm(path.arclen()) / Photon.arcradius),
+                                        skipfirst=0, skiplast=0, turnangle=0) ])
 
 
 

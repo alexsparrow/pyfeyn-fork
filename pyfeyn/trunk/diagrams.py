@@ -11,17 +11,23 @@ import elementtree.ElementTree as xml
 
 ##### FeynDiagram class #####
 class FeynDiagram:
+    currentDiagram = None
+    currentCanvas = None
+
     "Objects for holding a set of Feynman diagram components"
     def __init__(self, objects = []):
         self.__objs = objects
+        FeynDiagram.currentCanvas = pyx.canvas.canvas()
+        FeynDiagram.currentDiagram = self
 
     def add(self, *objs):
         for obj in objs:
             self.__objs.append( obj )
 
-    def draw(self, canvas):
+    def draw(self):
+        ## TODO: order of drawing...
         for obj in self.__objs:
-            obj.draw(canvas)
+            obj.draw(FeynDiagram.currentCanvas)
 
     ## TODO: Put this in an external class? And CamelCase is the chosen
     ## "standard" for method names (I've moved to_xml() to toXML() for now)

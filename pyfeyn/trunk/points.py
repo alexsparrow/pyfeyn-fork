@@ -7,14 +7,18 @@ import math
 ## Point base class
 class Point:
     "Base class for all pointlike objects in Feynman diagrams"
-    def __init__(self, xpos, ypos):
+    def __init__(self, xpos, ypos, blob = None):
         self.setpos(xpos, ypos)
+        self.blob = blob
 
     def draw(self, canvas):
         pass
 
     def path(self):
-        return None
+        if self.blob:
+            return self.blob.path()
+        else:
+            return None
 
     def midpoint(self, otherpoint):
         return Point( (self.x() + otherpoint.x()) / 2.0,
@@ -67,7 +71,8 @@ class Point:
 class DecoratedPoint(Point):
     "Class for a point drawn with a marker"
     def __init__(self, xpos, ypos, mark=None, size=4*pyx.unit.t_pt,
-                 fillstyles=[pyx.color.rgb.black], strokestyles=[pyx.color.rgb.black]):
+                 fillstyles=[pyx.color.rgb.black],
+                 strokestyles=[pyx.color.rgb.black]):
         self.setpos(xpos, ypos)
         if mark is not None:
            self.marker = mark

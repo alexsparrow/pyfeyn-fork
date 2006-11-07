@@ -1,8 +1,8 @@
 import pyx
 import math
 
-##### Arrow decorator class #####
 
+##### Arrow decorator class
 class Arrow(pyx.deco.deco, pyx.attr.attr):
     """Arrow for Feynman diagram lines"""
     def __init__(self, pos=0.5, size=6*pyx.unit.v_pt, angle=45, constriction=0.8):
@@ -14,14 +14,14 @@ class Arrow(pyx.deco.deco, pyx.attr.attr):
     def decorate(self, dp, texrunner):
         dp.ensurenormpath()
         constrictionlen = self.size*self.constriction*math.cos(self.angle*math.pi/360.0)
-        arrowtopos = self.pos*dp.path.arclen()+0.5*self.size
+        arrowtopos = self.pos * dp.path.arclen()+0.5*self.size
         arrowtopath = dp.path.split(arrowtopos)[0]
         arrowpath = pyx.deco._arrowhead(arrowtopath, self.pos*dp.path.arclen(), 1, self.size, 45, constrictionlen)
         dp.ornaments.fill(arrowpath)
         return dp
 
-##### TeXLabel decorator class #####
 
+##### TeXLabel decorator class
 class TeXLabel(pyx.deco.deco, pyx.attr.attr):
     """TeX label for Feynman diagram lines"""
     def __init__(self, text, pos=0.5, size=pyx.text.size.normalsize, displace=0.5, angle=0, textattrs=[]):

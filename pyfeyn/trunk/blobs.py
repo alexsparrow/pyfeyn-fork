@@ -8,12 +8,9 @@ from points import Point
 ## Blob base class
 class Blob(Point):
     "Base class for all blob-like objects in Feynman diagrams"
-    def __init__(self, xpos, ypos, fillstyles = [color.rgb.white], strokestyles = [color.rgb.black]):
-        raise Exception("Blob is an abstract base class: you can't make 'em!")
-        #self.fillstyles = fillstyles
-        #self.strokestyles = strokestyles
-        #self.trafos = []
-
+    def __init__(self):
+        raise Exception("Blobs are an abstract base class: you can't make them!")
+    
     def strokestyle(self, stylelist):
         self.strokestyles.append(stylelist)
         return self
@@ -25,6 +22,15 @@ class Blob(Point):
     def trafo(self, trafolist):
         self.trafos.append(trafolist)
         return self
+
+    def setPoints(self, points):
+        if points:
+            self.points = points
+            for p in self.points:
+                p.blob = self
+        else:
+            self.points = []
+
 
     def toXML(self):
         ele = xml.Element("blob",
@@ -41,13 +47,14 @@ class Circle(Blob):
     blobshape = "circle"
 
     def __init__(self, xpos, ypos, radius,
-                 fillstyles = [color.rgb.white], strokestyles = [color.rgb.black]):
+                 fillstyles = [color.rgb.white], strokestyles = [color.rgb.black],
+                 points = None):
         self.xpos = xpos
         self.ypos = ypos
         self.radius = float(radius)
-        ## Can I inherit these by calling the base class __init__?
-        self.fillstyles = fillstyles  #[color.rgb.white]
-        self.strokestyles = strokestyles  #[color.rgb.black]
+        self.setPoints(points)
+        self.fillstyles = fillstyles
+        self.strokestyles = strokestyles
         self.trafos = []
 
     def path(self):
@@ -65,7 +72,8 @@ class Ellipse(Blob):
     blobshape = "ellipse"
 
     def __init__(self, xpos, ypos, xradius, yradius=None,
-                 fillstyles = [color.rgb.white], strokestyles = [color.rgb.black]):
+                 fillstyles = [color.rgb.white], strokestyles = [color.rgb.black],
+                 points = None):
         self.xpos = xpos
         self.ypos = ypos
         self.xrad = float(xradius)
@@ -73,10 +81,11 @@ class Ellipse(Blob):
            self.yrad = float(yradius)
         else:
            self.yrad = self.xrad
-        ## Can I inherit these by calling the base class __init__?
-        self.fillstyles = fillstyles #[color.rgb.white]
-        self.strokestyles = strokestyles #[color.rgb.black]
+        self.setPoints(points)
+        self.fillstyles = fillstyles
+        self.strokestyles = strokestyles
         self.trafos = []
+
 
     def path(self):
         ucircle = path.circle(self.xpos, self.ypos, 1.0)
