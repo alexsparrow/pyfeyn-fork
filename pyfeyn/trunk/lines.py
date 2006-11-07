@@ -110,33 +110,35 @@ class Line:
                                       path.arcn(*arcargs))
 
     def getVisiblePath(self):
+        """Find the subpath between the endpoints which isn't overshadowed by a blob of some kind"""
         p1path = self.p1.path()
         p2path = self.p2.path()
-        splitpoints = []
+        vispath = self.path()
         if p1path:
             as, bs = p1path.intersect(self.path())
-            splitpoints.append(bs[0])
-            ix, iy = p1path.at(as[0])
-            FeynDiagram.currentCanvas.fill(path.circle(ix, iy, 0.1), [color.rgb.green])
+            subpaths = vispath.split(bs[0])
+            if len(subpaths) == 1:
+                vispath = subpaths[0]
+            else:
+                vispath = subpaths[-1]
+            if FeynDiagram.options.VDEBUG:
+                ix, iy = p1path.at(as[0])
+                FeynDiagram.currentCanvas.fill(path.circle(ix, iy, 0.1), [color.rgb.green])
         if p2path: 
             as, bs = p2path.intersect(self.path())
-            splitpoints.append(bs[0])
-            ix, iy = p2path.at(as[0])
-            FeynDiagram.currentCanvas.fill(path.circle(ix, iy, 0.1), [color.rgb.blue])
-        ## Split path here and only deform the central section
-        subpaths = self.path().split(splitpoints)
-        #print subpaths
-        vispath = self.path()
-        if len(subpaths) == 1:
+            subpaths = vispath.split(bs[0])
             vispath = subpaths[0]
-        elif len(subpaths) == 3:
-            vispath = subpaths[1]
-        FeynDiagram.currentCanvas.stroke(vispath, [color.rgb.red])
+            if FeynDiagram.options.VDEBUG:
+                ix, iy = p2path.at(as[0])
+                FeynDiagram.currentCanvas.fill(path.circle(ix, iy, 0.1), [color.rgb.blue])
+        if FeynDiagram.options.VDEBUG:
+            FeynDiagram.currentCanvas.stroke(vispath, [color.rgb.red])
         return vispath
         
     def draw(self, canvas):
         path = self.getVisiblePath()
-        print self.styles
+        if FeynDiagram.options.DEBUG:
+            print self.styles
         canvas.stroke(path, self.styles)
 
     def to_xml(self):
