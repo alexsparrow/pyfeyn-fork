@@ -1,6 +1,5 @@
 from pyx import *
-import elementtree.ElementTree as xml
-import md5, math
+import math
 
 from points import Point
 
@@ -32,13 +31,6 @@ class Blob(Point):
             self.points = []
 
 
-    def toXML(self):
-        ele = xml.Element("blob",
-                          {"id" : "V%s" % md5.md5(str(self.xpos, self.ypos)).hexdigest(),
-                           "x" : str(self.xpos), "y" : str(self.ypos),
-                           "shape" : hasattr(self,"blobshape") and self.blobshape or "circle"})
-        #xml.dump(ele)
-        return ele
 
 
 ## Circle class (a kind of Blob)

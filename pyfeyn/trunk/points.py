@@ -1,7 +1,6 @@
 import pyx
-import elementtree.ElementTree as xml
-import md5 ## TODO: remove
 import math
+from diagrams import *
 
 
 ## Point base class
@@ -10,6 +9,9 @@ class Point:
     def __init__(self, xpos, ypos, blob = None):
         self.setpos(xpos, ypos)
         self.blob = blob
+        ## Add this to the current diagram automatically
+        #print "foo" + str(self) + str(xpos) + " " + str(ypos)
+        #FeynDiagram.currentDiagram.add(self)
 
     def draw(self, canvas):
         pass
@@ -61,10 +63,6 @@ class Point:
         self.xpos = float(xpos)
         self.ypos = float(ypos)
 
-    def to_xml(self):
-        ele = xml.Element("vertex",{"id":"V%s"%md5.md5(str((self.xpos,self.ypos))).hexdigest(),"x":str(self.xpos), "y":str(self.ypos)})
-        #xml.dump(ele)
-        return ele
 
 
 ## Decorated point class
@@ -110,23 +108,6 @@ class DecoratedPoint(Point):
         canvas.fill(self.path(), self.fillstyles)
         canvas.stroke(self.path(), self.strokestyles)
 
-    def to_xml(self):
-        ele = Point.to_xml(self)
-        fills = ""
-        for x in self.fillstyles:
-            if isinstance(x,pyx.color.rgb):
-               fills = fills + " #%02x%02x%02x"%(255*x.color["r"],
-                               255*x.color["g"],255*x.color["b"])
-        strokes = ""
-        for x in self.strokestyles:
-            if isinstance(x,pyx.color.rgb):
-               strokes = strokes + " #%02x%02x%02x"%(255*x.color["r"],
-                                   255*x.color["g"],255*x.color["b"])
-        s = "mark-shape:%s;mark-size:%s;fill-style:%s;line-style:%s;"%(
-                      MarkedName[self.marker],pyx.unit.tocm(self.radius),
-                      fills,strokes )
-        ele.attrib["style"] = s
-        return ele
 
 
 # A square marker

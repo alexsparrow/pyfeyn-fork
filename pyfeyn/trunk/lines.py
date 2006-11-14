@@ -1,6 +1,5 @@
 from pyx import *
-import math, md5
-import elementtree.ElementTree as xml
+import math
 
 from diagrams import FeynDiagram
 from points import Point
@@ -50,14 +49,14 @@ class Line:
             ## This is a simple straight line
             return path.path( path.moveto(*(self.p1.pos())),
                                   path.lineto(*(self.p2.pos())) )
-        elif (self.p1.x() == self.p2.x() and self.p1.y()==self.p2.y()):
+        elif (self.p1.x() == self.p2.x() and self.p1.y() == self.p2.y()):
             ## This is a tadpole-type loop and needs special care;
-            ## we shall assume that the arcthrupoint is meant to be
+            ## We shall assume that the arcthrupoint is meant to be
             ## the antipode of the basepoint
             arccenter = self.p1.midpoint(self.__arcthrupoint)
-            arcradius = self.p1.distance(self.__arcthrupoint) / 2.
+            arcradius = self.p1.distance(self.__arcthrupoint) / 2.0
             arcangle1 = arccenter.arg(self.p1)
-            arcangle2 = arccenter.arg(self.p1)+360
+            arcangle2 = arccenter.arg(self.p1) + 360
             arcargs = (arccenter.x(), arccenter.y(), arcradius, arcangle1, arcangle2)
             return path.path( path.arc(*arcargs) )
         else:
@@ -114,6 +113,8 @@ class Line:
         p1path = self.p1.path()
         p2path = self.p2.path()
         vispath = self.path()
+        if FeynDiagram.options.VDEBUG:
+            FeynDiagram.currentCanvas.stroke(vispath, [color.rgb.green])
         if p1path:
             as, bs = p1path.intersect(self.path())
             subpaths = vispath.split(bs[0])
@@ -141,16 +142,6 @@ class Line:
             print self.styles
         canvas.stroke(path, self.styles)
 
-    def to_xml(self):
-        attribs = {"id":"P%s"%md5.md5(str((self.p1.xpos,self.p1.ypos,self.p2.xpos,self.p2.ypos,self.__arcthrupoint and (self.__arcthrupoint.xpos,self.__arcthrupoint.ypos)))).hexdigest(),
-               "source":"V%s"%md5.md5(str((self.p1.xpos,self.p1.ypos))).hexdigest(),
-               "target":"V%s"%md5.md5(str((self.p2.xpos,self.p2.ypos))).hexdigest(),
-               "type":hasattr(self,"linetype") and self.linetype or "fermion"}
-        if self.bendamount:
-           attribs["bend"] = str(self.bendamount)
-        ele = xml.Element("propagator",attribs)
-        #xml.dump(ele)
-        return ele
 
 
 ## DecoratedLine base class
