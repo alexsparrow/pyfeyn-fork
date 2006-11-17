@@ -11,7 +11,7 @@ class Point:
         self.blob = blob
         ## Add this to the current diagram automatically
         #print "foo" + str(self) + str(xpos) + " " + str(ypos)
-        #FeynDiagram.currentDiagram.add(self)
+        FeynDiagram.currentDiagram.add(self)
 
     def draw(self, canvas):
         pass

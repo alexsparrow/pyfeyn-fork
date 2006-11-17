@@ -118,17 +118,26 @@ class Line:
         if p1path:
             as, bs = p1path.intersect(self.path())
             subpaths = vispath.split(bs[0])
-            if len(subpaths) == 1:
-                vispath = subpaths[0]
-            else:
+            if len(subpaths) > 1:
+                if FeynDiagram.options.DEBUG:
+                    print "Num subpaths 1 = %d" % len(subpaths)
+                subpaths.sort( lambda x, y : int(unit.tocm(x.arclen() - y.arclen())/math.fabs(unit.tocm(x.arclen() - y.arclen()))) )
                 vispath = subpaths[-1]
+                if FeynDiagram.options.VDEBUG:
+                    FeynDiagram.currentCanvas.stroke(subpaths[0], [color.rgb.blue])
             if FeynDiagram.options.VDEBUG:
                 ix, iy = p1path.at(as[0])
                 FeynDiagram.currentCanvas.fill(path.circle(ix, iy, 0.1), [color.rgb.green])
         if p2path: 
             as, bs = p2path.intersect(self.path())
             subpaths = vispath.split(bs[0])
-            vispath = subpaths[0]
+            if len(subpaths) > 1:
+                if FeynDiagram.options.DEBUG:
+                    print "Num subpaths 2 = %d" % len(subpaths)
+                subpaths.sort( lambda x, y : int(unit.tocm(x.arclen() - y.arclen())/math.fabs(unit.tocm(x.arclen() - y.arclen()))) )
+                vispath = subpaths[-1]
+                if FeynDiagram.options.VDEBUG:
+                    FeynDiagram.currentCanvas.stroke(subpaths[0], [color.rgb.red])
             if FeynDiagram.options.VDEBUG:
                 ix, iy = p2path.at(as[0])
                 FeynDiagram.currentCanvas.fill(path.circle(ix, iy, 0.1), [color.rgb.blue])
