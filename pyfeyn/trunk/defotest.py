@@ -3,10 +3,10 @@ from math import sin, cos
 
 c = canvas.canvas()
 
-mypath = path.curve(0.0*unit.cm, 0.0*unit.cm,
-                    2.0*unit.cm, 6.0*unit.cm,
-                    6.0*unit.cm, 6.0*unit.cm,
-                    8.0*unit.cm, 0.0*unit.cm)
+mypath = path.curve( 2.0*unit.cm, 2.0*unit.cm,
+                     4.0*unit.cm, 8.0*unit.cm,
+                     8.0*unit.cm, 8.0*unit.cm,
+                    10.0*unit.cm, 2.0*unit.cm)
 #mypath = path.line(0.0*unit.cm, 0.0*unit.cm, 10.0*unit.cm, 0.0*unit.cm,)
 
 #def deform:
