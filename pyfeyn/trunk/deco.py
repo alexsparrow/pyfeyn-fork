@@ -1,8 +1,7 @@
 import pyx
 import math
 
-
-##### Arrow decorator class
+## Arrow decorator class
 class Arrow(pyx.deco.deco, pyx.attr.attr):
     """Arrow for Feynman diagram lines"""
     def __init__(self, pos=0.5, size=6*pyx.unit.v_pt, angle=45, constriction=0.8):
@@ -21,7 +20,7 @@ class Arrow(pyx.deco.deco, pyx.attr.attr):
         return dp
 
 
-##### TeXLabel decorator class
+## TeXLabel decorator class
 class TeXLabel(pyx.deco.deco, pyx.attr.attr):
     """TeX label for Feynman diagram lines"""
     def __init__(self, text, pos=0.5, size=pyx.text.size.normalsize, displace=0.5, angle=0, textattrs=[]):
@@ -39,9 +38,11 @@ class TeXLabel(pyx.deco.deco, pyx.attr.attr):
                                          pyx.text.vshift.mathaxis] +
                                         [self.size] + self.textattrs)
         t = texrunner.text(x,y,self.text,self.textattrs)
-        t.linealign(self.displace, math.cos(self.angle*math.pi/180),
-                                   math.sin(self.angle*math.pi/180))
+        t.linealign(self.displace,
+                    math.cos(self.angle*math.pi/180),
+                    math.sin(self.angle*math.pi/180))
         dp.ornaments.insert(t)
+
 
 class FreeTeXLabel(pyx.deco.deco, pyx.attr.attr):
     """TeX label for Feynman diagram points"""
@@ -65,8 +66,7 @@ class FreeTeXLabel(pyx.deco.deco, pyx.attr.attr):
         dp.ornaments.insert(t)
 
 
-##### Coil decorator class #####
-
+## Coil decorator class
 class Coil(pyx.deformer.deformer):
     """Fancy version of the PyX default cycloid deformer, with an oscillating
     x-velocity and a 3D-look option.

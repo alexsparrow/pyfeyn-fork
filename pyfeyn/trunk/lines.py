@@ -3,7 +3,7 @@ import math
 
 from diagrams import FeynDiagram
 from points import Point
-from deco import Coil
+from deco import Coil, Arrow, TeXLabel
 
 
 ## Line base class
@@ -14,25 +14,85 @@ class Line:
         self.p1 = point1
         self.p2 = point2
         self.styles = []
-        self.__arcthrupoint = None
+        self.arcthrupoint = None
         self.bendamount = 0
         self.is3D = False
-    
-    def arrows(self):
-        ## TODO!
-        pass
+        self.arrows = []
+        self.labels = []
 
-    def arcThru(self, arcpoint):
-        self.__arcthrupoint = arcpoint
+    def addLabel(self, text, pos = 0.5, displace = 0.5, angle = 0, texlabel = None):
+        """Add a LaTeX label to this line, either via parameters or actually as
+        a TeXLable object."""
+        if FeynDiagram.options.DEBUG:
+            print "Adding label: " + text
+        if texlabel:
+            self.labels.append(texlabel)
+        else:
+            self.labels.append(TeXLabel(text=text, pos=pos, displace=displace, angle=angle))
+        if FeynDiagram.options.DEBUG:
+            print "Labels = " + str(self.labels)
+        return self
+            
+    def removeLabels(self):
+        self.labels = []
+        return self
+
+    ####
+
+    def setArrows(self, arrows):
+        ## TODO Check that the arg is a list
+        self.arrows = []
+        for i in arrows:
+            if i.__class__ == "deco.Arrow":
+                self.arrows.append(i)
+            else:
+                self.arrows.append(Arrow(pos = i))
+        return self
+
+    def addArrow(self, position = 0.5, arrow = None):
+        """Add an arrow to the line at the specified position, which is a number
+        between 0 and 1, representing the fraction along the line at which the
+        arrow should be placed. The default arrow style can be overridden by
+        explicitly supplying an arrow object as the 'arrow' argument, in which
+        case the position argument will be ignored."""
+        if arrow:
+            self.arrows.append(arrow)
+        else:
+            self.arrows.append(Arrow(pos=position))
+        return self
+
+    def removeArrows(self):
+        """Remove all arrows from this line."""
+        self.arrows = []
+        return self
+
+    def arcThru(self, arcpoint = None, pos = None):
+        """Set the point through which this line will arc. Either pass a Point
+        or set x, y as floats."""
+        if arcpoint != None:
+            self.arcthrupoint = arcpoint
+        elif pos != None and len(pos) == 2:
+            self.arcthrupoint = Point(*pos)
+        else:
+            raise Exception("Tried to set an arcpoint with invalid arguments")
         self.bendamount = None
         return self
 
+    def straighten(self):
+        """Make this line a straight line between start and end."""
+        self.arcthrupoint = None
+        self.bendamount = None
+
     def bend(self, amount):
+        """Bend the line by """
         middle = self.p1.midpoint(self.p2)
-        normal = (middle.y()-self.p1.y(),self.p1.x()-middle.x())
-        arcpoint = Point(middle.x()+amount*normal[0],
-                         middle.y()+amount*normal[1])
-        self.__arcthrupoint = arcpoint
+        normal = (middle.y() - self.p1.y(), self.p1.x() - middle.x())
+        arcpoint = Point(middle.x() + amount * normal[0],
+                         middle.y() + amount * normal[1])
+        if FeynDiagram.options.VDEBUG:
+            FeynDiagram.currentCanvas.stroke(
+                path.line(middle.x(), middle.y(), arcpoint.x(), arcpoint.y()) )
+        self.arcthrupoint = arcpoint
         self.bendamount = amount
         return self
     
@@ -45,7 +105,7 @@ class Line:
         return self
 
     def path(self):
-        if self.__arcthrupoint == None:
+        if self.arcthrupoint == None:
             ## This is a simple straight line
             return path.path( path.moveto(*(self.p1.pos())),
                               path.lineto(*(self.p2.pos())) )
@@ -53,8 +113,8 @@ class Line:
             ## This is a tadpole-type loop and needs special care;
             ## We shall assume that the arcthrupoint is meant to be
             ## the antipode of the basepoint
-            arccenter = self.p1.midpoint(self.__arcthrupoint)
-            arcradius = self.p1.distance(self.__arcthrupoint) / 2.0
+            arccenter = self.p1.midpoint(self.arcthrupoint)
+            arcradius = self.p1.distance(self.arcthrupoint) / 2.0
             
             ## TODO Why does a circle work and an arc doesn't?
             cargs = (arccenter.x(), arccenter.y(), arcradius)
@@ -75,9 +135,9 @@ class Line:
 
         else:
             ## Work out line gradients
-            try: n13 = (self.p1.y() - self.__arcthrupoint.y()) / (self.p1.x() - self.__arcthrupoint.x())
+            try: n13 = (self.p1.y() - self.arcthrupoint.y()) / (self.p1.x() - self.arcthrupoint.x())
             except ZeroDivisionError: n13 = 1e100
-            try: n23 = (self.p2.y() - self.__arcthrupoint.y()) / (self.p2.x() - self.__arcthrupoint.x())
+            try: n23 = (self.p2.y() - self.arcthrupoint.y()) / (self.p2.x() - self.arcthrupoint.x())
             except ZeroDivisionError: n23 = 1e100
 
             ## If gradients match,
@@ -91,8 +151,8 @@ class Line:
             except ZeroDivisionError: m13 = 1e100
             try: m23 = - 1.0 / n23
             except ZeroDivisionError: m23 = 1e100
-            mid13 = self.p1.midpoint(self.__arcthrupoint)
-            mid23 = self.p2.midpoint(self.__arcthrupoint)
+            mid13 = self.p1.midpoint(self.arcthrupoint)
+            mid23 = self.p2.midpoint(self.arcthrupoint)
             
             ## Line y-intercepts
             c13 = mid13.y() - m13 * mid13.x()
@@ -104,15 +164,15 @@ class Line:
             arccenter = Point(xcenter, ycenter)
 
             ## Get the angles required for drawing the arc
-            arcradius = arccenter.distance(self.__arcthrupoint)
+            arcradius = arccenter.distance(self.arcthrupoint)
             arcangle1 = arccenter.arg(self.p1)
             arcangle2 = arccenter.arg(self.p2)
-            arcangle3 = arccenter.arg(self.__arcthrupoint)
+            arcangle3 = arccenter.arg(self.arcthrupoint)
             arcargs = (arccenter.x(), arccenter.y(), arcradius, arcangle1, arcangle2)
 
             ## Calculate cross product to determine direction of arc
             vec12 = [self.p2.x()-self.p1.x(), self.p2.y()-self.p1.y(), 0.0]
-            vec13 = [self.__arcthrupoint.x()-self.p1.x(), self.__arcthrupoint.y()-self.p1.y(), 0.0]
+            vec13 = [self.arcthrupoint.x()-self.p1.x(), self.arcthrupoint.y()-self.p1.y(), 0.0]
             crossproductZcoord = vec12[0]*vec13[1] - vec12[1]*vec13[0]
 
             if crossproductZcoord < 0:
@@ -129,7 +189,6 @@ class Line:
         vispath = self.path()
         if FeynDiagram.options.VDEBUG:
             FeynDiagram.currentCanvas.stroke(vispath, [color.rgb.green])
-        #print str(self.__class__)
         if p1path:
             as, bs = p1path.intersect(vispath)
             for b in bs:
@@ -167,9 +226,10 @@ class Line:
         
     def draw(self, canvas):
         path = self.getVisiblePath()
+        styles = self.styles + self.arrows + self.labels
         if FeynDiagram.options.DEBUG:
-            print "Drawing " + str(__class__) + " with styles = " + str(self.styles)
-        canvas.stroke(path, self.styles)
+            print "Drawing " + str(self.__class__) + " with styles = " + str(styles)
+        canvas.stroke(path, styles)
 
 
 
@@ -191,22 +251,27 @@ class DecoratedLine(Line):
 
 class Gluon(DecoratedLine):
     """A line with a cycloid deformation"""
-#    p1 # inherited
-#    p2 # inherited
-#    styles = [] # inherited
-#    __arcthrupoint = None # inherited
-#    bendamount = 0 # inherited
-#    is3D = False # inherited
-    arcradius = 0.25
-    elasticity = 1.38268
-    linetype = "gluon"
+    def __init__(self, point1, point2):
+        self.p1 = point1
+        self.p2 = point2
+        self.styles = []
+        self.arcthrupoint = None
+        self.bendamount = 0
+        self.is3D = False
+        self.arrows = []
+        self.labels = []
+        self.arcradius = 0.25
+        self.elasticity = 1.38268
+        self.linetype = "gluon"
 
     def tension(self, value):
         self.elasticity = value
         return self
 
     def draw(self, canvas):
-        self.getVisiblePath()
+        styles = self.styles + self.arrows + self.labels
+        if FeynDiagram.options.DEBUG:
+            print "Drawing " + str(self.__class__) + " with styles = " + str(styles)
         needwindings = self.elasticity * \
                        unit.tocm(self.getVisiblePath().arclen()) / self.arcradius
         ## Get the whole number of windings and make sure that it's odd so we
@@ -215,29 +280,36 @@ class Gluon(DecoratedLine):
         if intwindings % 2 == 0:
             intwindings -= 1
         deficit = needwindings-intwindings
-        canvas.stroke(self.getVisiblePath(), self.styles +
-             [ deformer.cycloid(self.arcradius, intwindings,
-               skipfirst=0.0*deficit*self.arcradius,
-               skiplast=0.0*deficit*self.arcradius) ])
 
+        canvas.stroke(self.getVisiblePath(), styles +
+                      [ deformer.cycloid(self.arcradius, intwindings,
+                                         skipfirst=0.0*deficit*self.arcradius,
+                                         skiplast=0.0*deficit*self.arcradius) ])
+        
 
 
 class Photon(DecoratedLine):
     """A line with a sinoid deformation"""
-#    p1 # inherited
-#    p2 # inherited
-#    styles = [] # inherited
-#    __arcthrupoint = None # inherited
-#    bendamount = 0 # inherited
-#    is3D = False # inherited
-    arcradius = 0.25
-    linetype = "photon"
+    def __init__(self, point1, point2):
+        self.p1 = point1
+        self.p2 = point2
+        self.styles = []
+        self.arcthrupoint = None
+        self.bendamount = 0
+        self.is3D = False
+        self.arrows = []
+        self.labels = []
+        self.arcradius = 0.25
+        self.linetype = "photon"
 
     def draw(self, canvas):
         path = self.getVisiblePath()
-        canvas.stroke(path, self.styles +
-                      [deformer.cycloid(Photon.arcradius,
-                                        int(1.5 * unit.tocm(path.arclen()) / Photon.arcradius),
+        styles = self.styles + self.arrows + self.labels
+        if FeynDiagram.options.DEBUG:
+            print "Drawing " + str(self.__class__) + " with styles = " + str(styles)
+        canvas.stroke(path, styles +
+                      [deformer.cycloid(self.arcradius,
+                                        int(1.5 * unit.tocm(path.arclen()) / self.arcradius),
                                         skipfirst=0, skiplast=0, turnangle=0) ])
 
 
