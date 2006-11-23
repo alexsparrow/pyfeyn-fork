@@ -68,7 +68,8 @@ class Point:
 ## Decorated point class
 class DecoratedPoint(Point):
     "Class for a point drawn with a marker"
-    def __init__(self, xpos, ypos, mark=None, size=4*pyx.unit.t_pt,
+    def __init__(self, xpos, ypos, mark=None, blob = None,
+                 size=4*pyx.unit.t_pt,
                  fillstyles=[pyx.color.rgb.black],
                  strokestyles=[pyx.color.rgb.black]):
         self.setpos(xpos, ypos)
@@ -78,11 +79,15 @@ class DecoratedPoint(Point):
         else:
            self.marker = NamedMark["square"]
            self.radius = 0 
+        self.blob = blob
         self.fillstyles = [x for x in fillstyles] # lists are mutable --
         self.strokestyles = [x for x in strokestyles] # hence make a copy!
 
     def path(self):
-        return self.marker(self.xpos, self.ypos, self.radius).path()
+        if self.blob:
+            return self.blob.path()
+        else:
+            return self.marker(self.xpos, self.ypos, self.radius).path()
 
     def mark(self, mark, size=None):
         self.marker = mark
