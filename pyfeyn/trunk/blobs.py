@@ -1,11 +1,13 @@
 from pyx import *
 import math
 
+from diagrams import FeynDiagram
 from points import Point
+from utils import Visible
 
 
 ## Blob base class
-class Blob(Point):
+class Blob(Point, Visible):
     "Base class for all blob-like objects in Feynman diagrams"
     def __init__(self):
         raise Exception("Blobs are an abstract base class: you can't make them!")
@@ -39,16 +41,19 @@ class Circle(Blob):
     blobshape = "circle"
 
     def __init__(self, xpos, ypos, radius,
-                 fillstyles = [color.rgb.white], strokestyles = [color.rgb.black],
+                 fill = [color.rgb.white],
+                 stroke = [color.rgb.black],
                  points = None):
         self.xpos = xpos
         self.ypos = ypos
         self.radius = float(radius)
         self.setPoints(points)
-        self.fillstyles = fillstyles
-        self.strokestyles = strokestyles
+        self.fillstyles = fill
+        self.strokestyles = stroke
         self.trafos = []
-
+        ## Add this to the current diagram automatically
+        FeynDiagram.currentDiagram.add(self)
+        
     def path(self):
         return path.circle(self.xpos, self.ypos, self.radius)
 
@@ -64,7 +69,8 @@ class Ellipse(Blob):
     blobshape = "ellipse"
 
     def __init__(self, xpos, ypos, xradius, yradius=None,
-                 fillstyles = [color.rgb.white], strokestyles = [color.rgb.black],
+                 fill = [color.rgb.white],
+                 stroke = [color.rgb.black],
                  points = None):
         self.xpos = xpos
         self.ypos = ypos
@@ -74,10 +80,11 @@ class Ellipse(Blob):
         else:
            self.yrad = self.xrad
         self.setPoints(points)
-        self.fillstyles = fillstyles
-        self.strokestyles = strokestyles
+        self.fillstyles = fill
+        self.strokestyles = stroke
         self.trafos = []
-
+        ## Add this to the current diagram automatically
+        FeynDiagram.currentDiagram.add(self)
 
     def path(self):
         ucircle = path.circle(self.xpos, self.ypos, 1.0)
@@ -91,5 +98,4 @@ class Ellipse(Blob):
 
 
 ## A dictionary to map feynML blob shape choices to blob classes
-## TODO: move XML stuff to an external class?
-NamedBlob = {"circle" : Circle, "ellipse" : Ellipse}
+NamedBlob = { "circle" : Circle, "ellipse" : Ellipse } 

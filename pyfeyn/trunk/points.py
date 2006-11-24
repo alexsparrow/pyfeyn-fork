@@ -1,7 +1,9 @@
-import pyx
+from pyx import *
+from copy import *
 import math
-from diagrams import *
 
+from diagrams import FeynDiagram
+from utils import Visible
 
 ## Point base class
 class Point:
@@ -9,9 +11,6 @@ class Point:
     def __init__(self, xpos, ypos, blob = None):
         self.setpos(xpos, ypos)
         self.blob = blob
-        ## Add this to the current diagram automatically
-        #print "foo" + str(self) + str(xpos) + " " + str(ypos)
-        FeynDiagram.currentDiagram.add(self)
 
     def draw(self, canvas):
         pass
@@ -66,22 +65,25 @@ class Point:
 
 
 ## Decorated point class
-class DecoratedPoint(Point):
+class DecoratedPoint(Point, Visible):
     "Class for a point drawn with a marker"
-    def __init__(self, xpos, ypos, mark=None, blob = None,
-                 size=4*pyx.unit.t_pt,
-                 fillstyles=[pyx.color.rgb.black],
-                 strokestyles=[pyx.color.rgb.black]):
+    def __init__(self, xpos, ypos, mark = None,
+                 size = 0.1,
+                 fill = [color.rgb.black],
+                 stroke = [color.rgb.black],
+                 blob = None):
         self.setpos(xpos, ypos)
-        if mark is not None:
-           self.marker = mark
+        if mark != None:
+           self.marker = NamedMark[mark]
            self.radius = size
         else:
            self.marker = NamedMark["square"]
            self.radius = 0 
         self.blob = blob
-        self.fillstyles = [x for x in fillstyles] # lists are mutable --
-        self.strokestyles = [x for x in strokestyles] # hence make a copy!
+        self.fillstyles = copy( fill ) # lists are mutable --
+        self.strokestyles = copy( stroke ) # hence make a copy!
+        ## Add this to the current diagram automatically
+        FeynDiagram.currentDiagram.add(self)
 
     def path(self):
         if self.blob:
@@ -94,18 +96,18 @@ class DecoratedPoint(Point):
         if size is not None:
            self.radius = size
         if size is None and self.radius == 0: # change shape of a true point?
-           self.radius = 4*pyx.unit.t_pt # probably want to use default size
+           self.radius = 4*unit.t_pt # probably want to use default size
         return self
 
-    def size(self,size):
+    def size(self, size):
         self.radius = size
         return self
 
-    def fillstyle(self,style):
+    def fillstyle(self, style):
         self.fillstyles.append(style)
         return self
 
-    def strokestyle(self,style):
+    def strokestyle(self, style):
         self.strokestyles.append(style)
         return self
 
@@ -114,13 +116,15 @@ class DecoratedPoint(Point):
         canvas.stroke(self.path(), self.strokestyles)
 
 
+class Vertex(DecoratedPoint):
+    """Vertex is an alias for DecoratedPoint"""
+    pass
+
 
 # A square marker
-_square = lambda x,y,r:pyx.box.rect(x-r,y-r,2*r,2*r)
+_square = lambda x, y, r : box.rect(x-r, y-r, 2*r, 2*r)
 
 # A dictionary mapping feynML "mark" choices to marker classes
-NamedMark = {"square": _square, 
-             "circle": pyx.path.circle}
-MarkedName = {_square: "square",
-              pyx.path.circle: "circle"}
+NamedMark = {"square": _square, "circle": path.circle}
+MarkedName = {_square: "square", path.circle : "circle"}
  

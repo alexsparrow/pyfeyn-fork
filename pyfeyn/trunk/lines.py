@@ -4,10 +4,11 @@ import math
 from diagrams import FeynDiagram
 from points import Point
 from deco import Coil, Arrow, TeXLabel
+from utils import Visible
 
 
 ## Line base class
-class Line:
+class Line(Visible):
     "Base class for all objects which connect points in Feynman diagrams"
     
     def __init__(self, point1, point2):
@@ -19,6 +20,8 @@ class Line:
         self.is3D = False
         self.arrows = []
         self.labels = []
+        ## Add this to the current diagram automatically
+        FeynDiagram.currentDiagram.add(self)
 
     def addLabel(self, text, pos = 0.5, displace = 0.5, angle = 0, texlabel = None):
         """Add a LaTeX label to this line, either via parameters or actually as
@@ -232,6 +235,9 @@ class Line:
         canvas.stroke(path, styles)
 
 
+class Fermion(Line):
+    pass
+
 
 ## DecoratedLine base class
 class DecoratedLine(Line):
@@ -263,6 +269,8 @@ class Gluon(DecoratedLine):
         self.arcradius = 0.25
         self.elasticity = 1.38268
         self.linetype = "gluon"
+        ## Add this to the current diagram automatically
+        FeynDiagram.currentDiagram.add(self)
 
     def tension(self, value):
         self.elasticity = value
@@ -301,7 +309,9 @@ class Photon(DecoratedLine):
         self.labels = []
         self.arcradius = 0.25
         self.linetype = "photon"
-
+        ## Add this to the current diagram automatically
+        FeynDiagram.currentDiagram.add(self)
+        
     def draw(self, canvas):
         path = self.getVisiblePath()
         styles = self.styles + self.arrows + self.labels
@@ -315,6 +325,4 @@ class Photon(DecoratedLine):
 
 
 # A dictionary for mapping FeynML line types to line classes
-NamedLine = {"photon":Photon,"gluon":Gluon,"fermion":DecoratedLine}
-
- 
+NamedLine = {"photon" : Photon, "gluon" : Gluon, "fermion" : DecoratedLine}

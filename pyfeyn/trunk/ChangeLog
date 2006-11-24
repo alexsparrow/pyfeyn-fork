@@ -1,5 +1,9 @@
 2006-11-24  Andy Buckley  <andy@insectnation.org>
 
+	* Added Fermion and Vertex as aliases to Line and DecoratedPoint.
+
+	* Made visible objects add themselves to the current diagram.
+
 	* Made fd.draw() take a filename argument: PyX canvases are now 
 	hidden from the user.
 	

@@ -5,7 +5,7 @@ from optparse import OptionParser
 ## Version check
 majorversionstr = re.sub(r"(\d+\.\d+).*", r"\1", pyx.version.version)
 if float(majorversionstr) < 0.9:
-    print "Warning: PyFeyn may not work with PyX versions older than 0.9 !"
+    print "Warning: PyFeyn may not work with PyX versions older than 0.9!"
 
 ## TeX stuff
 pyx.text.defaulttexrunner.set(mode="latex")
@@ -25,25 +25,8 @@ parser.add_option("-D", "--debug", dest="DEBUG", action = "store_true", default 
 (FeynDiagram.options, args) = parser.parse_args()
 
 ## Imports
-from utils import sign
-#
-from points import Point
-from points import DecoratedPoint
-from points import NamedMark
-#
-from blobs import Blob
-from blobs import Circle
-from blobs import Ellipse
-from blobs import NamedBlob
-#
-from lines import Line
-from lines import DecoratedLine
-from lines import Gluon
-from lines import Photon
-from lines import NamedLine
-#
-from deco import Arrow
-from deco import TeXLabel
-from deco import FreeTeXLabel
-from deco import Coil
-
+from utils import *
+from points import *
+from blobs import *
+from lines import *
+from deco import *

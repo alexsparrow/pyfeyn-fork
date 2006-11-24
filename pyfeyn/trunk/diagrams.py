@@ -15,16 +15,22 @@ class FeynDiagram:
 
     def add(self, *objs):
         for obj in objs:
-            #print "Adding " + str(obj)
-            self.__objs.append( obj )
+            if FeynDiagram.options.DEBUG:
+                print "#objs = %d" % len(self.__objs)
+            self.__objs.append(obj)
 
     def draw(self, file):
+        if FeynDiagram.options.DEBUG:
+            print "Final #objs = %d" % len(self.__objs)
         if FeynDiagram.options.VDEBUG:
             print "Running in visual debug mode"
         ## TODO: order of drawing...
-        for obj in self.__objs:
+        drawingobjs = self.__objs
+        for obj in drawingobjs:
             obj.draw(FeynDiagram.currentCanvas)
         if re.search(r".*\.pdf", file):
             FeynDiagram.currentCanvas.writePDFfile(file)
         elif re.search(r".*\.eps", file):
             FeynDiagram.currentCanvas.writeEPSfile(file)
+
+
