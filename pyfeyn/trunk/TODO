@@ -1,0 +1,27 @@
+PyFeyn TODO
+-----------
+
+* "Visible path" between two blobs is not ideal when specifying 
+  length fractions between different-sized blobs: an arrow or label
+  at default pos = 0.5 won't actually be displayed centrally. Fix this.
+
+* Add momentum and helicity arrows via parallel deformer.
+
+* Add label interface to points.
+
+* Make custom gluon and photon deformers with 3D option.
+
+* Do hatched patterns better than PyX (or fix PyX's implementation).
+
+* Make interface consistent and add all docstrings, __init__.py's etc.
+
+* Reinstate HepML functionality.
+
+* Improve DecoratedPoint constructor. Maybe subclass as Vertex?
+
+* Auto-adding to the diagram? Is it possible to get orderings right?
+  Probably, if drawn classes automatically get a numeric ID (or layer ID)
+  on construction, which can be overridden if so wished.
+
+* Add SUSY particles (draw an extra fermion line through bosons). Maybe an
+  isSusy(bool) method...

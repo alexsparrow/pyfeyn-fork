@@ -1,35 +1,80 @@
+2006-11-24  Andy Buckley  <andy@insectnation.org>
+
+	* Made fd.draw() take a filename argument: PyX canvases are now 
+	hidden from the user.
+	
+	* Added get/set/add methods to Lines for labels and arrows, so
+	that the Element.style([...]) methods don't need to be exposed to
+	the user.
+
+	* Fixed tadpole loop "visible path" interpretation: more complex
+	than the usual case because the line gets split twice.
+
+2006-10-13  Andy Buckley  <andy@insectnation.org>
+
+	* Added command line option handling as class property of
+	FeynDiagram. -D enables text-based debugging statements, -V
+	enables visual debugging. Accessed via FeynDiagram.options.
+	
+	* Made it possible for Blobs to be attached to Points.
+	
+	* Added	"visible line" functionality, so that lines whose ends are
+	attached to Blobs will only be deformed and drawn for the portion 
+	outside the blobs.
+	
+2006-09-25  Andy Buckley  <andy@insectnation.org>
+
+	* Moved XML functionality out of classes and into an external
+	module. Currently broken.
+	
 2006-06-30  Georg von Hippel <gmv22@cantab.net>, <vonhippg@uregina.ca>
 
 	* Added rudimentary style support to feynML read/write functions
+	
         * Added label support to feynML read/write functions
+	
         * Added a new class for labels attached to points rather than lines
+	
 	* Improved interface of DecoratedPoint class
 
 2006-06-29  Georg von Hippel <gmv22@cantab.net>, <vonhippg@uregina.ca>
 
 	* Improved feynML Schema to look more like proposed
+	
 	* Corresponding changes to feynML code
+	
 	* Added bend method to lines (autmoatically finds an arcpoint)
 
 2006-06-28  Georg von Hippel <gmv22@cantab.net>, <vonhippg@uregina.ca>
 
 	* Fixed some divide-by-zero bugs in points.py
+	
 	* Added feynML as a W3C XML Schema
+	
 	* Added feynML reader support module
+	
 	* Added rudimentary feynML writing support to feyn submodules
 
 2006-06-22  Georg von Hippel <gmv22@cantab.net>, <vonhippg@uregina.ca>
 
         * Fixed Arrow code to work with PyX 0.9
+	
         * Split code into submodules for convenience
+	
 	* Removed StraightLine class, moved trig. code into Point class
+	
         * Added hepnames module
+	
         * Added Photon line class
+	
 	* Added Support for tadpole-type loops into Line class
+	
 	* Added TexLabel decorator
+	
 	* Added DecoratedPoint class
 
 2005-09-23  Andy Buckley  <andy@insectnation.org>
 
+        * Start of ChangeLog. Basic functionality aready exists.
+	
 	* Added Arrow class, courtest of Andre Wobst.
-
