@@ -1,3 +1,17 @@
+2006-12-20  Andy Buckley  <andy@insectnation.org>
+
+        * Various other interface hacks... too many changes this evening
+	to remember them all!
+	
+	* Changed bend() to use a displacement which is always on the left
+	of the line, as viewed from start to end.
+
+	* Rewrote labels as the Label class, which computes its offsets
+	using the normal to the curve at that point.
+
+	* Neatened up the point, line and blob interfaces a lot with
+	additions of get/set/add prefixes in lots of places.
+
 2006-11-24  Andy Buckley  <andy@insectnation.org>
 
 	* Added Fermion and Vertex as aliases to Line and DecoratedPoint.

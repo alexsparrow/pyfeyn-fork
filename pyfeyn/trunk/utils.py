@@ -9,5 +9,11 @@ def sign(x):
 
 
 class Visible:
-    def isVisible():
+    def isVisible(self):
         return True
+
+    def getPath(self):
+        return None
+
+    def getVisiblePath(self):
+        return self.getPath()

@@ -1,27 +1,30 @@
 PyFeyn TODO
 -----------
 
-* "Visible path" between two blobs is not ideal when specifying 
-  length fractions between different-sized blobs: an arrow or label
-  at default pos = 0.5 won't actually be displayed centrally. Fix this.
+ * Allow setting of the straight components of decorated lines.
 
-* Add momentum and helicity arrows via parallel deformer.
+ * Allow the start and end phases of deformed lines to be specified.
 
-* Add label interface to points.
+ * Every diagram element should know its parent diagram.
 
-* Make custom gluon and photon deformers with 3D option.
+ * Allow control of deformed line nominal frequencies and amplitudes.
 
-* Do hatched patterns better than PyX (or fix PyX's implementation).
+ * Include widths and deformation amplitudes of lines in calculating the
+   label displacement.
 
-* Make interface consistent and add all docstrings, __init__.py's etc.
+ * Add momentum and helicity arrows (via parallel deformer?).
 
-* Reinstate HepML functionality.
+ * Add label interface to points.
 
-* Improve DecoratedPoint constructor. Maybe subclass as Vertex?
+ * Make custom gluon and photon deformers with 3D option.
 
-* Auto-adding to the diagram? Is it possible to get orderings right?
-  Probably, if drawn classes automatically get a numeric ID (or layer ID)
-  on construction, which can be overridden if so wished.
+ * Do hatched patterns better than PyX (or fix PyX's implementation).
 
-* Add SUSY particles (draw an extra fermion line through bosons). Maybe an
-  isSusy(bool) method...
+ * Make interface consistent and add all docstrings, __init__.py's etc.
+
+ * Reinstate HepML functionality.
+
+ * Add specific layer choice when making/adding objects.
+
+ * Add SUSY particles (draw an extra fermion line through bosons). Maybe an
+   isSusy(bool) method... Also, a graviton (interleaving vector boson line).

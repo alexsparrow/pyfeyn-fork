@@ -1,5 +1,7 @@
-import pyx
+from pyx import *
 import math
+from feyn import *
+
 
 ## Arrow decorator class
 class Arrow(pyx.deco.deco, pyx.attr.attr):
@@ -20,6 +22,70 @@ class Arrow(pyx.deco.deco, pyx.attr.attr):
         return dp
 
 
+## Label
+class Label(Visible):
+    """Label for Feynman diagram lines"""
+    def __init__(self, line, text, pos=0.5, displace=0.3, angle=0):
+        self.pos = pos
+        self.size = pyx.text.size.normalsize
+        self.displace = displace
+        self.angle = angle
+        self.text = text
+        self.line = line
+        self.textattrs = []
+
+    def getLine(self):
+        return self.line
+
+    def setLine(self, line):
+        self.line = line
+        return self
+
+    def draw(self, canvas):
+        p = self.line.getPath()
+        #x, y = self.line.fracPoint(self.pos).getXY()
+        posparam = p.begin() + self.pos * p.arclen()
+        x, y = p.at(posparam)
+
+        ## Calculate the displacement from the line
+        displacement = self.displace  # TODO: length
+        intrinsicwidth = 0.10 # TODO: length
+        if hasattr(self.line, "arcradius"):
+            intrinsicwidth = self.line.arcradius
+        if displacement > 0: displacement += intrinsicwidth  # TODO: length
+        if displacement < 0: displacement -= intrinsicwidth  # TODO: length
+        if FeynDiagram.options.DEBUG:
+            print "Displacement = ", displacement
+
+        ## Position the label on the right hand side of lines
+        tangent = p.tangent(posparam, abs(displacement))
+        normal = tangent.transformed(pyx.trafo.rotate(90, x, y))
+        nx, ny = normal.atend()
+        nxcm, nycm = unit.tocm(nx - x), unit.tocm(ny - y)
+        vx, vy = p.atbegin()
+        vxcm, vycm = unit.tocm(x - vx), unit.tocm(y - vy)
+
+        ## If the label is on the left, flip it by 180 degrees
+        if (vxcm * nycm - vycm * nxcm) > 0:
+            normal = normal.transformed(pyx.trafo.rotate(180, x, y))
+            nx, ny = normal.atend()
+        if displacement < 0:
+            normal = normal.transformed(pyx.trafo.rotate(180, x, y))        
+            nx, ny = normal.atend()
+        if FeynDiagram.options.VDEBUG:
+            FeynDiagram.currentCanvas.stroke(normal)
+
+        ## Displace the label by this normal vector
+        x, y = nx, ny
+
+        textattrs = pyx.attr.mergeattrs([pyx.text.halign.center, pyx.text.vshift.mathaxis, self.size] + self.textattrs)
+        t = text.defaulttexrunner.text(x, y, self.text, textattrs)
+        #t.linealign(self.displace,
+        #            math.cos(self.angle * math.pi/180),
+        #            math.sin(self.angle * math.pi/180))
+        canvas.insert(t)
+
+
 ## TeXLabel decorator class
 class TeXLabel(pyx.deco.deco, pyx.attr.attr):
     """TeX label for Feynman diagram lines"""
@@ -33,14 +99,14 @@ class TeXLabel(pyx.deco.deco, pyx.attr.attr):
 
     def decorate(self, dp, texrunner):
         dp.ensurenormpath()
-        x, y = dp.path.at(dp.path.begin() + self.pos*dp.path.arclen())
+        x, y = dp.path.at(dp.path.begin() + self.pos * dp.path.arclen())
         textattrs = pyx.attr.mergeattrs([pyx.text.halign.center,
                                          pyx.text.vshift.mathaxis] +
                                         [self.size] + self.textattrs)
-        t = texrunner.text(x,y,self.text,self.textattrs)
+        t = texrunner.text(x, y, self.text, self.textattrs)
         t.linealign(self.displace,
-                    math.cos(self.angle*math.pi/180),
-                    math.sin(self.angle*math.pi/180))
+                    math.cos(self.angle * math.pi/180),
+                    math.sin(self.angle * math.pi/180))
         dp.ornaments.insert(t)
 
 
