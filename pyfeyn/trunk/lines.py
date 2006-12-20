@@ -339,7 +339,7 @@ class Gluon(DecoratedLine):
 
         sign = 1
         if self.inverted: sign = -1        
-        defo = deformer.cycloid(self.arcradius, intwindings, skipfirst = 0.0, skiplast = 0.0, sign = sign)
+        defo = deformer.cycloid(self.arcradius, intwindings, curvesperhloop=10, skipfirst = 0.0, skiplast = 0.0, sign = sign)
         return defo.deform(self.getVisiblePath())
 
 
@@ -382,7 +382,7 @@ class Photon(DecoratedLine):
 
         sign = 1
         if self.inverted: sign = -1 
-        defo = deformer.cycloid(self.arcradius, intwindings, skipfirst=0.0, skiplast=0.0, turnangle=0, sign=sign)
+        defo = deformer.cycloid(self.arcradius, intwindings, curvesperhloop=5, skipfirst=0.0, skiplast=0.0, turnangle=0, sign=sign)
         return defo.deform(self.getVisiblePath())
 
         

@@ -1,5 +1,10 @@
 2006-12-20  Andy Buckley  <andy@insectnation.org>
 
+	* Changed number of curves per half-loop to get nicer gluons and
+	photons.
+
+	* Added test1 program (e+ e- -> q q~).
+	
         * Various other interface hacks... too many changes this evening
 	to remember them all!
 	

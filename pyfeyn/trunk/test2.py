@@ -38,4 +38,4 @@ l2.addLabel(r"\Pphoton")
 l5.addLabel(r"$\Pgluon_1$")
 
 print "Committing to the canvas and file..."
-fd.draw("fdtest.pdf")
+fd.draw("pyfeyn-test2.pdf")
