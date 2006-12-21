@@ -3,6 +3,8 @@ PyFeyn TODO
 
  * Allow setting of the straight components of decorated lines.
 
+ * Allow single lines to be deviated sharply (split) round a vertex?
+
  * Allow the start and end phases of deformed lines to be specified.
 
  * Every diagram element should know its parent diagram.

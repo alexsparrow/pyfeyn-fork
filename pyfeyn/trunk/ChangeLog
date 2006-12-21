@@ -1,3 +1,12 @@
+2006-12-21  Andy Buckley  <andy@insectnation.org>
+
+	* Added logo.
+
+	* Added 4x scaling to get output resolution more reasonable.
+
+	* Removed explicit units dependencies in the coil deformer and
+	label displacement code.
+
 2006-12-20  Andy Buckley  <andy@insectnation.org>
 
 	* Changed number of curves per half-loop to get nicer gluons and

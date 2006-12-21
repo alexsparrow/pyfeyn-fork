@@ -3,7 +3,7 @@ import math
 
 from diagrams import FeynDiagram
 from points import Point
-from deco import Coil, Arrow, Label
+from deco import Arrow, Label
 from utils import Visible
 
 
@@ -116,7 +116,7 @@ class Line(Visible):
         arcpoint = Point(middle.x() + amount * nx, middle.y() + amount * ny)
         if FeynDiagram.options.VDEBUG:
             FeynDiagram.currentCanvas.stroke(
-                path.line(middle.x(), middle.y(), arcpoint.x(), arcpoint.y()) )
+                path.line(middle.x(), middle.y(), arcpoint.x(), arcpoint.y()), [color.rgb.blue] )
         self.arcThru(arcpoint)
         self.bendamount = amount
         return self
@@ -309,7 +309,7 @@ class Gluon(DecoratedLine):
         self.is3D = False
         self.arrows = []
         self.labels = []
-        self.arcradius = 0.25
+        self.arcradius = unit.length(0.25)
         self.elasticity = 1.3
         self.inverted = False
         self.linetype = "gluon"
@@ -322,14 +322,18 @@ class Gluon(DecoratedLine):
         return self
 
 
-    def tension(self, value):
+    def getTension(self):
+        return self.elasticity
+    
+
+    def setTension(self, value):
         self.elasticity = value
         return self
 
 
     def getDeformedPath(self):
         needwindings = self.elasticity * \
-                       unit.tocm(self.getVisiblePath().arclen()) / self.arcradius
+                       unit.tocm(self.getVisiblePath().arclen()) / unit.tocm(self.arcradius)
         ## Get the whole number of windings and make sure that it's odd so we
         ## don't get a weird double-back thing
         intwindings = int(needwindings)
@@ -365,7 +369,7 @@ class Photon(DecoratedLine):
         self.arrows = []
         self.labels = []
         self.inverted = False
-        self.arcradius = 0.25
+        self.arcradius = unit.length(0.25)
         self.linetype = "photon"
         ## Add this to the current diagram automatically
         FeynDiagram.currentDiagram.add(self)
@@ -378,7 +382,7 @@ class Photon(DecoratedLine):
 
     def getDeformedPath(self):
         path = self.getVisiblePath()
-        intwindings = int(1.0 * unit.tocm(path.arclen()) / self.arcradius) # TODO: units
+        intwindings = int(1.0 * unit.tocm(path.arclen()) / unit.tocm(self.arcradius))
 
         sign = 1
         if self.inverted: sign = -1 
