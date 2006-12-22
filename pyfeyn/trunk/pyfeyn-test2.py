@@ -1,28 +1,20 @@
-#! /usr/bin/env python
+from pyfeyn import *
+from pyx import color
 
-from feyn import *
-from hepnames import *
-from pyx import *
-
-print "Starting up..."
 fd = FeynDiagram()
 
-print "Defining things: ",
-print "points,",
 p1 = Point(2, -2)
 p2 = Point(-2, 2)
 p3 = Vertex(1.25, 1.25, "circle")
 p4 = p1.midpoint(p2)
-p5 = p4.midpoint(p1) # setBlob
-p6 = p4.midpoint(p2) # setBlob
+p5 = p4.midpoint(p1)
+p6 = p4.midpoint(p2)
 
-print "blobs,",
 c1 = Circle(center=p1, radius=0.5, fill=[color.rgb.red], points=[p1])
 c2 = Circle(center=p2, radius=0.3, fill=[color.rgb.green], points=[p2])
 e1 = Ellipse(center=p4, xradius=0.5, yradius=1.0,
              fill=[color.cmyk.MidnightBlue], points=[p4])
 
-print "lines,",
 l0a = Fermion(p1, p4)
 l0b = Fermion(p2, p4)
 l1 = NamedLine["gluon"](p2, p1).arcThru(x=3, y=0)
@@ -32,10 +24,8 @@ l4 = Photon(p1, p3)
 l5 = Gluon(p5, p6).bend(-p5.distance(p6)/2.0)
 loop1 = Line(p3, p3).arcThru(x=1.75, y=1.75).addArrow(0.55)
 
-print "& labels."
 l1.addLabel(r"\Pgluon")
 l2.addLabel(r"\Pphoton")
 l5.addLabel(r"$\Pgluon_1$")
 
-print "Committing to the canvas and file..."
 fd.draw("pyfeyn-test2.pdf")

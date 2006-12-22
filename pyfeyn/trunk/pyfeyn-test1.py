@@ -1,6 +1,7 @@
 #! /usr/bin/env python
 
-from feyn import *
+from pyfeyn import *
+from pyx import color
 
 fd = FeynDiagram()
 

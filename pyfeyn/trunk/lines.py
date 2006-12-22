@@ -1,5 +1,5 @@
-from pyx import *
-import math
+import pyx, math
+from pyx import color
 
 from diagrams import FeynDiagram
 from points import Point
@@ -116,7 +116,7 @@ class Line(Visible):
         arcpoint = Point(middle.x() + amount * nx, middle.y() + amount * ny)
         if FeynDiagram.options.VDEBUG:
             FeynDiagram.currentCanvas.stroke(
-                path.line(middle.x(), middle.y(), arcpoint.x(), arcpoint.y()), [color.rgb.blue] )
+                pyx.path.line(middle.x(), middle.y(), arcpoint.x(), arcpoint.y()), [color.rgb.blue] )
         self.arcThru(arcpoint)
         self.bendamount = amount
         return self
@@ -149,8 +149,8 @@ class Line(Visible):
     def getPath(self):
         if self.arcthrupoint == None:
             ## This is a simple straight line
-            return path.path( path.moveto( *(self.p1.getXY()) ),
-                              path.lineto( *(self.p2.getXY()) ) )
+            return pyx.path.path( pyx.path.moveto( *(self.p1.getXY()) ),
+                              pyx.path.lineto( *(self.p2.getXY()) ) )
         elif (self.p1.x() == self.p2.x() and self.p1.y() == self.p2.y()):
             ## This is a tadpole-type loop and needs special care;
             ## We shall assume that the arcthrupoint is meant to be
@@ -160,8 +160,8 @@ class Line(Visible):
             
             ## TODO Why does a circle work and an arc doesn't?
             cargs = (arccenter.x(), arccenter.y(), arcradius)
-            circle = path.circle(*cargs)
-            line = path.line( self.p1.x(), self.p1.y(), arccenter.x(), arccenter.y())
+            circle = pyx.path.circle(*cargs)
+            line = pyx.path.line( self.p1.x(), self.p1.y(), arccenter.x(), arccenter.y())
             if FeynDiagram.options.VDEBUG:
                 FeynDiagram.currentCanvas.stroke(line, [color.rgb.green])
             as, bs = circle.intersect(line)
@@ -173,7 +173,7 @@ class Line(Visible):
             arcangle1 = arccenter.arg(self.p1)
             arcangle2 = arccenter.arg(self.p1) + 360
             arcargs = (arccenter.x(), arccenter.y(), arcradius, arcangle1, arcangle2)
-            return path.path( path.arc(*arcargs) )
+            return pyx.path.path( pyx.path.arc(*arcargs) )
 
         else:
             ## Work out line gradients
@@ -185,8 +185,8 @@ class Line(Visible):
             ## If gradients match,
             ## then we have a straight line, so bypass the complexity
             if n13 == n23:
-                return path.path( path.moveto(*(self.p1.getXY())),
-                                      path.lineto(*(self.p2.getXY())) )
+                return pyx.path.path( pyx.path.moveto(*(self.p1.getXY())),
+                                      pyx.path.lineto(*(self.p2.getXY())) )
 
             ## Otherwise work out conjugate gradients and midpoints
             try: m13 = - 1.0 / n13
@@ -218,11 +218,11 @@ class Line(Visible):
             crossproductZcoord = vec12[0]*vec13[1] - vec12[1]*vec13[0]
 
             if crossproductZcoord < 0:
-                return path.path( path.moveto(*(self.p1.getXY())),
-                                      path.arc(*arcargs))
+                return pyx.path.path( pyx.path.moveto(*(self.p1.getXY())),
+                                      pyx.path.arc(*arcargs))
             else:
-                return path.path( path.moveto(*(self.p1.getXY())),
-                                      path.arcn(*arcargs))
+                return pyx.path.path( pyx.path.moveto(*(self.p1.getXY())),
+                                      pyx.path.arcn(*arcargs))
 
 
     def getVisiblePath(self):
@@ -239,14 +239,14 @@ class Line(Visible):
                 if len(subpaths) > 1:
                     if FeynDiagram.options.DEBUG:
                         print "Num subpaths 1 = %d" % len(subpaths)
-                    subpaths.sort( lambda x, y : int(unit.tocm(x.arclen() - y.arclen())/math.fabs(unit.tocm(x.arclen() - y.arclen()))) )
+                    subpaths.sort( lambda x, y : int(pyx.unit.tocm(x.arclen() - y.arclen())/math.fabs(pyx.unit.tocm(x.arclen() - y.arclen()))) )
                     vispath = subpaths[-1]
                     if FeynDiagram.options.VDEBUG:
                         FeynDiagram.currentCanvas.stroke(subpaths[0], [color.rgb.blue])
                 if FeynDiagram.options.VDEBUG:
                     for a in as:
                         ix, iy = p1path.at(a)
-                        FeynDiagram.currentCanvas.fill(path.circle(ix, iy, 0.05), [color.rgb.green])
+                        FeynDiagram.currentCanvas.fill(pyx.path.circle(ix, iy, 0.05), [color.rgb.green])
         if p2path: 
             as, bs = p2path.intersect(vispath)
             for b in bs:
@@ -254,17 +254,17 @@ class Line(Visible):
                 if len(subpaths) > 1:
                     if FeynDiagram.options.DEBUG:
                         print "Num subpaths 2 = %d" % len(subpaths)
-                    subpaths.sort( lambda x, y : int(unit.tocm(x.arclen() - y.arclen())/math.fabs(unit.tocm(x.arclen() - y.arclen()))) )
+                    subpaths.sort( lambda x, y : int(pyx.unit.tocm(x.arclen() - y.arclen())/math.fabs(pyx.unit.tocm(x.arclen() - y.arclen()))) )
                     vispath = subpaths[-1]
                     if FeynDiagram.options.VDEBUG:
                         FeynDiagram.currentCanvas.stroke(subpaths[0], [color.rgb.red])
                 if FeynDiagram.options.VDEBUG:
                     for a in as:
                         ix, iy = p2path.at(a)
-                        FeynDiagram.currentCanvas.fill(path.circle(ix, iy, 0.05), [color.rgb.blue])
+                        FeynDiagram.currentCanvas.fill(pyx.path.circle(ix, iy, 0.05), [color.rgb.blue])
         if FeynDiagram.options.VDEBUG:
             FeynDiagram.currentCanvas.stroke(vispath, [color.rgb.red])
-        #return path.circle(-2,-1,0.2)
+        #return pyx.path.circle(-2,-1,0.2)
         return vispath
 
         
@@ -309,7 +309,7 @@ class Gluon(DecoratedLine):
         self.is3D = False
         self.arrows = []
         self.labels = []
-        self.arcradius = unit.length(0.25)
+        self.arcradius = pyx.unit.length(0.25)
         self.elasticity = 1.3
         self.inverted = False
         self.linetype = "gluon"
@@ -333,17 +333,16 @@ class Gluon(DecoratedLine):
 
     def getDeformedPath(self):
         needwindings = self.elasticity * \
-                       unit.tocm(self.getVisiblePath().arclen()) / unit.tocm(self.arcradius)
+                       pyx.unit.tocm(self.getVisiblePath().arclen()) / pyx.unit.tocm(self.arcradius)
         ## Get the whole number of windings and make sure that it's odd so we
         ## don't get a weird double-back thing
         intwindings = int(needwindings)
         if intwindings % 2 == 0:
             intwindings -= 1
         deficit = needwindings - intwindings
-
         sign = 1
-        if self.inverted: sign = -1        
-        defo = deformer.cycloid(self.arcradius, intwindings, curvesperhloop=10, skipfirst = 0.0, skiplast = 0.0, sign = sign)
+        if self.inverted: sign = -1 
+        defo = pyx.deformer.cycloid(self.arcradius, intwindings, curvesperhloop=10, skipfirst = 0.0, skiplast = 0.0, sign = sign)
         return defo.deform(self.getVisiblePath())
 
 
@@ -369,7 +368,7 @@ class Photon(DecoratedLine):
         self.arrows = []
         self.labels = []
         self.inverted = False
-        self.arcradius = unit.length(0.25)
+        self.arcradius = pyx.unit.length(0.25)
         self.linetype = "photon"
         ## Add this to the current diagram automatically
         FeynDiagram.currentDiagram.add(self)
@@ -381,12 +380,10 @@ class Photon(DecoratedLine):
 
 
     def getDeformedPath(self):
-        path = self.getVisiblePath()
-        intwindings = int(1.0 * unit.tocm(path.arclen()) / unit.tocm(self.arcradius))
-
+        intwindings = int(1.0 * pyx.unit.tocm(self.getVisiblePath().arclen()) / pyx.unit.tocm(self.arcradius))
         sign = 1
         if self.inverted: sign = -1 
-        defo = deformer.cycloid(self.arcradius, intwindings, curvesperhloop=5, skipfirst=0.0, skiplast=0.0, turnangle=0, sign=sign)
+        defo = pyx.deformer.cycloid(self.arcradius, intwindings, curvesperhloop=5, skipfirst=0.0, skiplast=0.0, turnangle=0, sign=sign)
         return defo.deform(self.getVisiblePath())
 
         

@@ -11,18 +11,17 @@ PyFeyn TODO
 
  * Allow control of deformed line nominal frequencies and amplitudes.
 
- * Include widths and deformation amplitudes of lines in calculating the
-   label displacement.
-
  * Add momentum and helicity arrows (via parallel deformer?).
 
- * Add label interface to points.
+ * Add label interface to points and also allow arrows to be explicitly 
+   added.
 
- * Make custom gluon and photon deformers with 3D option.
+ * Make custom gluon deformer with a 3D option. Can use line's
+   intersections with itself and then chop out alternating crossings...
 
  * Do hatched patterns better than PyX (or fix PyX's implementation).
 
- * Make interface consistent and add all docstrings, __init__.py's etc.
+ * Make documentation.
 
  * Reinstate HepML functionality.
 
@@ -30,3 +29,4 @@ PyFeyn TODO
 
  * Add SUSY particles (draw an extra fermion line through bosons). Maybe an
    isSusy(bool) method... Also, a graviton (interleaving vector boson line).
+

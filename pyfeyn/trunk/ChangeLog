@@ -1,6 +1,11 @@
+2006-12-22  Andy Buckley  <andy@insectnation.org>
+
+	* Removed feyn module and added initialisation stuff to
+	__init__.py
+
 2006-12-21  Andy Buckley  <andy@insectnation.org>
 
-	* Added logo.
+	* Made logo.
 
 	* Added 4x scaling to get output resolution more reasonable.
 
