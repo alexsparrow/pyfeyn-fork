@@ -1,6 +1,6 @@
 from distutils.core import setup
 setup(name='pyfeyn',
-      version='0.9beta',
+      version='0.2.0b1',
       packages=['pyfeyn'],
       provides='pyfeyn',
       requires='pyx >= 0.9',
