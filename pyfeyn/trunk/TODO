@@ -11,6 +11,8 @@ PyFeyn TODO
 
  * Allow control of deformed line nominal frequencies and amplitudes.
 
+ * Allow multiple diagrams in a single output image.
+
  * Add momentum and helicity arrows (via parallel deformer?).
 
  * Add label interface to points and also allow arrows to be explicitly 
