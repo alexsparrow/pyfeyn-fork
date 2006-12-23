@@ -1,3 +1,5 @@
+"""Various types of points for vertices etc."""
+
 from pyx import *
 from copy import *
 import math

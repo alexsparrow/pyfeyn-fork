@@ -1,3 +1,8 @@
+2006-12-23  Andy Buckley  <andy@insectnation.org>
+
+	* Rehacked the module import structure a bit more to get epydoc to
+	treat the modules as public (as it should).
+
 2006-12-22  Andy Buckley  <andy@insectnation.org>
 
 	* Removed feyn module and added initialisation stuff to

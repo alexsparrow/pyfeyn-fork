@@ -1,3 +1,5 @@
+"""Various particle line types."""
+
 import pyx, math
 from pyx import color
 

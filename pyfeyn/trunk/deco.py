@@ -1,5 +1,6 @@
-import pyx, math
+"""A couple of classes for decorating diagram elements."""
 
+import pyx, math
 from diagrams import FeynDiagram
 from utils import Visible
 

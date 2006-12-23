@@ -1,3 +1,5 @@
+"""Various blob shapes to represent generic interactions."""
+
 from pyx import *
 import math
 

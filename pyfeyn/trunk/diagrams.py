@@ -1,4 +1,6 @@
-from pyx import *
+"""The main diagram class."""
+
+import pyx
 import re
 
 ## Diagram class
@@ -10,7 +12,7 @@ class FeynDiagram:
     "Objects for holding a set of Feynman diagram components"
     def __init__(self, objects = []):
         self.__objs = objects
-        FeynDiagram.currentCanvas = canvas.canvas()
+        FeynDiagram.currentCanvas = pyx.canvas.canvas()
         FeynDiagram.currentDiagram = self
 
     def add(self, *objs):
@@ -28,9 +30,5 @@ class FeynDiagram:
         drawingobjs = self.__objs
         for obj in drawingobjs:
             obj.draw(FeynDiagram.currentCanvas)
-        if re.search(r".*\.pdf", file):
-            FeynDiagram.currentCanvas.writePDFfile(file)
-        elif re.search(r".*\.eps", file):
-            FeynDiagram.currentCanvas.writeEPSfile(file)
-
+        FeynDiagram.currentCanvas.writetofile(file)
 
