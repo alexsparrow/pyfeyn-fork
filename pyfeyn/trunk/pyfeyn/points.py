@@ -7,12 +7,29 @@ import math
 from diagrams import FeynDiagram
 from utils import Visible
 
+
 ## Point base class
 class Point:
-    "Base class for all pointlike objects in Feynman diagrams"
+    """Base class for all pointlike objects in Feynman diagrams."""
     def __init__(self, x, y, blob = None):
         self.setXY(x, y)
         self.setBlob(blob)
+
+#     def __plus__(self, point = None):
+#         if point:
+#             addx, addy = point.getX(), point.getY()
+#             self.setX(self.getX() + addx)
+#             self.setY(self.getY() + addy)
+#         else:
+#             raise Exception("Tried to add a null x or y component")
+
+#     def __minus__(self, point = None):
+#         if point:
+#             addx, addy = point.getX(), point.getY()
+#             self.setX(self.getX() - addx)
+#             self.setY(self.getY() - addy)
+#         else:
+#             raise Exception("Tried to subtract a null x or y component")
 
     def draw(self, canvas):
         "Do nothing (abstract base class)."
@@ -38,34 +55,53 @@ class Point:
         "Return the y-intercept of the straight line defined by this point and the argument."
         return self.y() - self.tangent(otherpoint) * self.x()
 
+
     def tangent(self,otherpoint):
         "Return the tangent of the straight line defined by this point and the argument."
         if otherpoint.x() != self.x():
            return (otherpoint.y() - self.y()) / (otherpoint.x() - self.x())
         else:
-           return 9999.0 ## An arbitrary large number to replace infinity
+           return float(10000) ## An arbitrary large number to replace infinity
+
 
     def arg(self, otherpoint):
         """Return the angle between the x-axis and the straight line defined
         by this point and the argument (cf. complex numbers)."""
-        if otherpoint.x() != self.x():
+        arg = None
+        if otherpoint.x() == self.x():
+            if otherpoint.y() > self.y():
+                arg = math.pi / 2.0
+            elif otherpoint.y() < self.y():
+                arg = 3 * math.pi / 2.0  # this will be reset to 0 if the points are the same
+
+        if otherpoint.y() == self.y():
+            if otherpoint.x() < self.x():
+                arg = math.pi
+            else:
+                arg = 0.0
+
+        if otherpoint.x() != self.x() and otherpoint.y() != self.y():
             arg = math.atan( (otherpoint.y() - self.y()) / (otherpoint.x() - self.x()) )
-        else:
-            arg = math.pi/2.
-        ## Handle tangent sign ambiguity
-        if otherpoint.x() < self.x():
-            arg = arg + math.pi
+            if otherpoint.x() < self.x():
+                arg += math.pi
+            elif otherpoint.y() < self.y():
+                arg += 2 * math.pi 
+
         ## Convert to degrees
-        return math.degrees(arg)
+        argindegs = math.degrees(arg)
+        return argindegs
+
 
     def getBlob(self):
         "Get the attached blob."
         return self.blob
 
+
     def setBlob(self, blob):
         "Set the attached blob."
         self.blob = blob
         return self
+
  
     def getX(self):
         "Return the x-coordinate of this point."

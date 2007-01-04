@@ -1,4 +1,9 @@
 """Utility functions and classes for PyFeyn"""
+import pyx
+
+
+defunit = pyx.unit.cm
+todefunit = pyx.unit.tocm
 
 
 def sign(x):

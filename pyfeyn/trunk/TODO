@@ -1,6 +1,22 @@
 PyFeyn TODO
 -----------
 
+ * Fix pattern stroke colour problem
+
+ * Add specific layer choice when making/adding objects.
+
+ * Provide blob labels.
+
+ * Add label interface to points and also allow arrows to be explicitly 
+   added.
+
+ * Make custom gluon deformer with a 3D option. Can use line's
+   intersections with itself and then chop out alternating crossings...
+
+ * Allow control of deformed line nominal frequencies and amplitudes.
+
+ * Provide "add one half cycle" method.
+
  * Allow setting of the straight components of decorated lines.
 
  * Allow single lines to be deviated sharply (split) round a vertex?
@@ -9,25 +25,13 @@ PyFeyn TODO
 
  * Every diagram element should know its parent diagram.
 
- * Allow control of deformed line nominal frequencies and amplitudes.
-
  * Allow multiple diagrams in a single output image.
 
  * Add momentum and helicity arrows (via parallel deformer?).
 
- * Add label interface to points and also allow arrows to be explicitly 
-   added.
-
- * Make custom gluon deformer with a 3D option. Can use line's
-   intersections with itself and then chop out alternating crossings...
-
  * Do hatched patterns better than PyX (or fix PyX's implementation).
 
- * Make documentation.
-
  * Reinstate HepML functionality.
-
- * Add specific layer choice when making/adding objects.
 
  * Add SUSY particles (draw an extra fermion line through bosons). Maybe an
    isSusy(bool) method... Also, a graviton (interleaving vector boson line).

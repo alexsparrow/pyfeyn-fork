@@ -6,7 +6,7 @@ from pyx import color
 from diagrams import FeynDiagram
 from points import Point
 from deco import Arrow, Label
-from utils import Visible
+from utils import Visible, defunit
 
 
 ## Line base class
@@ -18,7 +18,6 @@ class Line(Visible):
         self.p2 = point2
         self.styles = []
         self.arcthrupoint = None
-        self.bendamount = 0
         self.is3D = False
         self.arrows = []
         self.labels = []
@@ -52,7 +51,7 @@ class Line(Visible):
         TODO: Handle units properly."""
         p = self.getPath() ## no truncation or deformation
         x, y = p.at(p.begin() + frac * p.arclen())
-        return Point(x, y)
+        return Point(x/defunit, y/defunit)
     
 
     def setArrows(self, arrows):
@@ -94,14 +93,12 @@ class Line(Visible):
             self.arcthrupoint = Point(x, y)
         else:
             raise Exception("Tried to set an arcpoint with invalid arguments")
-        self.bendamount = None
         return self
 
 
     def straighten(self):
         """Make this line a straight line between start and end."""
         self.arcthrupoint = None
-        self.bendamount = None
 
 
     def bend(self, amount):
@@ -114,16 +111,18 @@ class Line(Visible):
         if (vx * ny - vy * nx) > 0:
             nx *= -1
             ny *= -1
-            
         arcpoint = Point(middle.x() + amount * nx, middle.y() + amount * ny)
         if FeynDiagram.options.VDEBUG:
             FeynDiagram.currentCanvas.stroke(
                 pyx.path.line(middle.x(), middle.y(), arcpoint.x(), arcpoint.y()), [color.rgb.blue] )
         self.arcThru(arcpoint)
-        self.bendamount = amount
+        if FeynDiagram.options.DEBUG:
+            print self.getVisiblePath()
+        if FeynDiagram.options.VDEBUG:
+             FeynDiagram.currentCanvas.stroke(self.getVisiblePath(), [color.rgb.blue])
         return self
 
-    
+
     def set3D(self, choice):
         self.is3D = choice
         return self
@@ -178,11 +177,21 @@ class Line(Visible):
             return pyx.path.path( pyx.path.arc(*arcargs) )
 
         else:
+            n13, n23 = None, None
             ## Work out line gradients
-            try: n13 = (self.p1.y() - self.arcthrupoint.y()) / (self.p1.x() - self.arcthrupoint.x())
-            except ZeroDivisionError: n13 = 1e100
-            try: n23 = (self.p2.y() - self.arcthrupoint.y()) / (self.p2.x() - self.arcthrupoint.x())
-            except ZeroDivisionError: n23 = 1e100
+            try:
+                n13 = (self.p1.y() - self.arcthrupoint.y()) / (self.p1.x() - self.arcthrupoint.x())
+            except ZeroDivisionError:
+                if FeynDiagram.options.DEBUG:
+                    print "Grad 1 diverges"
+                n13 = 1e100
+                
+            try:
+                n23 = (self.p2.y() - self.arcthrupoint.y()) / (self.p2.x() - self.arcthrupoint.x())
+            except ZeroDivisionError:
+                if FeynDiagram.options.DEBUG:
+                    print "Grad 2 diverges"
+                n23 = 1e100
 
             ## If gradients match,
             ## then we have a straight line, so bypass the complexity
@@ -191,17 +200,22 @@ class Line(Visible):
                                       pyx.path.lineto(*(self.p2.getXY())) )
 
             ## Otherwise work out conjugate gradients and midpoints
-            try: m13 = - 1.0 / n13
-            except ZeroDivisionError: m13 = 1e100
-            try: m23 = - 1.0 / n23
-            except ZeroDivisionError: m23 = 1e100
+            m13, m23 = None, None
+            try:
+                m13 = -1.0 / n13
+            except ZeroDivisionError:
+                m13 = 1e100
+            try:
+                m23 = -1.0 / n23
+            except ZeroDivisionError:
+                m23 = 1e100
             mid13 = self.p1.midpoint(self.arcthrupoint)
             mid23 = self.p2.midpoint(self.arcthrupoint)
-            
+
             ## Line y-intercepts
             c13 = mid13.y() - m13 * mid13.x()
             c23 = mid23.y() - m23 * mid23.x()
-            
+
             ## Find the centre of the arc
             xcenter =  - (c23 - c13) / (m23 - m13)
             ycenter = m13 * xcenter + c13
@@ -213,6 +227,9 @@ class Line(Visible):
             arcangle2 = arccenter.arg(self.p2)
             arcangle3 = arccenter.arg(self.arcthrupoint)
             arcargs = (arccenter.x(), arccenter.y(), arcradius, arcangle1, arcangle2)
+
+            if FeynDiagram.options.DEBUG and arcangle1 == arcangle2:
+                print "Arc angles are the same - not drawing anything"
 
             ## Calculate cross product to determine direction of arc
             vec12 = [self.p2.x()-self.p1.x(), self.p2.y()-self.p1.y(), 0.0]
@@ -275,6 +292,7 @@ class Line(Visible):
         styles = self.styles + self.arrows
         if FeynDiagram.options.DEBUG:
             print "Drawing " + str(self.__class__) + " with styles = " + str(styles)
+            print path
         canvas.stroke(path, styles)
         for l in self.labels:
             l.draw(canvas)
@@ -307,7 +325,6 @@ class Gluon(DecoratedLine):
         self.p2 = point2
         self.styles = []
         self.arcthrupoint = None
-        self.bendamount = 0
         self.is3D = False
         self.arrows = []
         self.labels = []
@@ -365,7 +382,6 @@ class Photon(DecoratedLine):
         self.p2 = point2
         self.styles = []
         self.arcthrupoint = None
-        self.bendamount = 0
         self.is3D = False
         self.arrows = []
         self.labels = []

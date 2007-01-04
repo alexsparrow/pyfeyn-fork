@@ -6,11 +6,11 @@ majorversionstr = re.sub(r"(\d+\.\d+).*", r"\1", pyx.version.version)
 if float(majorversionstr) < 0.9:
     print "Warning: PyFeyn may not work with PyX versions older than 0.9!"
 
+
 ## Units
 pyx.unit.set(uscale = 4, vscale = 4, wscale = 4, xscale = 4)
 #pyx.unit.set(defaultunit = "inch")
-defunit = pyx.unit.cm
-todefunit = pyx.unit.tocm
+
 
 ## TeX stuff
 pyx.text.defaulttexrunner.set(mode="latex")

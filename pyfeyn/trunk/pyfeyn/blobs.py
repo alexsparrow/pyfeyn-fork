@@ -14,16 +14,28 @@ class Blob(Point, Visible):
     def __init__(self):
         raise Exception("Blobs are an abstract base class: you can't make them!")
     
-    def strokestyle(self, stylelist):
-        self.strokestyles.append(stylelist)
+    def setStrokeStyle(self, strokestyle):
+        self.strokestyles = [strokestyle]
         return self
 
-    def fillstyle(self, stylelist):
-        self.fillstyles.append(stylelist)
+    def clearStrokeStyles(self):
+        self.strokestyles = []
         return self
 
-    def trafo(self, trafolist):
-        self.trafos.append(trafolist)
+    def setFillStyle(self, fillstyle):
+        self.fillstyles = [fillstyle]
+        return self
+
+    def clearFillStyles(self):
+        self.fillstyles = []
+        return self
+
+    def addTrafo(self, trafo):
+        self.trafos.append(trafo)
+        return self
+
+    def clearTrafos(self):
+        self.trafos = []
         return self
 
     def setPoints(self, points):
@@ -156,8 +168,10 @@ class Ellipse(Blob):
 
 
     def draw(self, canvas):
-        canvas.fill(self.getPath(), [color.rgb.white] + self.fillstyles)
-        canvas.stroke(self.getPath(), [color.rgb.white] + self.strokestyles)
+        canvas.fill(self.getPath(), [color.rgb.white])
+        canvas.fill(self.getPath(), self.fillstyles)
+        #canvas.stroke(self.getPath(), [color.rgb.white])
+        canvas.stroke(self.getPath(), self.strokestyles)
 
 
 ## A dictionary to map feynML blob shape choices to blob classes
