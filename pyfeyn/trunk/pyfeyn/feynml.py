@@ -1,6 +1,7 @@
 """PyFeyn interface to the proposed FeynML XML dialect."""
 
 import math, pyx, md5
+from xml.dom.minidom import *
 
 
 class FeynMLWriter:
@@ -230,8 +231,8 @@ class FeynMLReader:
 if __name__=="__main__":
    import sys
    reader = FeynMLReader(sys.argv[1])
-   f = reader.get_diagram(0)
-   c = pyx.canvas.canvas()
-   f.draw(c)
+   _f = reader.get_diagram(0)
+   _c = pyx.canvas.canvas()
+   _f.draw(_c)
    c.writeEPSfile(sys.argv[1])
 

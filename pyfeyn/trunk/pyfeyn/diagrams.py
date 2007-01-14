@@ -1,10 +1,12 @@
-"""The main PyFeyn diagram class."""
+"""Diagramming classes - currently just FeynDiagram"""
 
 import pyx
 import re
 
 ## Diagram class
 class FeynDiagram:
+    """The main PyFeyn diagram class."""
+    
     currentDiagram = None
     currentCanvas = None
     options = None
