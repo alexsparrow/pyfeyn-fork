@@ -1,6 +1,6 @@
-import math, pyx, feyn
-import elementtree.ElementTree as elementtree
-import md5
+"""PyFeyn interface to the proposed FeynML XML dialect."""
+
+import math, pyx, md5
 
 
 class FeynMLWriter:
@@ -8,6 +8,7 @@ class FeynMLWriter:
    
     def __init__(self, filename):
         """Write FeynML to a file."""
+        pass
       
 
     def diagramToXML(self):
@@ -59,11 +60,10 @@ class FeynMLWriter:
        
 
 class FeynMLReader:
-   """Class to construct a Feynman diagram from its FeynML representation."""
+    """Class to construct a Feynman diagram from its FeynML representation."""
 
     def __init__(self, filename):
         """Read FeynML from a file."""
-
         self.root = elementtree.parse(filename).getroot()
         self.diagrams = []
         self.dicts = []
@@ -80,7 +80,6 @@ class FeynMLReader:
 
     def get_diagram(self,n):
         """Return the nth Feynman diagram represented by file contents."""
-
         fd = feyn.FeynDiagram()
         thediagram = self.diagrams[n]
         thedict = self.dicts[n]

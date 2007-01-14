@@ -1,6 +1,5 @@
 """Convenience interfaces between the hepnames LaTeX package and pyfeyn."""
 
-
 pions_dict = {
 "gp" : "\Pgp", # pion
 "gppm" : "\Pgppm", "gpmp" : "\Pgpmp", # charged pion

@@ -1,4 +1,4 @@
-"""The main diagram class."""
+"""The main PyFeyn diagram class."""
 
 import pyx
 import re
