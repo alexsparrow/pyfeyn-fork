@@ -1,4 +1,4 @@
-"""PyFeyn - a simple Python interface for making Feynman diagrams."""
+"""PyFeyn - a simple Python interface for making Feynman diagrams (pre-release version >= 0.2.0b1)."""
 
 __author__ = "Andy Buckley (andy@insectnation.org)"
 __version__ = "0.2.0b1"
@@ -17,7 +17,7 @@ if float(majorversionstr) < 0.9:
 
 ## Units
 pyx.unit.set(uscale = 4, vscale = 4, wscale = 4, xscale = 4)
-#pyx.unit.set(defaultunit = "inch")
+pyx.unit.set(defaultunit = "cm")
 
 
 ## TeX stuff
@@ -30,12 +30,6 @@ else:
 
 ## Set __all__ (for "import * from pyfeyn")
 __all__ = ["diagrams", "points", "blobs", "lines", "deco", "utils"]
-
-#__all__ = ["FeynDiagram",
-#           "Point", "Vertex", "DecoratedPoint",
-#           "Blob", "Circle", "Ellipse",
-#           "Line", "DecoratedLine", "Photon", "Gluon", "Fermion", "NamedLine",
-#           "Arrow", "Label"]
 
 
 ## Option parsing
