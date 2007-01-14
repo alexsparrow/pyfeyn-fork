@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>pyfeyn</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th bgcolor="#70b0f0" class="navbar-select"
+          >&nbsp;&nbsp;&nbsp;Home&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        Package&nbsp;pyfeyn
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript: void(0);" class="privatelink"
+    onclick="toggle_private();">hide private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="pyfeyn-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="pyfeyn-module.html">Package pyfeyn</a></h1>
+<pre class="py-src">
+<span class="py-lineno"> 1</span>  <span class="py-line"><span class="py-docstring">"""PyFeyn - a simple Python interface for making Feynman diagrams (pre-release version &gt;= 0.2.0b1)."""</span> </span>
+<span class="py-lineno"> 2</span>  <span class="py-line"> </span>
+<span class="py-lineno"> 3</span>  <span class="py-line"><span id="link-0" class="py-name"><a title="pyfeyn.__author__" class="py-name" href="#" onclick="doclink('link-0', '__author__', 'Variable pyfeyn.__author__=pyfeyn-module.html#__author__'); return false;">__author__</a></span></span> <span class="py-op">=</span> <span class="py-string">"Andy Buckley (andy@insectnation.org)"</span> </span>
+<span class="py-lineno"> 4</span>  <span class="py-line"><span id="link-1" class="py-name"><a title="pyfeyn.__version__" class="py-name" href="#" onclick="doclink('link-1', '__version__', 'Variable pyfeyn.__version__=pyfeyn-module.html#__version__'); return false;">__version__</a></span></span> <span class="py-op">=</span> <span class="py-string">"0.2.0b1"</span> </span>
+<span class="py-lineno"> 5</span>  <span class="py-line"><span id="link-2" class="py-name"><a title="pyfeyn.__date__" class="py-name" href="#" onclick="doclink('link-2', '__date__', 'Variable pyfeyn.__date__=pyfeyn-module.html#__date__'); return false;">__date__</a></span></span> <span class="py-op">=</span> <span class="py-string">"$Date: 2006/08/05 00:14:20 $"</span> </span>
+<span class="py-lineno"> 6</span>  <span class="py-line"><span id="link-3" class="py-name"><a title="pyfeyn.__copyright__" class="py-name" href="#" onclick="doclink('link-3', '__copyright__', 'Variable pyfeyn.__copyright__=pyfeyn-module.html#__copyright__'); return false;">__copyright__</a></span></span> <span class="py-op">=</span> <span class="py-string">"Copyright (c) 2007 Andy Buckley"</span> </span>
+<span class="py-lineno"> 7</span>  <span class="py-line"><span id="link-4" class="py-name"><a title="pyfeyn.__license__" class="py-name" href="#" onclick="doclink('link-4', '__license__', 'Variable pyfeyn.__license__=pyfeyn-module.html#__license__'); return false;">__license__</a></span></span> <span class="py-op">=</span> <span class="py-string">"GPL"</span> </span>
+<span class="py-lineno"> 8</span>  <span class="py-line"> </span>
+<span class="py-lineno"> 9</span>  <span class="py-line"><span class="py-keyword">import</span> <span class="py-name">pyx</span> </span>
+<span class="py-lineno">10</span>  <span class="py-line"> </span>
+<span class="py-lineno">11</span>  <span class="py-line"><span class="py-comment">## Version check</span> </span>
+<span class="py-lineno">12</span>  <span class="py-line"><span class="py-comment"></span><span class="py-keyword">import</span> <span class="py-name">re</span> </span>
+<span class="py-lineno">13</span>  <span class="py-line"><span id="link-5" class="py-name"><a title="pyfeyn.majorversionstr" class="py-name" href="#" onclick="doclink('link-5', 'majorversionstr', 'Variable pyfeyn.majorversionstr=pyfeyn-module.html#majorversionstr'); return false;">majorversionstr</a></span></span> <span class="py-op">=</span> <span class="py-name">re</span><span class="py-op">.</span><span class="py-name">sub</span><span class="py-op">(</span><span class="py-string">r"(\d+\.\d+).*"</span><span class="py-op">,</span> <span class="py-string">r"\1"</span><span class="py-op">,</span> <span class="py-name">pyx</span><span class="py-op">.</span><span class="py-name">version</span><span class="py-op">.</span><span class="py-name">version</span><span class="py-op">)</span> </span>
+<span class="py-lineno">14</span>  <span class="py-line"><span class="py-keyword">if</span> <span class="py-name">float</span><span class="py-op">(</span><span id="link-6" class="py-name"><a title="pyfeyn.majorversionstr" class="py-name" href="#" onclick="doclink('link-6', 'majorversionstr', 'Variable pyfeyn.majorversionstr=pyfeyn-module.html#majorversionstr'); return false;">majorversionstr</a></span></span><span class="py-op">)</span> <span class="py-op">&lt;</span> <span class="py-number">0.9</span><span class="py-op">:</span> </span>
+<span class="py-lineno">15</span>  <span class="py-line">    <span class="py-keyword">print</span> <span class="py-string">"Warning: PyFeyn may not work with PyX versions older than 0.9!"</span> </span>
+<span class="py-lineno">16</span>  <span class="py-line"> </span>
+<span class="py-lineno">17</span>  <span class="py-line"> </span>
+<span class="py-lineno">18</span>  <span class="py-line"><span class="py-comment">## Units</span> </span>
+<span class="py-lineno">19</span>  <span class="py-line"><span class="py-comment"></span><span class="py-name">pyx</span><span class="py-op">.</span><span class="py-name">unit</span><span class="py-op">.</span><span class="py-name">set</span><span class="py-op">(</span><span class="py-name">uscale</span> <span class="py-op">=</span> <span class="py-number">4</span><span class="py-op">,</span> <span class="py-name">vscale</span> <span class="py-op">=</span> <span class="py-number">4</span><span class="py-op">,</span> <span class="py-name">wscale</span> <span class="py-op">=</span> <span class="py-number">4</span><span class="py-op">,</span> <span class="py-name">xscale</span> <span class="py-op">=</span> <span class="py-number">4</span><span class="py-op">)</span> </span>
+<span class="py-lineno">20</span>  <span class="py-line"><span class="py-name">pyx</span><span class="py-op">.</span><span class="py-name">unit</span><span class="py-op">.</span><span class="py-name">set</span><span class="py-op">(</span><span class="py-name">defaultunit</span> <span class="py-op">=</span> <span class="py-string">"cm"</span><span class="py-op">)</span> </span>
+<span class="py-lineno">21</span>  <span class="py-line"> </span>
+<span class="py-lineno">22</span>  <span class="py-line"> </span>
+<span class="py-lineno">23</span>  <span class="py-line"><span class="py-comment">## TeX stuff</span> </span>
+<span class="py-lineno">24</span>  <span class="py-line"><span class="py-comment"></span><span class="py-name">pyx</span><span class="py-op">.</span><span class="py-name">text</span><span class="py-op">.</span><span class="py-name">defaulttexrunner</span><span class="py-op">.</span><span class="py-name">set</span><span class="py-op">(</span><span class="py-name">mode</span><span class="py-op">=</span><span class="py-string">"latex"</span><span class="py-op">)</span> </span>
+<span class="py-lineno">25</span>  <span class="py-line"><span class="py-keyword">if</span> <span class="py-name">pyx</span><span class="py-op">.</span><span class="py-name">pykpathsea</span><span class="py-op">.</span><span class="py-name">find_file</span><span class="py-op">(</span><span class="py-string">"hepnicenames.sty"</span><span class="py-op">,</span> <span class="py-name">pyx</span><span class="py-op">.</span><span class="py-name">pykpathsea</span><span class="py-op">.</span><span class="py-name">kpse_tex_format</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+<span class="py-lineno">26</span>  <span class="py-line">   <span class="py-name">pyx</span><span class="py-op">.</span><span class="py-name">text</span><span class="py-op">.</span><span class="py-name">defaulttexrunner</span><span class="py-op">.</span><span class="py-name">preamble</span><span class="py-op">(</span><span class="py-string">r"\usepackage{hepnicenames}"</span><span class="py-op">)</span> </span>
+<span class="py-lineno">27</span>  <span class="py-line"><span class="py-keyword">else</span><span class="py-op">:</span> </span>
+<span class="py-lineno">28</span>  <span class="py-line">   <span class="py-keyword">print</span> <span class="py-string">"Warning: hepnames LaTeX package not found!"</span> </span>
+<span class="py-lineno">29</span>  <span class="py-line"> </span>
+<span class="py-lineno">30</span>  <span class="py-line"> </span>
+<span class="py-lineno">31</span>  <span class="py-line"><span class="py-comment">## Set __all__ (for "import * from pyfeyn")</span> </span>
+<span class="py-lineno">32</span>  <span class="py-line"><span class="py-comment"></span><span class="py-name">__all__</span> <span class="py-op">=</span> <span class="py-op">[</span><span class="py-string">"diagrams"</span><span class="py-op">,</span> <span class="py-string">"points"</span><span class="py-op">,</span> <span class="py-string">"blobs"</span><span class="py-op">,</span> <span class="py-string">"lines"</span><span class="py-op">,</span> <span class="py-string">"deco"</span><span class="py-op">,</span> <span class="py-string">"utils"</span><span class="py-op">]</span> </span>
+<span class="py-lineno">33</span>  <span class="py-line"> </span>
+<span class="py-lineno">34</span>  <span class="py-line"> </span>
+<span class="py-lineno">35</span>  <span class="py-line"><span class="py-comment">## Option parsing</span> </span>
+<span class="py-lineno">36</span>  <span class="py-line"><span class="py-comment"></span><span class="py-keyword">from</span> <span class="py-name">optparse</span> <span class="py-keyword">import</span> <span class="py-name">OptionParser</span>  </span>
+<span class="py-lineno">37</span>  <span class="py-line"><span id="link-7" class="py-name"><a title="pyfeyn._parser" class="py-name" href="#" onclick="doclink('link-7', '_parser', 'Variable pyfeyn._parser=pyfeyn-module.html#_parser'); return false;">_parser</a></span></span> <span class="py-op">=</span> <span class="py-name">OptionParser</span><span class="py-op">(</span><span class="py-op">)</span> </span>
+<span class="py-lineno">38</span>  <span class="py-line"><span id="link-8" class="py-name"><a title="pyfeyn._parser" class="py-name" href="#" onclick="doclink('link-8', '_parser', 'Variable pyfeyn._parser=pyfeyn-module.html#_parser'); return false;">_parser</a></span></span><span class="py-op">.</span><span class="py-name">add_option</span><span class="py-op">(</span><span class="py-string">"-V"</span><span class="py-op">,</span> <span class="py-string">"--visual-debug"</span><span class="py-op">,</span> <span class="py-name">dest</span><span class="py-op">=</span><span class="py-string">"VDEBUG"</span><span class="py-op">,</span> <span class="py-name">action</span> <span class="py-op">=</span> <span class="py-string">"store_true"</span><span class="py-op">,</span> <span class="py-name">default</span> <span class="py-op">=</span> <span class="py-name">False</span><span class="py-op">,</span> </span>
+<span class="py-lineno">39</span>  <span class="py-line">                   <span class="py-name">help</span><span class="py-op">=</span><span class="py-string">"produce visual debug output"</span><span class="py-op">)</span> </span>
+<span class="py-lineno">40</span>  <span class="py-line"><span id="link-9" class="py-name"><a title="pyfeyn._parser" class="py-name" href="#" onclick="doclink('link-9', '_parser', 'Variable pyfeyn._parser=pyfeyn-module.html#_parser'); return false;">_parser</a></span></span><span class="py-op">.</span><span class="py-name">add_option</span><span class="py-op">(</span><span class="py-string">"-D"</span><span class="py-op">,</span> <span class="py-string">"--debug"</span><span class="py-op">,</span> <span class="py-name">dest</span><span class="py-op">=</span><span class="py-string">"DEBUG"</span><span class="py-op">,</span> <span class="py-name">action</span> <span class="py-op">=</span> <span class="py-string">"store_true"</span><span class="py-op">,</span> <span class="py-name">default</span> <span class="py-op">=</span> <span class="py-name">False</span><span class="py-op">,</span> </span>
+<span class="py-lineno">41</span>  <span class="py-line">                   <span class="py-name">help</span><span class="py-op">=</span><span class="py-string">"produce debug output"</span><span class="py-op">)</span> </span>
+<span class="py-lineno">42</span>  <span class="py-line"><span class="py-keyword">from</span> <span id="link-10" class="py-name"><a title="pyfeyn.diagrams" class="py-name" href="#" onclick="doclink('link-10', 'diagrams', 'Module pyfeyn.diagrams=pyfeyn.diagrams-module.html'); return false;">diagrams</a></span></span> <span class="py-keyword">import</span> <span id="link-11" class="py-name"><a title="pyfeyn.diagrams.FeynDiagram" class="py-name" href="#" onclick="doclink('link-11', 'FeynDiagram', 'Class pyfeyn.diagrams.FeynDiagram=pyfeyn.diagrams.FeynDiagram-class.html'); return false;">FeynDiagram</a></span></span> </span>
+<span class="py-lineno">43</span>  <span class="py-line"><span class="py-op">(</span><span id="link-12" class="py-name"><a title="pyfeyn.diagrams.FeynDiagram" class="py-name" href="#" onclick="doclink('link-12', 'FeynDiagram', 'Class pyfeyn.diagrams.FeynDiagram=pyfeyn.diagrams.FeynDiagram-class.html'); return false;">FeynDiagram</a></span></span><span class="py-op">.</span><span id="link-13" class="py-name"><a title="pyfeyn.diagrams.FeynDiagram.options" class="py-name" href="#" onclick="doclink('link-13', 'options', 'Variable pyfeyn.diagrams.FeynDiagram.options=pyfeyn.diagrams.FeynDiagram-class.html#options'); return false;">options</a></span></span><span class="py-op">,</span> <span id="link-14" class="py-name"><a title="pyfeyn.args" class="py-name" href="#" onclick="doclink('link-14', 'args', 'Variable pyfeyn.args=pyfeyn-module.html#args'); return false;">args</a></span></span><span class="py-op">)</span> <span class="py-op">=</span> <span id="link-15" class="py-name"><a title="pyfeyn._parser" class="py-name" href="#" onclick="doclink('link-15', '_parser', 'Variable pyfeyn._parser=pyfeyn-module.html#_parser'); return false;">_parser</a></span></span><span class="py-op">.</span><span class="py-name">parse_args</span><span class="py-op">(</span><span class="py-op">)</span> </span>
+<span class="py-lineno">44</span>  <span class="py-line"> </span><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th bgcolor="#70b0f0" class="navbar-select"
+          >&nbsp;&nbsp;&nbsp;Home&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">Generated by Epydoc
+        3.0alpha3 on Sun Jan 14 19:25:15 2007</td>
+    <td align="right" class="footer">
+      <a href="http://epydoc.sourceforge.net">http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie()
+  // -->
+</script>
+  
+</body>
+</html>
