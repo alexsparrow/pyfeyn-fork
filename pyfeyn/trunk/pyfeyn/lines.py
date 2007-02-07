@@ -65,7 +65,7 @@ class Line(Visible):
         return self
 
 
-    def addArrow(self, position = 0.5, arrow = None):
+    def addArrow(self, position = 0.53, arrow = None):
         """Add an arrow to the line at the specified position, which is a number
         between 0 and 1, representing the fraction along the line at which the
         arrow should be placed. The default arrow style can be overridden by
@@ -302,6 +302,24 @@ class Fermion(Line):
     pass
 
 
+class Scalar(Line):
+    def draw(self, canvas):
+        path = self.getVisiblePath()
+        styles = self.styles + [pyx.style.linestyle.dashed] + self.arrows
+        ## TODO: call base class method?
+        if FeynDiagram.options.DEBUG:
+            print "Drawing " + str(self.__class__) + " with styles = " + str(styles)
+            print path
+        canvas.stroke(path, styles)
+        for l in self.labels:
+            l.draw(canvas)
+
+
+class Higgs(Scalar):
+    pass
+
+
+
 ## DecoratedLine base class
 class DecoratedLine(Line):
     """Base class for spring and sine-like lines"""
@@ -375,7 +393,7 @@ class Gluon(DecoratedLine):
 
 
 
-class Photon(DecoratedLine):
+class Vector(DecoratedLine):
     """A line with a sinoid deformation"""
     def __init__(self, point1, point2):
         self.p1 = point1
@@ -413,6 +431,9 @@ class Photon(DecoratedLine):
         for l in self.labels:
             l.draw(canvas)
 
+
+class Photon(Vector):
+    pass
 
 
 # A dictionary for mapping FeynML line types to line classes

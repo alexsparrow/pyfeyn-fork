@@ -19,7 +19,7 @@ PyFeyn TODO
 
  * Allow setting of the straight components of decorated lines.
 
- * Allow single lines to be deviated sharply (split) round a vertex?
+ * Allow single lines to be deviated sharply (split?) round a vertex.
 
  * Allow the start and end phases of deformed lines to be specified.
 
@@ -34,5 +34,5 @@ PyFeyn TODO
  * Reinstate HepML functionality.
 
  * Add SUSY particles (draw an extra fermion line through bosons). Maybe an
-   isSusy(bool) method... Also, a graviton (interleaving vector boson line).
+   isSusy(bool) method... Also, a graviton (interleaving vector boson lines).
 
