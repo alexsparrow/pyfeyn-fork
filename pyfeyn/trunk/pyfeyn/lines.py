@@ -5,7 +5,7 @@ from pyx import color
 
 from diagrams import FeynDiagram
 from points import Point
-from deco import Arrow, Label
+from deco import Arrow, LineLabel
 from utils import Visible, defunit
 
 
@@ -34,7 +34,7 @@ class Line(Visible):
         #if text.__class__ == "Label":
         #    self.labels.append(label)
         #else:
-        self.labels.append(Label(text=text, line=self, pos=pos, displace=displace, angle=angle))
+        self.labels.append(LineLabel(text=text, line=self, pos=pos, displace=displace, angle=angle))
         if FeynDiagram.options.DEBUG:
             print "Labels = " + str(self.labels)
         return self

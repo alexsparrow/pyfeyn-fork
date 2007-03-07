@@ -2,6 +2,7 @@
 
 import pyx, math
 from diagrams import FeynDiagram
+from points import Point
 from utils import Visible
 
 
@@ -26,6 +27,39 @@ class Arrow(pyx.deco.deco, pyx.attr.attr):
 
 ## Label
 class Label(Visible):
+    """General label, unattached to any diagram elements"""
+    def __init__(self, text, pos=None, x=None, y=None, angle=0):
+        if pos != None:
+            self.pos = pos
+        elif x != None and y != None:
+            self.pos = Point(x, y)
+        else:
+            self.pos = Point(0, 0)
+        self.size = pyx.text.size.normalsize
+        self.angle = angle
+        self.text = text
+        self.textattrs = []
+
+        ## Add this to the current diagram automatically
+        FeynDiagram.currentDiagram.add(self)
+
+
+
+    def draw(self, canvas):
+        textattrs = pyx.attr.mergeattrs([pyx.text.halign.center, pyx.text.vshift.mathaxis, self.size] + self.textattrs)
+        t = pyx.text.defaulttexrunner.text(self.pos.getX(), self.pos.getY(), self.text, textattrs)
+        canvas.insert(t)
+
+
+## PointLabel
+class PointLabel(Label):
+    """Label attached to points on the diagram"""
+    def __init__(self, point, text, displace=0.3, angle=0):
+        pass
+
+
+## LineLabel
+class LineLabel(Label):
     """Label for Feynman diagram lines"""
     def __init__(self, line, text, pos=0.5, displace=0.3, angle=0):
         self.pos = pos
