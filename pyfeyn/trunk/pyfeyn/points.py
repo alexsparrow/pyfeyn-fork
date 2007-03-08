@@ -6,6 +6,7 @@ import math
 
 from diagrams import FeynDiagram
 from utils import Visible
+from deco import PointLabel
 
 
 ## Point base class
@@ -14,6 +15,7 @@ class Point:
     def __init__(self, x, y, blob = None):
         self.setXY(x, y)
         self.setBlob(blob)
+        self.labels = []
 
 #     def __plus__(self, point = None):
 #         if point:
@@ -30,6 +32,22 @@ class Point:
 #             self.setY(self.getY() - addy)
 #         else:
 #             raise Exception("Tried to subtract a null x or y component")
+
+    def addLabel(self, text, displace=0.3, angle = 0):
+        """Add a LaTeX label to this point, either via parameters or actually as
+        a PointLable object."""
+        if FeynDiagram.options.DEBUG:
+            print "Adding label: " + text
+        self.labels.append(PointLabel(text=text, point=self, displace=displace, angle=angle))
+        if FeynDiagram.options.DEBUG:
+            print "Labels = " + str(self.labels)
+        return self
+
+            
+    def removeLabels(self):
+        self.labels = []
+        return self
+
 
     def draw(self, canvas):
         "Do nothing (abstract base class)."
@@ -154,6 +172,7 @@ class DecoratedPoint(Point, Visible):
                  stroke = [color.rgb.black],
                  blob = None):
         self.setXY(xpos, ypos)
+        self.labels = []
         
         if mark != None:
            self.marker = NamedMark[mark]
@@ -222,6 +241,8 @@ class DecoratedPoint(Point, Visible):
         if self.getPath():
             canvas.fill(self.getPath(), self.fillstyles)
             canvas.stroke(self.getPath(), self.strokestyles)
+        for l in self.labels:
+            l.draw(canvas)
 
 
 class Vertex(DecoratedPoint):

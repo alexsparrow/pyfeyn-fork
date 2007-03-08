@@ -1,5 +1,7 @@
 2007-03-07  Andy Buckley  <andy@insectnation.org>
 
+	* Added point-attached labels.
+
 	* Added unattached label implementation and updated example 1 to
 	demonstrate it.
 

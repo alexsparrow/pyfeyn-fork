@@ -5,9 +5,7 @@ PyFeyn TODO
 
  * Add specific layer choice when making/adding objects.
 
- * Provide point and blob attached labels.
-
- * Add label interface to points.
+ * Provide blob-attached labels.
 
  * Add unattached and line-parallel arrows (useful for momenta, helicities etc.)
 
