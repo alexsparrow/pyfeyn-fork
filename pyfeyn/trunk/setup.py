@@ -7,7 +7,7 @@ from setuptools import setup
 
 ## Setup definition
 setup(name = 'pyfeyn',
-      version = '0.2.0b1',
+      version = '0.2.1b1',
       packages = ['pyfeyn'],
       install_requires = 'pyx >= 0.9',
       author = 'Andy Buckley',

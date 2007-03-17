@@ -1,7 +1,7 @@
 """PyFeyn - a simple Python interface for making Feynman diagrams (pre-release version >= 0.2.0b1)."""
 
 __author__ = "Andy Buckley (andy@insectnation.org)"
-__version__ = "0.2.0b1"
+__version__ = "0.2.1b1"
 __date__ = "$Date: 2006/08/05 00:14:20 $"
 __copyright__ = "Copyright (c) 2007 Andy Buckley"
 __license__ = "GPL"
