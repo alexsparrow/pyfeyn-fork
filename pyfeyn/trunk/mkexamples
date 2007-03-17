@@ -1,0 +1,8 @@
+#! /usr/bin/env bash
+
+for i in 1 2 3 4; do
+    echo "Making example $i"
+    python examples/pyfeyn-test${i}.py
+    convert -density 70 pyfeyn-test${i}.{pdf,png}
+    convert -density 25  pyfeyn-test${i}.pdf pyfeyn-test${i}-small.png
+done

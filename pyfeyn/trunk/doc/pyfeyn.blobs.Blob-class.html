@@ -56,21 +56,41 @@
   </tr>
 </table>
 <!-- ==================== CLASS DESCRIPTION ==================== -->
-<h1 class="epydoc">Class Blob</h1><span class="codelink"><a href="pyfeyn.blobs-pysrc.html#Blob">source&nbsp;code</a></span><br /><br />
-<pre class="base-tree">
- <a href="pyfeyn.points.Point-class.html">points.Point</a> --+
-                |
-<a href="pyfeyn.utils.Visible-class.html">utils.Visible</a> --+
-                |
-               <strong class="uidshort">Blob</strong>
-</pre>
-
-<dl><dt>Known Subclasses:</dt>
-<dd>
-    <a href="pyfeyn.blobs.Circle-class.html">Circle</a>,
-    <a href="pyfeyn.blobs.Ellipse-class.html">Ellipse</a>
-</dd></dl>
-
+<h1 class="epydoc">Class Blob</h1><br /><br />
+<center>
+<center>  <map id="uml_class_diagram_for_classdoc" name="uml_class_diagram_for_classdoc">
+<area shape="rect" href="pyfeyn.points.Point&#45;class.html#getXY" title="Return the x and y coordinates of this point as a 2&#45;tuple." alt="" coords="17,36,276,55" />
+<area shape="rect" href="pyfeyn.points.Point&#45;class.html#x" title="Alias for getX()." alt="" coords="17,55,276,73" />
+<area shape="rect" href="pyfeyn.points.Point&#45;class.html#draw" title="Do nothing (abstract base class)." alt="" coords="17,73,276,92" />
+<area shape="rect" href="pyfeyn.points.Point&#45;class.html#tangent" title="Return the tangent of the straight line defined by this point and the  argument." alt="" coords="17,92,276,111" />
+<area shape="rect" href="pyfeyn.points.Point&#45;class.html#intercept" title="Return the y&#45;intercept of the straight line defined by this point and the  argument." alt="" coords="17,111,276,129" />
+<area shape="rect" href="pyfeyn.points.Point&#45;class.html#addLabel" title="Add a LaTeX label to this point, either via parameters or actually as a  PointLable object." alt="" coords="17,129,276,148" />
+<area shape="rect" href="pyfeyn.points.Point&#45;class.html#midpoint" title="Return the point midway between this point and the argument." alt="" coords="17,148,276,167" />
+<area shape="rect" href="pyfeyn.points.Point&#45;class.html#getPath" title="Return the path of the attached blob path, if there is one, otherwise None." alt="" coords="17,167,276,185" />
+<area shape="rect" href="pyfeyn.points.Point&#45;class.html#getX" title="Return the x&#45;coordinate of this point." alt="" coords="17,185,276,204" />
+<area shape="rect" href="pyfeyn.points.Point&#45;class.html#getY" title="Return the y&#45;coordinate of this point." alt="" coords="17,204,276,223" />
+<area shape="rect" href="pyfeyn.points.Point&#45;class.html#getBlob" title="Get the attached blob." alt="" coords="17,223,276,241" />
+<area shape="rect" href="pyfeyn.points.Point&#45;class.html#xy" title="Alias for getXY()." alt="" coords="17,241,276,260" />
+<area shape="rect" href="pyfeyn.points.Point&#45;class.html#setXY" title="Set the x and y coordinates of this point." alt="" coords="17,260,276,279" />
+<area shape="rect" href="pyfeyn.points.Point&#45;class.html#distance" title="Calculate the distance between this point and the argument." alt="" coords="17,297,276,316" />
+<area shape="rect" href="pyfeyn.points.Point&#45;class.html" title="pyfeyn.points.Point" alt="" coords="5,5,288,323" />
+<area shape="rect" href="pyfeyn.blobs.Blob&#45;class.html#clearFillStyles" title="pyfeyn.blobs.Blob.clearFillStyles" alt="" coords="171,372,365,391" />
+<area shape="rect" href="pyfeyn.blobs.Blob&#45;class.html#__init__" title="pyfeyn.blobs.Blob.__init__" alt="" coords="171,391,365,409" />
+<area shape="rect" href="pyfeyn.blobs.Blob&#45;class.html#addTrafo" title="pyfeyn.blobs.Blob.addTrafo" alt="" coords="171,409,365,428" />
+<area shape="rect" href="pyfeyn.blobs.Blob&#45;class.html#setFillStyle" title="pyfeyn.blobs.Blob.setFillStyle" alt="" coords="171,428,365,447" />
+<area shape="rect" href="pyfeyn.blobs.Blob&#45;class.html#clearTrafos" title="pyfeyn.blobs.Blob.clearTrafos" alt="" coords="171,447,365,465" />
+<area shape="rect" href="pyfeyn.blobs.Blob&#45;class.html#setStrokeStyle" title="pyfeyn.blobs.Blob.setStrokeStyle" alt="" coords="171,465,365,484" />
+<area shape="rect" href="pyfeyn.blobs.Blob&#45;class.html#clearStrokeStyles" title="pyfeyn.blobs.Blob.clearStrokeStyles" alt="" coords="171,484,365,503" />
+<area shape="rect" href="pyfeyn.blobs.Blob&#45;class.html#setPoints" title="pyfeyn.blobs.Blob.setPoints" alt="" coords="171,503,365,521" />
+<area shape="rect" href="pyfeyn.blobs.Blob&#45;class.html" title="pyfeyn.blobs.Blob" alt="" coords="159,341,377,528" />
+<area shape="rect" href="pyfeyn.utils.Visible&#45;class.html#getVisiblePath" title="pyfeyn.utils.Visible.getVisiblePath" alt="" coords="329,157,452,176" />
+<area shape="rect" href="pyfeyn.utils.Visible&#45;class.html#isVisible" title="pyfeyn.utils.Visible.isVisible" alt="" coords="329,176,452,195" />
+<area shape="rect" href="pyfeyn.utils.Visible&#45;class.html" title="pyfeyn.utils.Visible" alt="" coords="317,127,464,201" />
+<area shape="rect" href="pyfeyn.blobs.Ellipse&#45;class.html" title="pyfeyn.blobs.Ellipse" alt="" coords="180,547,255,584" />
+<area shape="rect" href="pyfeyn.blobs.Circle&#45;class.html" title="pyfeyn.blobs.Circle" alt="" coords="284,547,353,584" />
+</map>
+  <img src="uml_class_diagram_for_classdoc.gif" alt='' usemap="#uml_class_diagram_for_classdoc" ismap="ismap" class="graph-without-title">
+</center></center>
 <hr />
 Base class for all blob-like objects in Feynman diagrams<br /><br />
 
@@ -154,6 +174,7 @@ Base class for all blob-like objects in Feynman diagrams<br /><br />
   <tr>
     <td colspan="2" class="summary">
     <p class="indent-wrapped-lines"><b>Inherited from <code><a href="pyfeyn.points.Point-class.html">points.Point</a></code></b>:
+      <code><a href="pyfeyn.points.Point-class.html#addLabel">addLabel</a></code>,
       <code><a href="pyfeyn.points.Point-class.html#arg">arg</a></code>,
       <code><a href="pyfeyn.points.Point-class.html#distance">distance</a></code>,
       <code><a href="pyfeyn.points.Point-class.html#draw">draw</a></code>,
@@ -164,6 +185,7 @@ Base class for all blob-like objects in Feynman diagrams<br /><br />
       <code><a href="pyfeyn.points.Point-class.html#getY">getY</a></code>,
       <code><a href="pyfeyn.points.Point-class.html#intercept">intercept</a></code>,
       <code><a href="pyfeyn.points.Point-class.html#midpoint">midpoint</a></code>,
+      <code><a href="pyfeyn.points.Point-class.html#removeLabels">removeLabels</a></code>,
       <code><a href="pyfeyn.points.Point-class.html#setBlob">setBlob</a></code>,
       <code><a href="pyfeyn.points.Point-class.html#setX">setX</a></code>,
       <code><a href="pyfeyn.points.Point-class.html#setXY">setXY</a></code>,
@@ -211,7 +233,7 @@ Base class for all blob-like objects in Feynman diagrams<br /><br />
     <br /><em class="fname">(Constructor)</em>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="pyfeyn.blobs-pysrc.html#Blob.__init__">source&nbsp;code</a></span>&nbsp;</span
+    >&nbsp;</span
     ></td>
   </table>
   
@@ -234,7 +256,7 @@ Base class for all blob-like objects in Feynman diagrams<br /><br />
         <span class="sig-arg">strokestyle</span>)</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="pyfeyn.blobs-pysrc.html#Blob.setStrokeStyle">source&nbsp;code</a></span>&nbsp;</span
+    >&nbsp;</span
     ></td>
   </table>
   
@@ -253,7 +275,7 @@ Base class for all blob-like objects in Feynman diagrams<br /><br />
   <h3 class="epydoc"><span class="sig"><span class="sig-name">clearStrokeStyles</span>(<span class="sig-arg">self</span>)</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="pyfeyn.blobs-pysrc.html#Blob.clearStrokeStyles">source&nbsp;code</a></span>&nbsp;</span
+    >&nbsp;</span
     ></td>
   </table>
   
@@ -273,7 +295,7 @@ Base class for all blob-like objects in Feynman diagrams<br /><br />
         <span class="sig-arg">fillstyle</span>)</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="pyfeyn.blobs-pysrc.html#Blob.setFillStyle">source&nbsp;code</a></span>&nbsp;</span
+    >&nbsp;</span
     ></td>
   </table>
   
@@ -292,7 +314,7 @@ Base class for all blob-like objects in Feynman diagrams<br /><br />
   <h3 class="epydoc"><span class="sig"><span class="sig-name">clearFillStyles</span>(<span class="sig-arg">self</span>)</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="pyfeyn.blobs-pysrc.html#Blob.clearFillStyles">source&nbsp;code</a></span>&nbsp;</span
+    >&nbsp;</span
     ></td>
   </table>
   
@@ -312,7 +334,7 @@ Base class for all blob-like objects in Feynman diagrams<br /><br />
         <span class="sig-arg">trafo</span>)</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="pyfeyn.blobs-pysrc.html#Blob.addTrafo">source&nbsp;code</a></span>&nbsp;</span
+    >&nbsp;</span
     ></td>
   </table>
   
@@ -331,7 +353,7 @@ Base class for all blob-like objects in Feynman diagrams<br /><br />
   <h3 class="epydoc"><span class="sig"><span class="sig-name">clearTrafos</span>(<span class="sig-arg">self</span>)</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="pyfeyn.blobs-pysrc.html#Blob.clearTrafos">source&nbsp;code</a></span>&nbsp;</span
+    >&nbsp;</span
     ></td>
   </table>
   
@@ -351,7 +373,7 @@ Base class for all blob-like objects in Feynman diagrams<br /><br />
         <span class="sig-arg">points</span>)</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="pyfeyn.blobs-pysrc.html#Blob.setPoints">source&nbsp;code</a></span>&nbsp;</span
+    >&nbsp;</span
     ></td>
   </table>
   
@@ -387,7 +409,7 @@ Base class for all blob-like objects in Feynman diagrams<br /><br />
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">Generated by Epydoc
-        3.0alpha3 on Fri Feb  9 00:16:37 2007</td>
+        3.0alpha3 on Sat Mar 17 13:08:44 2007</td>
     <td align="right" class="footer">
       <a href="http://epydoc.sourceforge.net">http://epydoc.sourceforge.net</a>
     </td>

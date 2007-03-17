@@ -4,9 +4,9 @@ from pyx import *
 from copy import *
 import math
 
-from diagrams import FeynDiagram
-from utils import Visible
-from deco import PointLabel
+from pyfeyn.diagrams import FeynDiagram
+from pyfeyn.utils import Visible
+from pyfeyn.deco import PointLabel
 
 
 ## Point base class
@@ -248,6 +248,8 @@ class DecoratedPoint(Point, Visible):
 class Vertex(DecoratedPoint):
     """Vertex is an alias for DecoratedPoint"""
     pass
+
+
 
 
 # A square marker

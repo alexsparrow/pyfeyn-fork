@@ -1,9 +1,8 @@
 """A couple of classes for decorating diagram elements."""
 
 import pyx, math
-from diagrams import FeynDiagram
-#from points import Point
-from utils import Visible
+from pyfeyn.diagrams import FeynDiagram
+from pyfeyn.utils import Visible
 
 
 ## Arrow decorator class
@@ -29,12 +28,9 @@ class Arrow(pyx.deco.deco, pyx.attr.attr):
 class Label(Visible):
     """General label, unattached to any diagram elements"""
     def __init__(self, text, pos=None, x=None, y=None):
-        if pos != None:
-            self.pos = pos
-        elif x != None and y != None:
-            self.pos = Point(x, y)
-        else:
-            self.pos = Point(0, 0)
+        self.x, self.y = 0, 0
+        if x != None: self.x = x
+        if y != None: self.y = y
         self.size = pyx.text.size.normalsize
         self.text = text
         self.textattrs = []
@@ -44,7 +40,7 @@ class Label(Visible):
 
     def draw(self, canvas):
         textattrs = pyx.attr.mergeattrs([pyx.text.halign.center, pyx.text.vshift.mathaxis, self.size] + self.textattrs)
-        t = pyx.text.defaulttexrunner.text(self.pos.getX(), self.pos.getY(), self.text, textattrs)
+        t = pyx.text.defaulttexrunner.text(self.x, self.y, self.text, textattrs)
         canvas.insert(t)
 
 
