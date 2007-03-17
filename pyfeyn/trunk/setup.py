@@ -1,7 +1,11 @@
 #! /usr/bin/env python
 
+## Get setuptools
+import ez_setup
+ez_setup.use_setuptools()
 from setuptools import setup
 
+## Setup definition
 setup(name = 'pyfeyn',
       version = '0.2.0b1',
       packages = ['pyfeyn'],
