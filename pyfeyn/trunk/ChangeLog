@@ -1,3 +1,11 @@
+2007-03-18  Andy Buckley  <andy@insectnation.org>
+
+	* Added layer-based sorting of the object list before drawing, and
+	a get/setDepth() method via the Visible interface.
+
+	* Tidied up a bit: inparticular, removed a mutual dependence bug
+	between the deco and points modules.
+
 2007-03-07  Andy Buckley  <andy@insectnation.org>
 
 	* Added point-attached labels.

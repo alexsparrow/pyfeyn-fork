@@ -10,8 +10,8 @@ import pyx
 
 ## Version check
 import re
-majorversionstr = re.sub(r"(\d+\.\d+).*", r"\1", pyx.version.version)
-if float(majorversionstr) < 0.9:
+_majorversionstr = re.sub(r"(\d+\.\d+).*", r"\1", pyx.version.version)
+if float(_majorversionstr) < 0.9:
     print "Warning: PyFeyn may not work with PyX versions older than 0.9!"
 
 

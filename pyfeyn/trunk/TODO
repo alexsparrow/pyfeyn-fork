@@ -3,8 +3,6 @@ PyFeyn TODO
 
  * Fix pattern stroke colour problem.
 
- * Add specific layer choice when making/adding objects.
-
  * Provide blob-attached labels.
 
  * Add unattached and line-parallel arrows (useful for momenta, helicities etc.)
