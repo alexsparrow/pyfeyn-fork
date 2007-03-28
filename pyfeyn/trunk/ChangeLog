@@ -1,6 +1,8 @@
 2007-03-28  Georg von Hippel <gmv22@cantab.net>
 
 	* Started to repair the FeynML module
+	* Fixed a bug in lines.py (never use == or != with None, use is/is not
+	  instead).
 
 2007-03-18  Andy Buckley  <andy@insectnation.org>
 

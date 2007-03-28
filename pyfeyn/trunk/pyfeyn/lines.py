@@ -87,9 +87,9 @@ class Line(Visible):
     def arcThru(self, arcpoint = None, x = None, y = None):
         """Set the point through which this line will arc. Either pass a Point
         or set x, y as floats."""
-        if arcpoint != None:
+        if arcpoint is not None:
             self.arcthrupoint = arcpoint
-        elif x != None and y != None:
+        elif x is not None and y is not None:
             self.arcthrupoint = Point(x, y)
         else:
             raise Exception("Tried to set an arcpoint with invalid arguments")
@@ -148,7 +148,7 @@ class Line(Visible):
 
 
     def getPath(self):
-        if self.arcthrupoint == None:
+        if self.arcthrupoint is None:
             ## This is a simple straight line
             return pyx.path.path( pyx.path.moveto( *(self.p1.getXY()) ),
                               pyx.path.lineto( *(self.p2.getXY()) ) )
