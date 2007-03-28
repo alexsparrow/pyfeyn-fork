@@ -3,13 +3,22 @@
 import pyx
 import re
 
+class optionset:
+    """A container for options."""
+
+    def __init__(self):
+        self.DEBUG = None
+        self.VDEBUG = None
+
 ## Diagram class
 class FeynDiagram:
     """The main PyFeyn diagram class."""
     
     currentDiagram = None
     currentCanvas = None
-    options = None
+    options = optionset() 
+    options.DEBUG = None
+    options.VDEBUG = None
 
     "Objects for holding a set of Feynman diagram components"
     def __init__(self, objects = []):

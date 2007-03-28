@@ -1,3 +1,7 @@
+2007-03-28  Georg von Hippel <gmv22@cantab.net>
+
+	* Started to repair the FeynML module
+
 2007-03-18  Andy Buckley  <andy@insectnation.org>
 
 	* Added layer-based sorting of the object list before drawing, and
@@ -97,12 +101,12 @@
 	* Added	"visible line" functionality, so that lines whose ends are
 	attached to Blobs will only be deformed and drawn for the portion 
 	outside the blobs.
-	
+
 2006-09-25  Andy Buckley  <andy@insectnation.org>
 
 	* Moved XML functionality out of classes and into an external
 	module. Currently broken.
-	
+
 2006-06-30  Georg von Hippel <gmv22@cantab.net>, <vonhippg@uregina.ca>
 
 	* Added rudimentary style support to feynML read/write functions

@@ -4,9 +4,9 @@ from pyx import *
 from copy import *
 import math
 
-from pyfeyn.diagrams import FeynDiagram
-from pyfeyn.utils import Visible
-from pyfeyn.deco import PointLabel
+from diagrams import FeynDiagram
+from utils import Visible
+from deco import PointLabel
 
 
 ## Point base class

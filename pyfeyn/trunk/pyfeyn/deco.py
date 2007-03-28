@@ -1,8 +1,8 @@
 """A couple of classes for decorating diagram elements."""
 
 import pyx, math
-from pyfeyn.diagrams import FeynDiagram
-from pyfeyn.utils import Visible
+from diagrams import FeynDiagram
+from utils import Visible
 
 
 ## Arrow decorator class

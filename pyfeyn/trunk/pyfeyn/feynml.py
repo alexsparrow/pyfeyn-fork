@@ -2,7 +2,12 @@
 
 import math, pyx, md5
 from xml.dom.minidom import *
-
+from elementtree.ElementTree import ElementTree
+from diagrams import FeynDiagram
+from lines import *
+from points import *
+from deco import *
+from blobs import *
 
 class FeynMLWriter:
     """Class to write a FeynML representation of a Feynman diagram."""
@@ -65,7 +70,8 @@ class FeynMLReader:
 
     def __init__(self, filename):
         """Read FeynML from a file."""
-        self.root = elementtree.parse(filename).getroot()
+        elementtree = ElementTree()
+        self.root = elementtree.parse(filename) #.getroot()
         self.diagrams = []
         self.dicts = []
         if self.root.tag != "feynml":
@@ -81,7 +87,7 @@ class FeynMLReader:
 
     def get_diagram(self,n):
         """Return the nth Feynman diagram represented by file contents."""
-        fd = feyn.FeynDiagram()
+        fd = FeynDiagram()
         thediagram = self.diagrams[n]
         thedict = self.dicts[n]
         for element in thediagram:
@@ -109,11 +115,11 @@ class FeynMLReader:
             y = float(element.attrib["y"])
         except:
             raise "FeynML Error: invalid x,y attributes for <vertex> element"
-        v = feyn.DecoratedPoint(x,y)
+        v = DecoratedPoint(x,y)
         if "style" in element.attrib:
             v = self.apply_layout(element.attrib["style"],v)
         if "label" in element.attrib:
-            v = v.fillstyle(feyn.FreeTeXLabel(element.attrib["label"],x,y,displace=3*pyx.unit.t_pt,angle=90))
+            v = v.setFillstyles(PointLabel(v,element.attrib["label"],displace=3,angle=90))
         try:
             thedict[element.attrib["id"]] = v
         except:
@@ -129,13 +135,13 @@ class FeynMLReader:
             p2 = thedict[element.attrib["target"]]
         except:
             raise "FeynML Error: invalid attribute for <propagator> element"
-        l = feyn.NamedLine[type](p1,p2)
+        l = NamedLine[type](p1,p2)
         if "bend" in element.attrib:
             l.bend(float(element.attrib["bend"]))
         if "style" in element.attrib:
             l = self.apply_layout(element.attrib["style"],l)
         if "label" in element.attrib:
-            l = l.style(feyn.TeXLabel(element.attrib["label"]))
+            l = l.style(Label(element.attrib["label"]))
         try:
             thedict[element.attrib["id"]] = l
         except:
@@ -152,11 +158,11 @@ class FeynMLReader:
             p2 = thedict[element.attrib["target"]]
         except:
             raise "FeynML Error: invalid attribute for <leg> element"
-        l = feyn.NamedLine[type](feyn.Point(x,y),p2)
+        l = NamedLine[type](Point(x,y),p2)
         if "style" in element.attrib:
             l = self.apply_layout(element.attrib["style"],l)
         if "label" in element.attrib:
-            l = l.style(feyn.TeXLabel(element.attrib["label"]))
+            l = l.style(Label(element.attrib["label"]))
         try:
             thedict[element.attrib["id"]] = l
         except:
@@ -172,11 +178,12 @@ class FeynMLReader:
             radius = float(element.attrib["radius"])
         except:
             raise "FeynML Error: invalid attribute for <blob> element"
-        b = feyn.NamedBlob[shape](x,y,radius)
+        b = NamedBlob[shape](x=x,y=y,radius=radius)
         if "style" in element.attrib:
             b = self.apply_layout(element.attrib["style"],b)
         if "label" in element.attrib:
-            b = b.strokestyle(feyn.FreeTeXLabel(element.attrib["label"],x,y))
+            pass
+            #b = b.setFillStyle(PointLabel(element.attrib["label"],x,y))
         try:
             thedict[element.attrib["id"]] = b
         except:
@@ -199,11 +206,11 @@ class FeynMLReader:
         except:
             raise "FeynML Error: invalid direction %s"%direction
         if parent.blobshape == "circle":
-            x = parent.centre.x() + parent.radius*math.cos(angle)
-            y = parent.centre.y() + parent.radius*math.sin(angle)
+            x = parent.x() + parent.radius*math.cos(angle)
+            y = parent.y() + parent.radius*math.sin(angle)
         else:
             raise "*** TODO *** connecting to non-circles not yet implemented !!"
-        p = feyn.Point(x,y)
+        p = DecoratedPoint(x,y)
         try:
             thedict[element.attrib["id"]] = p
         except:
@@ -214,9 +221,9 @@ class FeynMLReader:
         """Apply the decorators encoded in a style string to an object."""
         styleelements = stylestring.split(";")
         for styling in styleelements:
-            if styling[:10] == "mark-shape" and isinstance(object,feyn.DecoratedPoint):
-                object.mark(feyn.NamedMark[styling[11:]])
-            elif styling[:9] == "mark-size" and isinstance(object,feyn.DecoratedPoint):
+            if styling[:10] == "mark-shape" and isinstance(object,DecoratedPoint):
+                object.mark(NamedMark[styling[11:]])
+            elif styling[:9] == "mark-size" and isinstance(object,DecoratedPoint):
                 object.size(float(styling[10:]))
             else:
                 pass 
@@ -233,6 +240,5 @@ if __name__=="__main__":
    reader = FeynMLReader(sys.argv[1])
    _f = reader.get_diagram(0)
    _c = pyx.canvas.canvas()
-   _f.draw(_c)
-   c.writeEPSfile(sys.argv[1])
+   _f.draw(sys.argv[1]+".eps")
 

@@ -1,6 +1,6 @@
 """Utility functions and classes for PyFeyn"""
 import pyx
-from pyfeyn.diagrams import FeynDiagram
+from diagrams import FeynDiagram
 
 
 ## Default units
