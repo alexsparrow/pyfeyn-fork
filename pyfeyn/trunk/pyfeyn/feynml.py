@@ -182,8 +182,7 @@ class FeynMLReader:
         if "style" in element.attrib:
             b = self.apply_layout(element.attrib["style"],b)
         if "label" in element.attrib:
-            pass
-            #b = b.setFillStyle(PointLabel(element.attrib["label"],x,y))
+            b.addLabel(element.attrib["label"])
         try:
             thedict[element.attrib["id"]] = b
         except:

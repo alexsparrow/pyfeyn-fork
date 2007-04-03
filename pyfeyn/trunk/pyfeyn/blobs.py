@@ -6,6 +6,7 @@ import math
 from diagrams import FeynDiagram
 from points import Point
 from utils import Visible
+from deco import PointLabel
 
 
 ## Blob base class
@@ -46,6 +47,21 @@ class Blob(Point, Visible):
         else:
             self.points = []
 
+    def addLabel(self, text, displace=-0.15, angle = 0):
+        if FeynDiagram.options.DEBUG:
+            print "Adding label: " + text
+        self.labels.append(PointLabel(text=text, point=self, displace=displace, angle=angle))
+        if FeynDiagram.options.DEBUG:
+            print "Labels = " + str(self.labels)
+        return self
+
+    def removeLabels(self):
+        self.labels = []
+        return self
+
+
+
+
 
 
 
@@ -77,6 +93,7 @@ class Circle(Blob):
         self.fillstyles = fill
         self.strokestyles = stroke
         self.trafos = []
+        self.labels = []
         ## Add this to the current diagram automatically
         FeynDiagram.currentDiagram.add(self)
         
@@ -87,6 +104,9 @@ class Circle(Blob):
         canvas.fill(self.getPath(), [color.rgb.white])
         canvas.fill(self.getPath(), self.fillstyles)
         canvas.stroke(self.getPath(), self.strokestyles)
+        for l in self.labels:
+            l.draw(canvas)
+
 
 
 ## Ellipse class (a kind of Blob)
@@ -127,7 +147,8 @@ class Ellipse(Blob):
         self.fillstyles = fill
         self.strokestyles = stroke
         self.trafos = []
-        
+        self.labels = []
+    
         ## Add this to the current diagram automatically
         FeynDiagram.currentDiagram.add(self)
 
@@ -172,6 +193,8 @@ class Ellipse(Blob):
         canvas.fill(self.getPath(), self.fillstyles)
         #canvas.stroke(self.getPath(), [color.rgb.white])
         canvas.stroke(self.getPath(), self.strokestyles)
+        for l in self.labels:
+            l.draw(canvas)
 
 
 ## A dictionary to map feynML blob shape choices to blob classes
