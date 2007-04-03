@@ -1,8 +1,7 @@
 """PyFeyn interface to the proposed FeynML XML dialect."""
 
 import math, pyx, md5
-from xml.dom.minidom import *
-from elementtree.ElementTree import ElementTree
+from elementtree.ElementTree import *
 from diagrams import FeynDiagram
 from lines import *
 from points import *
@@ -16,46 +15,79 @@ class FeynMLWriter:
         """Write FeynML to a file."""
         pass
       
+    def diagramToXML(self,fd):
+        root = Element("diagram")
+        self.objects = fd._FeynDiagram__objs
+        self.ids = []
+        for obj in self.objects:
+            if isinstance(obj,Blob):
+               root.append(self.blobToXML(obj))
+            elif isinstance(obj,Line):
+               l,p1,p2 = self.lineToXML(obj)
+               if p1 is not None:
+                  root.append(p1)
+               if p2 is not None:
+                  root.append(p2)
+               root.append(l)
+            elif isinstance(obj,DecoratedPoint):
+               root.append(self.decopointToXML(obj))
+            elif isinstance(obj,Point) and not isinstance(obj,DecoratedPoint):
+               root.append(self.pointToXML(obj))
+            else:
+               print "Can't convert object to XML!"
+        return tostring(root).replace(">",">\n")
 
-    def diagramToXML(self):
-        root = xml.Element("diagram")
-        for obj in self.__objs:
-            root.append(obj.to_xml())
-            return xml.tostring(root).replace(">",">\n")
-
-    def blobToXML(self):
-        ele = xml.Element("blob",
-                          {"id" : "V%s" % md5.md5(str(self.xpos, self.ypos)).hexdigest(),
-                           "x" : str(self.xpos), "y" : str(self.ypos),
-                           "shape" : hasattr(self,"blobshape") and self.blobshape or "circle"})
+    def blobToXML(self,b):
+        attribs = {"id" : "V%s" % md5.md5(str(b.xpos, b.ypos)).hexdigest(),
+                   "x" : str(b.xpos), "y" : str(b.ypos),
+                   "shape" : hasattr(b,"blobshape") and b.blobshape or "circle"}
+        ele = Element("blob", attribs)
+        self.ids.append(attribs["id"])
         return ele
 
-    def lineToXML(self):
-        attribs = {"id":"P%s"%md5.md5(str((self.p1.xpos,self.p1.ypos,self.p2.xpos,self.p2.ypos,self.__arcthrupoint and (self.__arcthrupoint.xpos,self.__arcthrupoint.ypos)))).hexdigest(),
-                   "source":"V%s"%md5.md5(str((self.p1.xpos,self.p1.ypos))).hexdigest(),
-                   "target":"V%s"%md5.md5(str((self.p2.xpos,self.p2.ypos))).hexdigest(),
-                   "type":hasattr(self,"linetype") and self.linetype or "fermion"}
-        if self.bendamount:
-            attribs["bend"] = str(self.bendamount)
-        ele = xml.Element("propagator",attribs)
+    def lineToXML(self,l):
+        sourceid = "V%s"%md5.md5(str((l.p1.xpos,l.p1.ypos))).hexdigest()
+        if sourceid not in self.ids:
+           s1 = self.pointToXML(l.p1)
+        else:
+           s1 = None 
+        targetid = "V%s"%md5.md5(str((l.p2.xpos,l.p2.ypos))).hexdigest()
+        if targetid not in self.ids:
+           s2 = self.pointToXML(l.p2)
+        else:
+           s2 = None
+        attribs = {"id":"P%s"%md5.md5(str((l.p1.xpos,l.p1.ypos,l.p2.xpos,l.p2.ypos,l.arcthrupoint and (l.arcthrupoint.xpos,l.arcthrupoint.ypos)))).hexdigest(),
+                   "source":sourceid,
+                   "target":targetid,
+                   "type":hasattr(l,"linetype") and l.linetype or "fermion"}
+        if l.arcthrupoint:
+           middle = l.p1.midpoint(l.p2)
+           nx = (middle.y() - l.p1.y()) / abs(l.p1.distance(middle))
+           vx = middle.x() - l.p1.x()
+           bendamount = (l.arcthrupoint.x()-middle.x())/nx
+           attribs["bend"] = str(bendamount)
+        ele = Element("propagator",attribs)
+        self.ids.append(attribs["id"])
+        return ele,s1,s2
+
+    def pointToXML(self,p):
+        attribs = {"id":"V%s"%md5.md5(str((p.xpos,p.ypos))).hexdigest(),"x":str(p.xpos), "y":str(p.ypos)}
+        ele = Element("vertex",attribs)
+        self.ids.append(attribs["id"])
         return ele
 
-    def pointToXML(self):
-        ele = xml.Element("vertex",{"id":"V%s"%md5.md5(str((self.xpos,self.ypos))).hexdigest(),"x":str(self.xpos), "y":str(self.ypos)})
-        return ele
-
-    def decopointToXML(self):
-        ele = Point.to_xml(self)
+    def decopointToXML(self,p):
+        ele = self.pointToXML(p)
         fills = ""
-        for x in self.fillstyles:
+        for x in p.fillstyles:
             if isinstance(x,pyx.color.rgb):
                 fills = fills + " #%02x%02x%02x"%(255*x.color["r"], 255*x.color["g"], 255*x.color["b"])
         strokes = ""
-        for x in self.strokestyles:
+        for x in p.strokestyles:
             if isinstance(x,pyx.color.rgb):
                 strokes = strokes + " #%02x%02x%02x"%(255*x.color["r"], 255*x.color["g"],255*x.color["b"])
         s = "mark-shape:%s;mark-size:%s;fill-style:%s;line-style:%s;" % \
-            (MarkedName[self.marker],pyx.unit.tocm(self.radius), fills,strokes )
+            (MarkedName[p.marker],pyx.unit.tocm(p.radius), fills,strokes )
         ele.attrib["style"] = s
         return ele
 

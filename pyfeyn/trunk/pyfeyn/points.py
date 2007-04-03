@@ -256,5 +256,5 @@ class Vertex(DecoratedPoint):
 _square = lambda x, y, r : box.rect(x-r, y-r, 2*r, 2*r)
 
 # A dictionary mapping feynML "mark" choices to marker classes
-NamedMark = {"square": _square, "circle": path.circle}
-MarkedName = {_square: "square", path.circle : "circle"}
+NamedMark = {"none": None, "square": _square, "circle": path.circle}
+MarkedName = {None: "none", _square: "square", path.circle : "circle"}
