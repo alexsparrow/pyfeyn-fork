@@ -291,3 +291,7 @@ class CircleMark(Mark):
             x, y = self.point.getXY()
             return path.circle(x, y, self.radius).path()
         return None
+
+## Convenience constants
+CIRCLE = CircleMark()
+SQUARE = SquareMark()
