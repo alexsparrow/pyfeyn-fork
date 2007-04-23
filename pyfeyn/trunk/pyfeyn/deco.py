@@ -29,8 +29,8 @@ class Label(Visible):
     """General label, unattached to any diagram elements"""
     def __init__(self, text, pos=None, x=None, y=None):
         self.x, self.y = 0, 0
-        if x != None: self.x = x
-        if y != None: self.y = y
+        if x is not None: self.x = x
+        if y is not None: self.y = y
         self.size = pyx.text.size.normalsize
         self.text = text
         self.textattrs = []

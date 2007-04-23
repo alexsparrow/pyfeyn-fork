@@ -9,6 +9,16 @@ from utils import Visible
 from deco import PointLabel
 
 
+def midpoint(point1, point2):
+    "Return the point midway between this point and the argument."
+    return Point( (point1.getX() + point2.getX()) / 2.0,
+                  (point1.getY() + point2.getY()) / 2.0 )
+
+def distance(point1, point2):
+    "Calculate the distance between this point and the argument."
+    return math.hypot(point1.x()-point2.x(), point1.y()-point2.y())
+
+
 ## Point base class
 class Point:
     """Base class for all pointlike objects in Feynman diagrams."""
@@ -62,12 +72,11 @@ class Point:
 
     def midpoint(self, otherpoint):
         "Return the point midway between this point and the argument."
-        return Point( (self.getX() + otherpoint.getX()) / 2.0,
-                      (self.getY() + otherpoint.getY()) / 2.0 )
+        return midpoint(self, otherpoint)
 
     def distance(self, otherpoint):
         "Calculate the distance between this point and the argument."
-        return math.hypot(self.x()-otherpoint.x(), self.y()-otherpoint.y()) 
+        return distance(self, otherpoint)
 
     def intercept(self, otherpoint):
         "Return the y-intercept of the straight line defined by this point and the argument."
@@ -167,21 +176,13 @@ class DecoratedPoint(Point, Visible):
     "Class for a point drawn with a marker"
     def __init__(self, xpos, ypos,
                  mark = None,
-                 size = 0.1,
+                 blob = None,
                  fill = [color.rgb.black],
-                 stroke = [color.rgb.black],
-                 blob = None):
+                 stroke = [color.rgb.black]):
         self.setXY(xpos, ypos)
         self.labels = []
-        
-        if mark != None:
-           self.marker = NamedMark[mark]
-           self.radius = size
-        else:
-           self.marker = None
-           self.radius = 0 
-
-        self.blob = blob
+        self.setMark(mark)
+        self.setBlob(blob)
         self.fillstyles = copy( fill ) # lists are mutable --
         self.strokestyles = copy( stroke ) # hence make a copy!
         ## Add this to the current diagram automatically
@@ -189,22 +190,30 @@ class DecoratedPoint(Point, Visible):
 
     def getPath(self):
         if self.blob:
-            return self.blob.getPath()
+            return self.getBlob().getPath()
         elif self.marker:
-            return self.marker(self.xpos, self.ypos, self.radius).path()
+            return self.getMark().getPath()
         else:
             return None
 
-    def mark(self, mark, size=None):
+    def getMark(self):
+        return self.marker
+
+    def setMark(self, mark):
         self.marker = mark
-        if size is not None:
-           self.radius = size
-        if size is None and self.radius == 0: # change shape of a true point?
-           self.radius = 4*unit.t_pt # probably want to use default size
+        if self.marker is not None:
+            self.marker.setPoint(self)
+        # if size is None and self.radius == 0: # change shape of a true point?
+        #     self.radius = 4*unit.t_pt # probably want to use default size
         return self
 
-    def size(self, size):
-        self.radius = size
+    def getBlob(self):
+        return self.blob
+
+    def setBlob(self, blob):
+        self.blob = blob
+        if self.blob is not None:
+            self.blob.setPoint(self)
         return self
 
     def getFillstyles(self):
@@ -245,16 +254,40 @@ class DecoratedPoint(Point, Visible):
             l.draw(canvas)
 
 
-class Vertex(DecoratedPoint):
-    """Vertex is an alias for DecoratedPoint"""
-    pass
+## Vertex is an alias for DecoratedPoint
+Vertex = DecoratedPoint
+    
+
+class Mark:
+    def getPoint(self):
+        return self.point
+
+    def setPoint(self, point):
+        self.point = point
+        return self
 
 
+class SquareMark(Mark):
+    def __init__(self,
+                 size = 0.075):
+        self.size = size
+        self.point = None
+        
+    def getPath(self):
+        if self.getPoint() is not None:
+            x, y = self.point.getXY()
+            return box.rect(x-self.size, y-self.size, 2*self.size, 2*self.size).path()
+        return None    
 
 
-# A square marker
-_square = lambda x, y, r : box.rect(x-r, y-r, 2*r, 2*r)
-
-# A dictionary mapping feynML "mark" choices to marker classes
-NamedMark = {"none": None, "square": _square, "circle": path.circle}
-MarkedName = {None: "none", _square: "square", path.circle : "circle"}
+class CircleMark(Mark):
+    def __init__(self,
+                 size = 0.075):
+        self.radius = size
+        self.point = None
+        
+    def getPath(self):
+        if self.point is not None:
+            x, y = self.point.getXY()
+            return path.circle(x, y, self.radius).path()
+        return None

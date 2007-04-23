@@ -82,9 +82,9 @@ class Circle(Blob):
         else:
             raise Exception("No (or zero) radius specified for blob.")
 
-        if x != None and y != None:
+        if x is not None and y is not None:
             self.setXY(x, y)
-        elif center != None:
+        elif center is not None:
             self.setXY(center.getX(), center.getY())
         else:
             raise Exception("No center specified for blob.")
@@ -122,9 +122,9 @@ class Ellipse(Blob):
                  stroke = [color.rgb.black],
                  points = None):
         
-        if x != None and y != None:
+        if x is not None and y is not None:
             self.setXY(x, y)
-        elif center != None:
+        elif center is not None:
             self.setXY(center.getX(), center.getY())
         else:
             raise Exception("No center specified for blob.")

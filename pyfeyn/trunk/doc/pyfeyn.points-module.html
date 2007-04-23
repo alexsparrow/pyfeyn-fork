@@ -95,8 +95,29 @@ Various types of points for vertices etc.<br /><br />
   <td width="15%" align="right" valign="top" class="summary">
     <code class="summary-type">&nbsp;</code>
   </td><td class="summary">
-    <a href="pyfeyn.points.Vertex-class.html">Vertex</a><br />
-      Vertex is an alias for DecoratedPoint
+    <a href="pyfeyn.points.DecoratedPoint-class.html">Vertex</a><br />
+      Class for a point drawn with a marker
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <code class="summary-type">&nbsp;</code>
+  </td><td class="summary">
+    <a href="pyfeyn.points.Mark-class.html">Mark</a>
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <code class="summary-type">&nbsp;</code>
+  </td><td class="summary">
+    <a href="pyfeyn.points.SquareMark-class.html">SquareMark</a>
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <code class="summary-type">&nbsp;</code>
+  </td><td class="summary">
+    <a href="pyfeyn.points.CircleMark-class.html">CircleMark</a>
   </td>
 </tr>
 </table>
@@ -119,47 +140,22 @@ Various types of points for vertices etc.<br /><br />
     </table>
   </td>
 </tr>
-<tr class="private">
+<tr>
   <td width="15%" align="right" valign="top" class="summary">
     <code class="summary-type">&nbsp;</code>
   </td><td class="summary">
-    <span class="summary-sig"><a href="pyfeyn.points-module.html#_square" class="summary-sig-name">_square</a>(<span class="summary-sig-arg">x</span>,
-        <span class="summary-sig-arg">y</span>,
-        <span class="summary-sig-arg">r</span>)</span>
-  </td>
-</tr>
-</table>
-
-<br />
-<!-- ==================== VARIABLES ==================== -->
-<a name="section-Variables"></a>
-<table class="summary" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr bgcolor="#70b0f0" class="table-header">
-  <td colspan="2" class="table-header">
-    <table border="0" cellpadding="0" cellspacing="0" width="100%">
-      <tr valign="top">
-        <td align="left"><span class="table-header">Variables</span></td>
-        <td align="right" valign="top"
-         ><span class="options">[<a href="#section-Variables"
-         class="privatelink" onclick="toggle_private();"
-         >hide private</a>]</span></td>
-      </tr>
-    </table>
+    <span class="summary-sig"><a href="pyfeyn.points-module.html#midpoint" class="summary-sig-name">midpoint</a>(<span class="summary-sig-arg">point1</span>,
+        <span class="summary-sig-arg">point2</span>)</span><br />
+      Return the point midway between this point and the argument.
   </td>
 </tr>
 <tr>
   <td width="15%" align="right" valign="top" class="summary">
     <code class="summary-type">&nbsp;</code>
   </td><td class="summary">
-    <a href="pyfeyn.points-module.html#NamedMark">NamedMark</a> = <code title="{'circle': &lt;class 'pyx.path.circle'&gt;, 'square': &lt;function &lt;lambda&gt; at 0xb7a241b4&gt;}">{'circle': &lt;class 'pyx.path.circle'&gt;, 'square': &lt;fun...</code>
-  </td>
-</tr>
-<tr>
-  <td width="15%" align="right" valign="top" class="summary">
-    <code class="summary-type">&nbsp;</code>
-  </td><td class="summary">
-    <a href="pyfeyn.points-module.html#MarkedName">MarkedName</a> = <code title="{&lt;class 'pyx.path.circle'&gt;: 'circle', &lt;function &lt;lambda&gt; at 0xb7a241b4&gt;: 'square'}">{&lt;class 'pyx.path.circle'&gt;: 'circle', &lt;function &lt;lam...</code>
+    <span class="summary-sig"><a href="pyfeyn.points-module.html#distance" class="summary-sig-name">distance</a>(<span class="summary-sig-arg">point1</span>,
+        <span class="summary-sig-arg">point2</span>)</span><br />
+      Calculate the distance between this point and the argument.
   </td>
 </tr>
 </table>
@@ -183,77 +179,43 @@ Various types of points for vertices etc.<br /><br />
   </td>
 </tr>
 </table>
-<a name="_square"></a>
-<div class="private">
+<a name="midpoint"></a>
+<div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">_square</span>(<span class="sig-arg">x</span>,
-        <span class="sig-arg">y</span>,
-        <span class="sig-arg">r</span>)</span>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">midpoint</span>(<span class="sig-arg">point1</span>,
+        <span class="sig-arg">point2</span>)</span>
   </h3>
   </td><td align="right" valign="top"
     >&nbsp;</span
     ></td>
   </table>
   
-  None
+  Return the point midway between this point and the argument.
   <dl><dt></dt><dd>
   </dd></dl>
 </td></tr></table>
 </div>
-<br />
-<!-- ==================== VARIABLES DETAILS ==================== -->
-<a name="section-VariablesDetails"></a>
-<table class="summary" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr bgcolor="#70b0f0" class="table-header">
-  <td colspan="2" class="table-header">
-    <table border="0" cellpadding="0" cellspacing="0" width="100%">
-      <tr valign="top">
-        <td align="left"><span class="table-header">Variables Details</span></td>
-        <td align="right" valign="top"
-         ><span class="options">[<a href="#section-VariablesDetails"
-         class="privatelink" onclick="toggle_private();"
-         >hide private</a>]</span></td>
-      </tr>
-    </table>
-  </td>
-</tr>
-</table>
-<a name="NamedMark"></a>
+<a name="distance"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
-  <h3 class="epydoc">NamedMark</h3>
-  None
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">distance</span>(<span class="sig-arg">point1</span>,
+        <span class="sig-arg">point2</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Calculate the distance between this point and the argument.
   <dl><dt></dt><dd>
-    <dl><dt>Value:</dt>
-      <dd><table><tr><td><pre class="variable">
-{'circle': &lt;class 'pyx.path.circle'&gt;,
- 'square': &lt;function &lt;lambda&gt; at 0xb7a241b4&gt;}                          
-      </pre></td></tr></table></dd>
-    </dl>
-  </dd></dl>
-</td></tr></table>
-</div>
-<a name="MarkedName"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <h3 class="epydoc">MarkedName</h3>
-  None
-  <dl><dt></dt><dd>
-    <dl><dt>Value:</dt>
-      <dd><table><tr><td><pre class="variable">
-{&lt;function &lt;lambda&gt; at 0xb7a241b4&gt;: 'square',
- &lt;class 'pyx.path.circle'&gt;: 'circle'}                                  
-      </pre></td></tr></table></dd>
-    </dl>
   </dd></dl>
 </td></tr></table>
 </div>
@@ -284,7 +246,7 @@ Various types of points for vertices etc.<br /><br />
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">Generated by Epydoc
-        3.0alpha3 on Sun Mar 18 19:31:05 2007</td>
+        3.0alpha3 on Mon Apr 23 15:31:46 2007</td>
     <td align="right" class="footer">
       <a href="http://epydoc.sourceforge.net">http://epydoc.sourceforge.net</a>
     </td>

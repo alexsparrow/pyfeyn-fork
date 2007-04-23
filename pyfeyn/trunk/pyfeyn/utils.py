@@ -37,8 +37,13 @@ class Visible:
         
     def __cmp__(self, other):
         """Compare with another visible class, just using layers."""
+        #print "@" + str(other.__class__) + "@"
+        if other is None:
+            return -1
+
         if FeynDiagram.options.DEBUG:
             print "Comparing visible classes: ", \
                   self.__class__, "->", self.getDepth(), "vs.", \
                   other.__class__, "->", other.getDepth()
-        return cmp(self.getDepth(), other.getDepth())
+        else:
+            return cmp(self.getDepth(), other.getDepth())
