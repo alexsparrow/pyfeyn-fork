@@ -8,6 +8,8 @@ from points import *
 from deco import *
 from blobs import *
 
+NamedMark = { "none" : lambda:None, "circle" : CircleMark, "square" : SquareMark }
+
 class FeynMLWriter:
     """Class to write a FeynML representation of a Feynman diagram."""
    
@@ -251,13 +253,20 @@ class FeynMLReader:
     def apply_layout(self,stylestring,object):
         """Apply the decorators encoded in a style string to an object."""
         styleelements = stylestring.split(";")
+        styledict = {}
         for styling in styleelements:
-            if styling[:10] == "mark-shape" and isinstance(object,DecoratedPoint):
-                object.mark(NamedMark[styling[11:]])
-            elif styling[:9] == "mark-size" and isinstance(object,DecoratedPoint):
-                object.size(float(styling[10:]))
-            else:
-                pass 
+            if styling=="":
+               break
+            s = styling.split(":")
+            styledict[s[0]] = s[1]
+        if styledict.has_key("mark-shape") and isinstance(object,DecoratedPoint):
+                marktype = NamedMark[styledict["mark-shape"]]
+                object.setMark(marktype())
+        if styledict.has_key("mark-size") and isinstance(object,DecoratedPoint):
+                if object.marker is None:
+                   object.setMark(SQUARE)
+                else:
+                   object.setMark(marktype(size=float(styledict["mark-size"])))
         return object
 
 

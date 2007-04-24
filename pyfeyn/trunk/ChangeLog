@@ -1,3 +1,9 @@
+2007-04-24  Georg von Hippel <gmv22@cantab.net>
+
+	* Repaired FeynML support broken by Andy's recent changes.
+
+... Some changes by Andy missing here ...
+
 2007-04-03  Georg von Hippel <gmv22@cantab.net>
 
 	* Added label support for blobs.
