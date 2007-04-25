@@ -1,25 +1,29 @@
 """A couple of classes for decorating diagram elements."""
 
 import pyx, math
-from diagrams import FeynDiagram
-from utils import Visible
+from pyfeyn.diagrams import FeynDiagram
+from pyfeyn.utils import Visible
 
 
 ## Arrow decorator class
 class Arrow(pyx.deco.deco, pyx.attr.attr):
     """Arrow for Feynman diagram lines"""
-    def __init__(self, pos=0.5, size=6*pyx.unit.v_pt, angle=45, constriction=0.8):
+    def __init__(self, pos=0.5, size=6*pyx.unit.v_pt,
+                 angle=45, constriction=0.8):
         self.pos = pos
         self.size = size
         self.angle = angle
         self.constriction = constriction
         
     def decorate(self, dp, texrunner):
+        """Attach arrow to a path (usually a line)."""
         dp.ensurenormpath()
-        constrictionlen = self.size*self.constriction*math.cos(self.angle*math.pi/360.0)
+        constrictionlen = self.size * self.constriction * \
+                          math.cos(self.angle*math.pi/360.0)
         arrowtopos = self.pos * dp.path.arclen()+0.5*self.size
         arrowtopath = dp.path.split(arrowtopos)[0]
-        arrowpath = pyx.deco._arrowhead(arrowtopath, self.pos*dp.path.arclen(), 1, self.size, 45, constrictionlen)
+        arrowpath = pyx.deco._arrowhead(arrowtopath, self.pos*dp.path.arclen(),
+                                        1, self.size, 45, constrictionlen)
         dp.ornaments.fill(arrowpath)
         return dp
 
@@ -29,17 +33,23 @@ class Label(Visible):
     """General label, unattached to any diagram elements"""
     def __init__(self, text, pos=None, x=None, y=None):
         self.x, self.y = 0, 0
-        if x is not None: self.x = x
-        if y is not None: self.y = y
+        if x is not None:
+            self.x = x
+        if y is not None:
+            self.y = y
         self.size = pyx.text.size.normalsize
         self.text = text
         self.textattrs = []
+        self.pos = pos
 
         ## Add this to the current diagram automatically
         FeynDiagram.currentDiagram.add(self)
 
     def draw(self, canvas):
-        textattrs = pyx.attr.mergeattrs([pyx.text.halign.center, pyx.text.vshift.mathaxis, self.size] + self.textattrs)
+        """Draw this label on the supplied canvas."""
+        textattrs = pyx.attr.mergeattrs([pyx.text.halign.center,
+                                         pyx.text.vshift.mathaxis,
+                                         self.size] + self.textattrs)
         t = pyx.text.defaulttexrunner.text(self.x, self.y, self.text, textattrs)
         canvas.insert(t)
 
@@ -58,23 +68,26 @@ class PointLabel(Label):
 
 
     def getPoint(self):
+        """Get the point associated with this label."""
         return self.point
 
 
     def setPoint(self, point):
+        """Set the point associated with this label."""
         self.point = point
         return self
 
 
     def draw(self, canvas):
+        """Draw this label on the supplied canvas."""
         if FeynDiagram.options.VDEBUG:
-            canvas.fill(pyx.path.circle(self.point.getX(), self.point.getY(), 0.05), [pyx.color.rgb.green])
-        #print self.angle, math.radians(self.angle), math.cos(math.radians(self.angle))
-        #print self.displace
-        #print self.point.getX(), self.point.getX() + self.displace * math.cos(math.radians(self.angle))
+            canvas.fill(pyx.path.circle(self.point.getX(),
+                                        self.point.getY(), 0.05), [pyx.color.rgb.green])
         x = self.point.getX() + self.displace * math.cos(math.radians(self.angle))
         y = self.point.getY() + self.displace * math.sin(math.radians(self.angle))
-        textattrs = pyx.attr.mergeattrs([pyx.text.halign.center, pyx.text.vshift.mathaxis, self.size] + self.textattrs)
+        textattrs = pyx.attr.mergeattrs([pyx.text.halign.center,
+                                         pyx.text.vshift.mathaxis,
+                                         self.size] + self.textattrs)
         t = pyx.text.defaulttexrunner.text(x, y, self.text, textattrs)
         canvas.insert(t)
 
@@ -94,15 +107,18 @@ class LineLabel(Label):
 
 
     def getLine(self):
+        """Get the associated line."""
         return self.line
 
 
     def setLine(self, line):
+        """Set the associated line."""
         self.line = line
         return self
 
 
     def draw(self, canvas):
+        """Draw this label on the supplied canvas."""
         p = self.line.getPath()
         #x, y = self.line.fracPoint(self.pos).getXY()
         posparam = p.begin() + self.pos * p.arclen()
@@ -141,7 +157,9 @@ class LineLabel(Label):
         ## Displace the label by this normal vector
         x, y = nx, ny
 
-        textattrs = pyx.attr.mergeattrs([pyx.text.halign.center, pyx.text.vshift.mathaxis, self.size] + self.textattrs)
+        textattrs = pyx.attr.mergeattrs([pyx.text.halign.center,
+                                         pyx.text.vshift.mathaxis,
+                                         self.size] + self.textattrs)
         t = pyx.text.defaulttexrunner.text(x, y, self.text, textattrs)
         #t.linealign(self.displace,
         #            math.cos(self.angle * math.pi/180),

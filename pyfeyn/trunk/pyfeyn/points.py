@@ -1,12 +1,12 @@
 """Various types of points for vertices etc."""
 
-from pyx import *
-from copy import *
+import pyx
+from copy import copy
 import math
 
-from diagrams import FeynDiagram
-from utils import Visible
-from deco import PointLabel
+from pyfeyn.diagrams import FeynDiagram
+from pyfeyn.utils import Visible
+from pyfeyn.deco import PointLabel
 
 
 def midpoint(point1, point2):
@@ -27,21 +27,6 @@ class Point:
         self.setBlob(blob)
         self.labels = []
 
-#     def __plus__(self, point = None):
-#         if point:
-#             addx, addy = point.getX(), point.getY()
-#             self.setX(self.getX() + addx)
-#             self.setY(self.getY() + addy)
-#         else:
-#             raise Exception("Tried to add a null x or y component")
-
-#     def __minus__(self, point = None):
-#         if point:
-#             addx, addy = point.getX(), point.getY()
-#             self.setX(self.getX() - addx)
-#             self.setY(self.getY() - addy)
-#         else:
-#             raise Exception("Tried to subtract a null x or y component")
 
     def addLabel(self, text, displace=0.3, angle = 0):
         """Add a LaTeX label to this point, either via parameters or actually as
@@ -62,6 +47,7 @@ class Point:
     def draw(self, canvas):
         "Do nothing (abstract base class)."
         pass
+
 
     def getPath(self):
         "Return the path of the attached blob path, if there is one, otherwise None."
@@ -86,9 +72,9 @@ class Point:
     def tangent(self,otherpoint):
         "Return the tangent of the straight line defined by this point and the argument."
         if otherpoint.x() != self.x():
-           return (otherpoint.y() - self.y()) / (otherpoint.x() - self.x())
+            return (otherpoint.y() - self.y()) / (otherpoint.x() - self.x())
         else:
-           return float(10000) ## An arbitrary large number to replace infinity
+            return float(10000) ## An arbitrary large number to replace infinity
 
 
     def arg(self, otherpoint):
@@ -177,14 +163,14 @@ class DecoratedPoint(Point, Visible):
     def __init__(self, xpos, ypos,
                  mark = None,
                  blob = None,
-                 fill = [color.rgb.black],
-                 stroke = [color.rgb.black]):
+                 fill = [pyx.color.rgb.black],
+                 stroke = [pyx.color.rgb.black]):
         self.setXY(xpos, ypos)
         self.labels = []
-        self.setMark(mark)
+        self.setMark(copy(mark))
         self.setBlob(blob)
-        self.fillstyles = copy( fill ) # lists are mutable --
-        self.strokestyles = copy( stroke ) # hence make a copy!
+        self.fillstyles = copy(fill) # lists are mutable --
+        self.strokestyles = copy(stroke) # hence make a copy!
         ## Add this to the current diagram automatically
         FeynDiagram.currentDiagram.add(self)
 
@@ -289,7 +275,7 @@ class CircleMark(Mark):
     def getPath(self):
         if self.point is not None:
             x, y = self.point.getXY()
-            return path.circle(x, y, self.radius).path()
+            return pyx.path.circle(x, y, self.radius).path()
         return None
 
 ## Convenience constants

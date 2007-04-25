@@ -1,8 +1,27 @@
+2007-04-25  Andy Buckley  <andy@insectnation.org>
+
+	* Added frequency, amplitude and "extra (half) cycles" methods to
+	decorated lines.
+
+	* Now using copy when assigning a mark constant to a DecoratedPoint.
+
+	* Cleaned up the code a bit based on output from pylint.
+
 2007-04-24  Georg von Hippel <gmv22@cantab.net>
 
 	* Repaired FeynML support broken by Andy's recent changes.
 
-... Some changes by Andy missing here ...
+2007-04-24  Andy Buckley  <andy@insectnation.org>
+
+	* Added graviton and SUSY lines - rather silly but hey...
+
+2007-04-23  Andy Buckley  <andy@insectnation.org>
+
+	* Added speculative MultiLine and test #5. Very alpha and ropey.
+
+	* Replaced the NamedMark lookup with mark classes and module
+	constants for the defaults. Might reinstate the size attr on the
+	DecoratedPoint.
 
 2007-04-03  Georg von Hippel <gmv22@cantab.net>
 
@@ -20,7 +39,7 @@
 	* Added layer-based sorting of the object list before drawing, and
 	a get/setDepth() method via the Visible interface.
 
-	* Tidied up a bit: inparticular, removed a mutual dependence bug
+	* Tidied up a bit: in particular, removed a mutual dependence bug
 	between the deco and points modules.
 
 2007-03-07  Andy Buckley  <andy@insectnation.org>

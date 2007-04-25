@@ -1,4 +1,7 @@
-"""PyFeyn - a simple Python interface for making Feynman diagrams (pre-release version >= 0.2.0b1)."""
+"""
+PyFeyn - a simple Python interface for making Feynman
+diagrams (pre-release version >= 0.2.0b1).
+"""
 
 __author__ = "Andy Buckley (andy@insectnation.org)"
 __version__ = "0.2.1b1"
@@ -23,9 +26,9 @@ pyx.unit.set(defaultunit = "cm")
 ## TeX stuff
 pyx.text.defaulttexrunner.set(mode="latex")
 if pyx.pykpathsea.find_file("hepnicenames.sty", pyx.pykpathsea.kpse_tex_format):
-   pyx.text.defaulttexrunner.preamble(r"\usepackage{hepnicenames}")
+    pyx.text.defaulttexrunner.preamble(r"\usepackage{hepnicenames}")
 else:
-   print "Warning: hepnames LaTeX package not found!"
+    print "Warning: hepnames LaTeX package not found!"
 
 
 ## Set __all__ (for "import * from pyfeyn")
@@ -35,9 +38,9 @@ __all__ = ["diagrams", "points", "blobs", "lines", "deco", "utils"]
 ## Option parsing
 from optparse import OptionParser 
 _parser = OptionParser()
-_parser.add_option("-V", "--visual-debug", dest="VDEBUG", action = "store_true", default = False,
-                   help="produce visual debug output")
-_parser.add_option("-D", "--debug", dest="DEBUG", action = "store_true", default = False,
-                   help="produce debug output")
-from diagrams import FeynDiagram
+_parser.add_option("-V", "--visual-debug", dest="VDEBUG", action = "store_true",
+                   default = False, help="produce visual debug output")
+_parser.add_option("-D", "--debug", dest="DEBUG", action = "store_true",
+                   default = False, help="produce debug output")
+from pyfeyn.diagrams import FeynDiagram
 (FeynDiagram.options, args) = _parser.parse_args()

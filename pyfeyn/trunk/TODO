@@ -1,21 +1,22 @@
 PyFeyn TODO
 -----------
 
+ * Add multi-lines. Should be defined by number of lines and
+   max-width/half-width OR number and separation. Arrows shouldn't 
+   necessarily be duplicated on all lines. Auto-sizing to blobs?
+   Should definitely crop to a visible path on the markers/blobs -
+   should the visible path cropper be broken out as a standalone 
+   internal function?
+
  * Fix pattern stroke colour problem.
 
  * Add unattached and line-parallel arrows (useful for momenta, helicities etc.)
 
  * Make custom gluon deformer with a 3D option.
 
- * Allow control of deformed line nominal frequencies and amplitudes.
-
- * Provide "add one (half) cycle" method. (Full cycle for gluon)
-
  * Allow setting initial/final straight components of decorated lines.
 
  * Allow single lines to be deviated sharply (split?) round a vertex.
-
- * Allow the start and end phases of deformed lines to be specified?
 
  * Every diagram element should know its parent diagram.
 
@@ -24,6 +25,3 @@ PyFeyn TODO
  * Do hatched patterns better than PyX (or fix PyX's implementation).
 
  * Reinstate FeynML functionality.
-
- * Add SUSY particles (draw an extra fermion line through bosons). Maybe an
-   isSusy(bool) method... Also, a graviton (interleaving vector boson lines).

@@ -3,10 +3,10 @@
 import pyx, math
 from pyx import color
 
-from diagrams import FeynDiagram
-from points import Point
-from deco import Arrow, LineLabel
-from utils import Visible, defunit
+from pyfeyn.diagrams import FeynDiagram
+from pyfeyn.points import Point
+from pyfeyn.deco import Arrow, LineLabel
+from pyfeyn.utils import Visible, defunit
 
 
 ## Line base class
@@ -41,21 +41,25 @@ class Line(Visible):
 
             
     def removeLabels(self):
+        """Remove the labels from this line."""
         self.labels = []
         return self
 
 
     def fracpoint(self, frac):
-        """Get a new Point representing the point at the given fraction along
+        """
+        Get a new Point representing the point at the given fraction along
         the fundamental line (i.e. no truncation or deformation).
-        TODO: Handle units properly."""
+        TODO: Handle units properly.
+        """
         p = self.getPath() ## no truncation or deformation
         x, y = p.at(p.begin() + frac * p.arclen())
         return Point(x/defunit, y/defunit)
     
 
     def setArrows(self, arrows):
-        ## TODO Check that the arg is a list
+        """Define the arrows on this line."""
+        ## TODO: Check that the arg is a list
         self.arrows = []
         for i in arrows:
             if i.__class__ == "deco.Arrow":
@@ -114,40 +118,47 @@ class Line(Visible):
         arcpoint = Point(middle.x() + amount * nx, middle.y() + amount * ny)
         if FeynDiagram.options.VDEBUG:
             FeynDiagram.currentCanvas.stroke(
-                pyx.path.line(middle.x(), middle.y(), arcpoint.x(), arcpoint.y()), [color.rgb.blue] )
+                pyx.path.line(middle.x(), middle.y(), arcpoint.x(),
+                              arcpoint.y()), [color.rgb.blue] )
         self.arcThru(arcpoint)
         if FeynDiagram.options.DEBUG:
             print self.getVisiblePath()
         if FeynDiagram.options.VDEBUG:
-             FeynDiagram.currentCanvas.stroke(self.getVisiblePath(), [color.rgb.blue])
+            FeynDiagram.currentCanvas.stroke(self.getVisiblePath(), [color.rgb.blue])
         return self
 
 
     def set3D(self, choice):
+        """Make this line display in '3D'."""
         self.is3D = choice
         return self
 
 
     def getStyles(self, stylelist):
+        """Get the styles associated with this line."""
         return self.styles
 
 
     def setStyles(self, stylelist):
+        """Set the styles associated with this line."""
         self.styles = stylelist
         return self
 
 
     def addStyle(self, style):
+        """Add a style to this line."""
         self.styles.append(style)
         return self
 
 
     def addStyles(self, stylelist):
+        """Add some styles to this line."""
         self.styles = self.styles + stylelist
         return self
 
 
     def getPath(self):
+        """Get the path taken by this line."""
         if self.arcthrupoint is None:
             ## This is a simple straight line
             return pyx.path.path( pyx.path.moveto( *(self.p1.getXY()) ),
@@ -258,14 +269,18 @@ class Line(Visible):
                 if len(subpaths) > 1:
                     if FeynDiagram.options.DEBUG:
                         print "Num subpaths 1 = %d" % len(subpaths)
-                    subpaths.sort( lambda x, y : int(pyx.unit.tocm(x.arclen() - y.arclen())/math.fabs(pyx.unit.tocm(x.arclen() - y.arclen()))) )
+                    subpaths.sort(
+                        lambda x, y :
+                        int(pyx.unit.tocm(x.arclen() - y.arclen()) /
+                            math.fabs(pyx.unit.tocm(x.arclen() - y.arclen()))) )
                     vispath = subpaths[-1]
                     if FeynDiagram.options.VDEBUG:
                         FeynDiagram.currentCanvas.stroke(subpaths[0], [color.rgb.blue])
                 if FeynDiagram.options.VDEBUG:
                     for a in as:
                         ix, iy = p1path.at(a)
-                        FeynDiagram.currentCanvas.fill(pyx.path.circle(ix, iy, 0.05), [color.rgb.green])
+                        FeynDiagram.currentCanvas.fill(pyx.path.circle(ix, iy, 0.05),
+                                                       [color.rgb.green])
         if p2path: 
             as, bs = p2path.intersect(vispath)
             for b in bs:
@@ -273,14 +288,18 @@ class Line(Visible):
                 if len(subpaths) > 1:
                     if FeynDiagram.options.DEBUG:
                         print "Num subpaths 2 = %d" % len(subpaths)
-                    subpaths.sort( lambda x, y : int(pyx.unit.tocm(x.arclen() - y.arclen())/math.fabs(pyx.unit.tocm(x.arclen() - y.arclen()))) )
+                    subpaths.sort(
+                        lambda x, y :
+                        int(pyx.unit.tocm(x.arclen() - y.arclen()) /
+                            math.fabs(pyx.unit.tocm(x.arclen() - y.arclen()))) )
                     vispath = subpaths[-1]
                     if FeynDiagram.options.VDEBUG:
                         FeynDiagram.currentCanvas.stroke(subpaths[0], [color.rgb.red])
                 if FeynDiagram.options.VDEBUG:
                     for a in as:
                         ix, iy = p2path.at(a)
-                        FeynDiagram.currentCanvas.fill(pyx.path.circle(ix, iy, 0.05), [color.rgb.blue])
+                        FeynDiagram.currentCanvas.fill(pyx.path.circle(ix, iy, 0.05),
+                                                       [color.rgb.blue])
         if FeynDiagram.options.VDEBUG:
             FeynDiagram.currentCanvas.stroke(vispath, [color.rgb.red])
         #return pyx.path.circle(-2,-1,0.2)
@@ -288,6 +307,7 @@ class Line(Visible):
 
         
     def draw(self, canvas):
+        """Drwa this line on the given canvas."""
         path = self.getVisiblePath()
         styles = self.styles + self.arrows
         if FeynDiagram.options.DEBUG:
@@ -298,12 +318,33 @@ class Line(Visible):
             l.draw(canvas)
 
 
-class Fermion(Line):
-    pass
+## Fermion is an alias for Line
+Fermion = Line
+
+
+class MultiLine(Line):
+    """A class for drawing multiple parallel straight lines."""
+
+    def draw(self, canvas):
+        """Draw this multiline on the supplied canvas."""
+        dist = 0.2
+        n = 5
+        path = pyx.deformer.parallel(-n/2.0 * dist).deform(self.getPath())
+        paths = [path]
+        defo = pyx.deformer.parallel(dist)
+        for m in range(0, n):
+            path = defo.deform(path)
+            paths.append(path)
+        styles = self.styles + self.arrows
+        for p in paths:
+            canvas.stroke(p, styles)
 
 
 class Scalar(Line):
+    """A scalar particle line, like a Higgs boson."""
+
     def draw(self, canvas):
+        """Draw this scalar line on the given canvas."""
         path = self.getVisiblePath()
         styles = self.styles + [pyx.style.linestyle.dashed] + self.arrows
         ## TODO: call base class method?
@@ -315,24 +356,29 @@ class Scalar(Line):
             l.draw(canvas)
 
 
-class Higgs(Scalar):
-    pass
+
+## Higgs is an alias for Scalar
+Higgs = Scalar
 
 
 
 ## DecoratedLine base class
 class DecoratedLine(Line):
     """Base class for spring and sine-like lines"""
+
     def invert(self):
+        """Reflect the line decoration about the line."""
         pass
 
-    def numHalfPeriods(self):
+    def getNumHalfCycles(self):
+        """Get the number of half cycles in this line."""
         pass
 
-    def strikeThru(self):
-        pass
+    #def strikeThru(self):
+    #    pass
 
     def getDeformedPath(self):
+        """Get the deformed path."""
         return getVisiblePath()
 
 
@@ -347,7 +393,8 @@ class Gluon(DecoratedLine):
         self.arrows = []
         self.labels = []
         self.arcradius = pyx.unit.length(0.25)
-        self.elasticity = 1.3
+        self.frequency = 1.3
+        self.extras = 0
         self.inverted = False
         self.linetype = "gluon"
         ## Add this to the current diagram automatically
@@ -355,35 +402,59 @@ class Gluon(DecoratedLine):
 
 
     def invert(self):
+        """Flip the line decoration around the line."""
         self.inverted = not self.inverted
         return self
 
 
-    def getTension(self):
-        return self.elasticity
-    
+    def getFrequency(self):
+        """Get the rate of occurence of the coil decoration."""
+        return self.frequency
 
-    def setTension(self, value):
-        self.elasticity = value
+
+    def setFrequency(self, freq):
+        """Set the rate of occurence of the coil decoration."""
+        self.frequency = freq
         return self
 
 
+    def getAmplitude(self):
+        """Get the radius of the coil decoration.""" 
+        return self.arcradius
+
+
+    def setAmplitude(self, amplitude):
+        """Set the radius of the coil decoration.""" 
+        self.arcradius = amplitude
+        return self
+
+
+    def setExtraCycles(self, extras):
+        """Add some extra (possibly negative) oscillations to the coil decoration.""" 
+        self.extras = extras
+
+
     def getDeformedPath(self):
-        needwindings = self.elasticity * \
-                       pyx.unit.tocm(self.getVisiblePath().arclen()) / pyx.unit.tocm(self.arcradius)
+        """Get the path modified by the coil warping."""
+        needwindings = self.frequency * \
+                       pyx.unit.tocm(self.getVisiblePath().arclen()) / \
+                       pyx.unit.tocm(self.arcradius)
         ## Get the whole number of windings and make sure that it's odd so we
         ## don't get a weird double-back thing
         intwindings = int(needwindings)
+        intwindings += 2 * self.extras
         if intwindings % 2 == 0:
             intwindings -= 1
         deficit = needwindings - intwindings
         sign = 1
         if self.inverted: sign = -1 
-        defo = pyx.deformer.cycloid(self.arcradius, intwindings, curvesperhloop=10, skipfirst = 0.0, skiplast = 0.0, sign = sign)
+        defo = pyx.deformer.cycloid(self.arcradius, intwindings, curvesperhloop=10,
+                                    skipfirst = 0.0, skiplast = 0.0, sign = sign)
         return defo.deform(self.getVisiblePath())
 
 
     def draw(self, canvas):
+        """Draw the line on the supplied canvas."""
         styles = self.styles + self.arrows
         if FeynDiagram.options.DEBUG:
             print "Drawing " + str(self.__class__) + " with styles = " + str(styles)
@@ -395,7 +466,7 @@ class Gluon(DecoratedLine):
 
 class Vector(DecoratedLine):
     """A line with a sinoid deformation"""
-    def __init__(self, point1, point2):
+    def __init__(self, point1, point2, amplitude=0.25, frequency=1.0):
         self.p1 = point1
         self.p2 = point2
         self.styles = []
@@ -404,26 +475,62 @@ class Vector(DecoratedLine):
         self.arrows = []
         self.labels = []
         self.inverted = False
-        self.arcradius = pyx.unit.length(0.25)
+        self.arcradius = amplitude #pyx.unit.length(0.25)
         self.linetype = "photon"
+        self.frequency = frequency
+        self.extrahalfs = 0
         ## Add this to the current diagram automatically
         FeynDiagram.currentDiagram.add(self)
 
 
     def invert(self):
+        """Reflect the decoration in the line itself."""
         self.inverted = not self.inverted
         return self
 
 
+    def getFrequency(self):
+        """Get the rate of occurance of the oscillation."""
+        return self.frequency
+
+
+    def setFrequency(self, freq):
+        """Set the rate of occurance of the oscillation."""
+        self.frequency = freq
+        return self
+
+
+    def getAmplitude(self):
+        """Get the size of the oscillation."""
+        return self.arcradius
+
+
+    def setAmplitude(self, amplitude):
+        """Set the size of the oscillation."""
+        self.arcradius = amplitude
+        return self
+
+
+    def setExtraHalfCycles(self, extras):
+        """Add some extra half cycles to the oscillation on top of those
+        determined from the frequency."""
+        self.extrahalfs = extras
+
+
     def getDeformedPath(self):
-        intwindings = int(1.0 * pyx.unit.tocm(self.getVisiblePath().arclen()) / pyx.unit.tocm(self.arcradius))
+        """Get the path with the decorative deformation."""
+        intwindings = int(self.frequency * pyx.unit.tocm(self.getVisiblePath().arclen()) /
+                          pyx.unit.tocm(self.arcradius))
+        intwindings += self.extrahalfs
         sign = 1
         if self.inverted: sign = -1 
-        defo = pyx.deformer.cycloid(self.arcradius, intwindings, curvesperhloop=5, skipfirst=0.0, skiplast=0.0, turnangle=0, sign=sign)
+        defo = pyx.deformer.cycloid(self.arcradius, intwindings, curvesperhloop=5,
+                                    skipfirst=0.0, skiplast=0.0, turnangle=0, sign=sign)
         return defo.deform(self.getVisiblePath())
 
         
     def draw(self, canvas):
+        """Draw the line on the supplied canvas."""
         styles = self.styles + self.arrows
         if FeynDiagram.options.DEBUG:
             print "Drawing " + str(self.__class__) + " with styles = " + str(styles)
@@ -432,9 +539,86 @@ class Vector(DecoratedLine):
             l.draw(canvas)
 
 
-class Photon(Vector):
-    pass
+## Photon is an alias for Vector
+Photon = Vector
+
+
+class Graviton(DecoratedLine):
+    """A line with a double sinoid deformation"""
+    def __init__(self, point1, point2):
+        self.p1 = point1
+        self.p2 = point2
+        self.styles = []
+        self.arcthrupoint = None
+        self.is3D = False
+        self.arrows = []
+        self.labels = []
+        self.arcradius = pyx.unit.length(0.25)
+        self.linetype = "graviton"
+        ## Add this to the current diagram automatically
+        FeynDiagram.currentDiagram.add(self)
+
+
+    def getDeformedPath(self, sign = 1):
+        """Get the path with the decorative deformation."""
+        intwindings = int(0.6 * pyx.unit.tocm(self.getVisiblePath().arclen()) /
+                          pyx.unit.tocm(self.arcradius))
+        defo = pyx.deformer.cycloid(self.arcradius, intwindings, curvesperhloop=5,
+                                    skipfirst=0.0, skiplast=0.0, turnangle=0, sign=sign)
+        return defo.deform(self.getVisiblePath())
+
+        
+    def draw(self, canvas):
+        """Draw the line on the supplied canvas."""
+        styles = self.styles + self.arrows
+        if FeynDiagram.options.DEBUG:
+            print "Drawing " + str(self.__class__) + " with styles = " + str(styles)
+        canvas.stroke(self.getDeformedPath(+1), styles)
+        canvas.stroke(self.getDeformedPath(-1), styles)
+        for l in self.labels:
+            l.draw(canvas)
+
+
+class SusyBoson(DecoratedLine):
+    """A line with a sinoid deformation and a normal line"""
+    def __init__(self, point1, point2):
+        self.p1 = point1
+        self.p2 = point2
+        self.styles = []
+        self.arcthrupoint = None
+        self.is3D = False
+        self.arrows = []
+        self.labels = []
+        self.arcradius = pyx.unit.length(0.25)
+        self.linetype = "susyboson"
+        ## Add this to the current diagram automatically
+        FeynDiagram.currentDiagram.add(self)
+
+
+    def getDeformedPath(self, sign = 1):
+        """Get the path with the decorative deformation."""
+        intwindings = int(pyx.unit.tocm(self.getVisiblePath().arclen()) /
+                          pyx.unit.tocm(self.arcradius))
+        defo = pyx.deformer.cycloid(self.arcradius, intwindings, curvesperhloop=5,
+                                    skipfirst=0.0, skiplast=0.0, turnangle=0, sign=sign)
+        return defo.deform(self.getVisiblePath())
+
+        
+    def draw(self, canvas):
+        """Draw the line on the supplied canvas."""
+        styles = self.styles + self.arrows
+        if FeynDiagram.options.DEBUG:
+            print "Drawing " + str(self.__class__) + " with styles = " + str(styles)
+        canvas.stroke(self.getDeformedPath(+1), styles)
+        canvas.stroke(self.getVisiblePath(), styles)
+        for l in self.labels:
+            l.draw(canvas)
+
 
 
 # A dictionary for mapping FeynML line types to line classes
-NamedLine = {"photon" : Photon, "gluon" : Gluon, "fermion" : DecoratedLine}
+NamedLine = { "higgs"    : Higgs,
+              "photon"   : Photon,
+              "gluon"    : Gluon,
+              "fermion"  : Fermion,
+              "graviton" : Graviton }
