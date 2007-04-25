@@ -1,35 +1,36 @@
 from pyx import *
 
-splitsize = 0.25
-arcradius = 2.0
+splitsize = 0.15
+arcradius = 1.0
 
 c = canvas.canvas()
 
 p = path.path( path.moveto(0,0), path.lineto(10,10) )
-coil = deformer.cycloid(arcradius, 7, curvesperhloop=10, skipfirst=0.0, skiplast=0.0, sign=+1)
+coil = deformer.cycloid(arcradius, 15, curvesperhloop=10, skipfirst=0.0, skiplast=0.0, sign=+1)
 para = deformer.parallel(0.1)
 dp = coil.deform(p)
-pp = para.deform(dp)
 
-as, bs = pp.intersect(dp)
+as, bs, cs = para.normpath_selfintersections(dp.normpath(), 0.01)
+#print as, "\n"
+#print bs, "\n"
+#print cs, "\n"
 
-on = True
+## Get the appropriate split points around each intersection
 coil_params = []
 for b in bs:
-    if on:
-        coil_params.append(b - splitsize)
-        coil_params.append(b + splitsize)
-    on = not on
-
+    coil_params.append(b[0] - splitsize)
+    coil_params.append(b[0] + splitsize)
 pathbits = dp.split(coil_params)
 
-c.stroke(dp, [style.linewidth.thin])
-c.stroke(pp, [style.linewidth.thin, color.rgb.red])
+## Draw the underlying line with some transparency
+c.stroke(dp, [style.linewidth.THICK, color.cmyk.Violet, color.transparency(0.8)])
 
-# on = True
-# for pathbit in pathbits:
-#     if on:
-#         c.stroke(pathbit, [style.linewidth.THICK])
-#     on = not on
+on = True
+for pathbit in pathbits:
+    if on:
+        c.stroke(pathbit, [color.rgb.red, style.linewidth.thick])
+    #else:
+    #    c.stroke(pathbit, [color.rgb.blue])
+    on = not on
 
 c.writetofile("test-3dgluon2.pdf")
