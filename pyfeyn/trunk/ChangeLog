@@ -1,3 +1,9 @@
+2007-04-26  Andy Buckley  <andy@insectnation.org>
+
+	* Added silly example using multiple canvases and transparency.
+
+	* Added a 3D version of the gluon line (can be time-consuming).
+
 2007-04-25  Andy Buckley  <andy@insectnation.org>
 
 	* Added frequency, amplitude and "extra (half) cycles" methods to
