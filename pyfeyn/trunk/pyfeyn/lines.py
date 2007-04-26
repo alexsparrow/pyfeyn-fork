@@ -390,6 +390,8 @@ class Gluon(DecoratedLine):
         self.styles = []
         self.arcthrupoint = None
         self.is3D = False
+        self.skipsize3D = pyx.unit.length(0.05)
+        self.parity3D = 0
         self.arrows = []
         self.labels = []
         self.arcradius = pyx.unit.length(0.25)
@@ -399,6 +401,12 @@ class Gluon(DecoratedLine):
         self.linetype = "gluon"
         ## Add this to the current diagram automatically
         FeynDiagram.currentDiagram.add(self)
+
+
+    def set3D(self, is3D=True, skipsize=pyx.unit.length(0.05), parity=0):
+        self.is3D = is3D
+        self.skipsize3D = skipsize
+        self.parity3D = parity
 
 
     def invert(self):
@@ -458,7 +466,25 @@ class Gluon(DecoratedLine):
         styles = self.styles + self.arrows
         if FeynDiagram.options.DEBUG:
             print "Drawing " + str(self.__class__) + " with styles = " + str(styles)
-        canvas.stroke(self.getDeformedPath(), styles)
+        mypath = self.getDeformedPath()
+        if not self.is3D:
+            canvas.stroke(mypath, styles)
+        else:
+            para = pyx.deformer.parallel(0.001)
+            as, bs, cs = para.normpath_selfintersections(mypath.normpath(), epsilon=0.01)
+            coil_params = []
+            for b in bs:
+                coil_params.append(b[self.parity3D] - self.skipsize3D)
+                coil_params.append(b[self.parity3D] + self.skipsize3D)
+            pathbits = mypath.split(coil_params)
+            on = True
+            for pathbit in pathbits:
+                if on:
+                    canvas.stroke(pathbit, styles)
+                on = not on
+
+
+        ## Labels
         for l in self.labels:
             l.draw(canvas)
 

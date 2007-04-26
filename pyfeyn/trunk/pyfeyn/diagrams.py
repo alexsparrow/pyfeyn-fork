@@ -37,7 +37,8 @@ class FeynDiagram:
             self.highestautolayer += 1
             self.__objs.append(obj)
 
-    def draw(self, outfile):
+
+    def drawToCanvas(self):
         """Draw the components of this diagram in a well-defined order."""
         if FeynDiagram.options.DEBUG:
             print "Final #objs = %d" % len(self.__objs)
@@ -53,6 +54,12 @@ class FeynDiagram:
             if FeynDiagram.options.DEBUG:
                 print "Depth = ", obj.getDepth()
             obj.draw(FeynDiagram.currentCanvas)
-        if FeynDiagram.currentCanvas is not None:
-            FeynDiagram.currentCanvas.writetofile(outfile)
+
+        return FeynDiagram.currentCanvas
+
+
+    def draw(self, outfile):
+        c = self.drawToCanvas()
+        if c is not None and outfile is not None:
+            c.writetofile(outfile)
 
