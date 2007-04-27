@@ -374,12 +374,10 @@ class DecoratedLine(Line):
         """Get the number of half cycles in this line."""
         pass
 
-    #def strikeThru(self):
-    #    pass
-
     def getDeformedPath(self):
         """Get the deformed path."""
         return getVisiblePath()
+
 
 
 class Gluon(DecoratedLine):
@@ -407,6 +405,7 @@ class Gluon(DecoratedLine):
         self.is3D = is3D
         self.skipsize3D = skipsize
         self.parity3D = parity
+        return self
 
 
     def invert(self):
@@ -440,6 +439,7 @@ class Gluon(DecoratedLine):
     def setExtraCycles(self, extras):
         """Add some extra (possibly negative) oscillations to the coil decoration.""" 
         self.extras = extras
+        return self
 
 
     def getDeformedPath(self):
@@ -541,6 +541,7 @@ class Vector(DecoratedLine):
         """Add some extra half cycles to the oscillation on top of those
         determined from the frequency."""
         self.extrahalfs = extras
+        return self
 
 
     def getDeformedPath(self):
