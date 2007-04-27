@@ -22,7 +22,10 @@ class FeynMLWriter:
     def diagramToXML(self, fd):
         root = Element("diagram")
         self.objects = fd._FeynDiagram__objs
-        self.ids = []
+        self.ids = {}
+        self.linecount = 0
+        self.vertexcount = 0
+        self.blobcount = 0
         for obj in self.objects:
             if isinstance(obj, Blob):
                 root.append(self.blobToXML(obj))
@@ -42,29 +45,28 @@ class FeynMLWriter:
         return tostring(root).replace(">",">\n")
 
     def blobToXML(self, b):
-        attribs = {"id" : "V%s" % md5.md5(str(b.xpos, b.ypos)).hexdigest(),
+        attribs = {"id" : "B%s" % self.blobcount,
                    "x" : str(b.xpos), "y" : str(b.ypos),
                    "shape" : hasattr(b,"blobshape") and b.blobshape or "circle"}
         ele = Element("blob", attribs)
-        self.ids.append(attribs["id"])
+        self.ids[md5.md5(str(b.xpos, b.ypos)).hexdigest()] = attribs["id"]
+        self.blobcount += 1
         return ele
 
     def lineToXML(self, l):
-        sourceid = "V%s" % md5.md5(str((l.p1.xpos, l.p1.ypos))).hexdigest()
-        if sourceid not in self.ids:
+        source = md5.md5(str((l.p1.xpos, l.p1.ypos))).hexdigest()
+        if source not in self.ids:
             s1 = self.pointToXML(l.p1)
         else:
             s1 = None 
-        targetid = "V%s" % md5.md5(str((l.p2.xpos, l.p2.ypos))).hexdigest()
-        if targetid not in self.ids:
+        target = md5.md5(str((l.p2.xpos, l.p2.ypos))).hexdigest()
+        if target not in self.ids:
             s2 = self.pointToXML(l.p2)
         else:
             s2 = None
-        attribs = {"id" : "P%s" %
-                   md5.md5(str((l.p1.xpos,l.p1.ypos,l.p2.xpos,l.p2.ypos,l.arcthrupoint and
-                                (l.arcthrupoint.xpos,l.arcthrupoint.ypos)))).hexdigest(),
-                   "source" : sourceid,
-                   "target" : targetid,
+        attribs = {"id" : "P%s" % self.linecount,
+                   "source" : self.ids[source],
+                   "target" : self.ids[target],
                    "type" : hasattr(l,"linetype") and l.linetype or "fermion"}
         if l.arcthrupoint:
             middle = l.p1.midpoint(l.p2)
@@ -73,15 +75,19 @@ class FeynMLWriter:
             bendamount = (l.arcthrupoint.x() - middle.x()) / nx
             attribs["bend"] = str(bendamount)
         ele = Element("propagator", attribs)
-        self.ids.append(attribs["id"])
+        self.ids[md5.md5(str((l.p1.xpos,l.p1.ypos,l.p2.xpos,l.p2.ypos,
+                              l.arcthrupoint and (l.arcthrupoint.xpos,
+                       l.arcthrupoint.ypos)))).hexdigest()] = attribs["id"]
+        self.linecount += 1
         return ele, s1, s2
 
     def pointToXML(self, p):
-        attribs = {"id" : "V%s" % md5.md5(str((p.xpos, p.ypos))).hexdigest(),
+        attribs = {"id" : "V%s" % self.vertexcount,
                    "x" : str(p.xpos),
                    "y" : str(p.ypos)}
         ele = Element("vertex", attribs)
-        self.ids.append(attribs["id"])
+        self.ids[md5.md5(str((p.xpos, p.ypos))).hexdigest()] = attribs["id"]
+        self.vertexcount += 1
         return ele
 
     def decopointToXML(self, p):
@@ -99,7 +105,10 @@ class FeynMLWriter:
                                                         255 * x.color["g"],
                                                         255 * x.color["b"])
         s = "mark-shape:%s; mark-size:%s; fill-style:%s; line-style:%s;" % \
-            (MarkedName[p.marker], pyx.unit.tocm(p.radius), fills, strokes )
+            (p.marker.__class__.__name__[:-4].lower(),
+             hasattr(p.marker,"radius") and pyx.unit.tocm(p.marker.radius) \
+               or (hasattr(p.marker,"size") and pyx.unit.tocm(p.marker.size)\
+                   or 0), fills, strokes )
         ele.attrib["style"] = s
         return ele
 
@@ -304,6 +313,5 @@ if __name__ == "__main__":
     import sys
     reader = FeynMLReader(sys.argv[1])
     _f = reader.get_diagram(0)
-    _c = pyx.canvas.canvas()
     _f.draw(sys.argv[1]+".eps")
 
