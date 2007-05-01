@@ -4,6 +4,7 @@
     <meta name="Info" value="Part of the feynML test suite"/>
   </head>
   <diagram>
+    <label id="t1" x="0" y="2" text="Sample diagram"/>
     <vertex id="v1" x="-1" y="0" label="$xx$"/>
     <vertex id="v2" x="1" y="0" style="mark-shape:circle;mark-size:0.1;"/>
     <leg id="l1" x="-2" y="0" target="v1" type="fermion"/>

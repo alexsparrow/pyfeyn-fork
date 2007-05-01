@@ -1,3 +1,7 @@
+2007-05-01  Georg von Hippel <gmv22@cantab.net>
+
+	* Added support for free labels to FeynML module.
+
 2007-05-01  Andy Buckley  <andy@insectnation.org>
 
 	* Added 3D deformations to the SUSY and graviton lines. Again, they're

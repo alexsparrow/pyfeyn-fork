@@ -20,12 +20,14 @@ class FeynMLWriter:
         pass
     
     def diagramToXML(self, fd):
+        """Create FeynML code for a diagram."""
         root = Element("diagram")
         self.objects = fd._FeynDiagram__objs
         self.ids = {}
         self.linecount = 0
         self.vertexcount = 0
         self.blobcount = 0
+        self.labelcount = 0
         for obj in self.objects:
             if isinstance(obj, Blob):
                 root.append(self.blobToXML(obj))
@@ -40,11 +42,14 @@ class FeynMLWriter:
                 root.append(self.decopointToXML(obj))
             elif isinstance(obj,Point) and not isinstance(obj,DecoratedPoint):
                 root.append(self.pointToXML(obj))
+            elif isinstance(obj,Label):
+                root.append(self.labelToXML(obj))
             else:
                 print "Can't convert object to XML!"
         return tostring(root).replace(">",">\n")
 
     def blobToXML(self, b):
+        """Create FeynML code for a blob."""
         attribs = {"id" : "B%s" % self.blobcount,
                    "x" : str(b.xpos), "y" : str(b.ypos),
                    "shape" : hasattr(b,"blobshape") and b.blobshape or "circle"}
@@ -54,6 +59,7 @@ class FeynMLWriter:
         return ele
 
     def lineToXML(self, l):
+        """Create FeynML code for a line."""
         source = md5.md5(str((l.p1.xpos, l.p1.ypos))).hexdigest()
         if source not in self.ids:
             s1 = self.pointToXML(l.p1)
@@ -82,6 +88,7 @@ class FeynMLWriter:
         return ele, s1, s2
 
     def pointToXML(self, p):
+        """Create FeynML code for a point."""
         attribs = {"id" : "V%s" % self.vertexcount,
                    "x" : str(p.xpos),
                    "y" : str(p.ypos)}
@@ -91,6 +98,7 @@ class FeynMLWriter:
         return ele
 
     def decopointToXML(self, p):
+        """Create FeynML code for a decorated point."""
         ele = self.pointToXML(p)
         fills = ""
         for x in p.fillstyles:
@@ -112,7 +120,17 @@ class FeynMLWriter:
         ele.attrib["style"] = s
         return ele
 
-     
+    def labelToXML(self, l):
+        """Create FeynML code for a label."""
+        attribs = {"id": "L%s" % self.labelcount,
+                   "text": l.text,
+                   "x": str(l.x),
+                   "y": str(l.y)}
+        ele = Element("label", attribs)
+        self.ids[md5.md5(str((l.x, l.y, l.text))).hexdigest()] = attribs["id"]
+        self.labelcount += 1
+        return ele
+
 
 ##############################################
 
@@ -156,7 +174,7 @@ class FeynMLReader:
             elif element.tag == "connect":
                 fd.add( self.get_connect(element, thedict) )
             elif element.tag == "label":
-                pass # no labels yet
+                fd.add( self.get_label(element, thedict) )
             else:
                 raise Exception("FeynML Error: invalid tag <%s> in <diagram>" % \
                       element.tag)
@@ -283,6 +301,20 @@ class FeynMLReader:
             raise Exception("FeynML Error: missing id attribute in <connect> element")
         return p
 
+    def get_label(self, element, thedict):
+        """Build a free label from its FeynML representation."""
+        try:
+            x = float(element.attrib["x"])
+            y = float(element.attrib["y"])
+            text = element.attrib["text"]
+        except:
+            raise Exception("FeynML Error: invalid attributes for <label> element")
+        v = Label(text, x=x, y=y)
+        try:
+            thedict[element.attrib["id"]] = v
+        except:
+            raise Exception("FeynML Error: missing id attribute in <label> element")
+        return v
 
     def apply_layout(self, stylestring, obj):
         """Apply the decorators encoded in a style string to an object."""

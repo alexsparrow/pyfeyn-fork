@@ -214,6 +214,7 @@
 
 <!-- Free-floating Label type -->
 <xsd:complexType name="label.type">
+         <xsd:attributeGroup ref="global-atts"/>
          <xsd:attributeGroup ref="point-atts"/>
          <xsd:attribute name="text" type="texstring.type"/>
 </xsd:complexType>
