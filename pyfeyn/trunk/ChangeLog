@@ -1,3 +1,11 @@
+2007-05-01  Andy Buckley  <andy@insectnation.org>
+
+	* Added 3D deformations to the SUSY and graviton lines. Again, they're
+	time-consuming to render, but they look pretty.
+
+	* Points are now drawn by definition after lines (well, there's a
+	layer offset of 1000, which should be enough).
+
 2007-04-26  Andy Buckley  <andy@insectnation.org>
 
 	* Added silly example using multiple canvases and transparency.

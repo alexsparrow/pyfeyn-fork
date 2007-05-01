@@ -17,6 +17,7 @@ class Blob(Point, Visible):
         self.trafos = []
         self.strokestyles = []
         self.fillstyles = []
+        self.layeroffset = 1000
         raise Exception("Blobs are an abstract base class: you can't make them!")
     
     def setStrokeStyle(self, strokestyle):
@@ -103,6 +104,7 @@ class Circle(Blob):
         self.setPoints(points)
         self.fillstyles = fill
         self.strokestyles = stroke
+        self.layeroffset = 1000
         self.trafos = []
         self.labels = []
         ## Add this to the current diagram automatically
@@ -135,6 +137,7 @@ class Ellipse(Blob):
                  stroke = [pyx.color.rgb.black],
                  points = None):
         """Constructor."""
+        self.layeroffset = 1000
         
         if x is not None and y is not None:
             self.setXY(x, y)

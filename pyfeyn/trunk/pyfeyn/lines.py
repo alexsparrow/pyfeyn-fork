@@ -388,7 +388,7 @@ class Gluon(DecoratedLine):
         self.styles = []
         self.arcthrupoint = None
         self.is3D = False
-        self.skipsize3D = pyx.unit.length(0.05)
+        self.skipsize3D = pyx.unit.length(0.04)
         self.parity3D = 0
         self.arrows = []
         self.labels = []
@@ -401,7 +401,7 @@ class Gluon(DecoratedLine):
         FeynDiagram.currentDiagram.add(self)
 
 
-    def set3D(self, is3D=True, skipsize=pyx.unit.length(0.05), parity=0):
+    def set3D(self, is3D=True, skipsize=pyx.unit.length(0.04), parity=0):
         self.is3D = is3D
         self.skipsize3D = skipsize
         self.parity3D = parity
@@ -482,7 +482,6 @@ class Gluon(DecoratedLine):
                 if on:
                     canvas.stroke(pathbit, styles)
                 on = not on
-
 
         ## Labels
         for l in self.labels:
@@ -578,12 +577,28 @@ class Graviton(DecoratedLine):
         self.styles = []
         self.arcthrupoint = None
         self.is3D = False
+        self.skipsize3D = pyx.unit.length(0.04)
+        self.parity3D = 0
+        self.inverted = False
         self.arrows = []
         self.labels = []
         self.arcradius = pyx.unit.length(0.25)
         self.linetype = "graviton"
         ## Add this to the current diagram automatically
         FeynDiagram.currentDiagram.add(self)
+
+
+    def set3D(self, is3D=True, skipsize=pyx.unit.length(0.04), parity=0):
+        self.is3D = is3D
+        self.skipsize3D = skipsize
+        self.parity3D = parity
+        return self
+
+
+    def invert(self):
+        """Reflect the decoration in the line itself."""
+        self.inverted = not self.inverted
+        return self
 
 
     def getDeformedPath(self, sign = 1):
@@ -600,10 +615,53 @@ class Graviton(DecoratedLine):
         styles = self.styles + self.arrows
         if FeynDiagram.options.DEBUG:
             print "Drawing " + str(self.__class__) + " with styles = " + str(styles)
-        canvas.stroke(self.getDeformedPath(+1), styles)
-        canvas.stroke(self.getDeformedPath(-1), styles)
+        mypath1 = self.getDeformedPath(+1)
+        mypath2 = self.getDeformedPath(-1)
+        if self.inverted:
+            mypathtmp = mypath1
+            mypath1 = mypath2
+            mypath2 = mypathtmp
+        if not self.is3D:
+            canvas.stroke(mypath1, styles)
+            canvas.stroke(mypath2, styles)
+        else:
+            as, bs = mypath1.intersect(mypath2)
+            params1, params2 = [], []
+
+            parity1 = True
+            if self.parity3D == 0:
+                parity1 = False
+            for a in as[1:]: ## TODO: better endpoint cut vetoing
+                if parity1:
+                    params1.append(a - self.skipsize3D)
+                    params1.append(a + self.skipsize3D)
+                parity1 = not parity1
+            pathbits1 = mypath1.split(params1)
+            on = True
+            for pathbit in pathbits1:
+                if on:
+                    canvas.stroke(pathbit, styles)
+                on = not on
+
+            parity2 = False
+            if self.parity3D == 0:
+                parity2 = True
+            for b in bs[1:]: ## TODO: better endpoint cut vetoing
+                if parity2:
+                    params2.append(b - self.skipsize3D)
+                    params2.append(b + self.skipsize3D)
+                parity2 = not parity2
+            pathbits2 = mypath2.split(params2)
+            on = True
+            for pathbit in pathbits2:
+                if on:
+                    canvas.stroke(pathbit, styles)
+                on = not on
+
+
         for l in self.labels:
             l.draw(canvas)
+
 
 
 class SusyBoson(DecoratedLine):
@@ -614,6 +672,9 @@ class SusyBoson(DecoratedLine):
         self.styles = []
         self.arcthrupoint = None
         self.is3D = False
+        self.skipsize3D = pyx.unit.length(0.04)
+        self.parity3D = 0
+        self.inverted = False
         self.arrows = []
         self.labels = []
         self.arcradius = pyx.unit.length(0.25)
@@ -622,10 +683,25 @@ class SusyBoson(DecoratedLine):
         FeynDiagram.currentDiagram.add(self)
 
 
-    def getDeformedPath(self, sign = 1):
+    def set3D(self, is3D=True, skipsize=pyx.unit.length(0.04), parity=0):
+        self.is3D = is3D
+        self.skipsize3D = skipsize
+        self.parity3D = parity
+        return self
+
+
+    def invert(self):
+        """Reflect the decoration in the line itself."""
+        self.inverted = not self.inverted
+        return self
+
+
+    def getDeformedPath(self):
         """Get the path with the decorative deformation."""
         intwindings = int(pyx.unit.tocm(self.getVisiblePath().arclen()) /
                           pyx.unit.tocm(self.arcradius))
+        sign = 1
+        if self.inverted: sign = -1 
         defo = pyx.deformer.cycloid(self.arcradius, intwindings, curvesperhloop=5,
                                     skipfirst=0.0, skiplast=0.0, turnangle=0, sign=sign)
         return defo.deform(self.getVisiblePath())
@@ -636,8 +712,45 @@ class SusyBoson(DecoratedLine):
         styles = self.styles + self.arrows
         if FeynDiagram.options.DEBUG:
             print "Drawing " + str(self.__class__) + " with styles = " + str(styles)
-        canvas.stroke(self.getDeformedPath(+1), styles)
-        canvas.stroke(self.getVisiblePath(), styles)
+        mypath1 = self.getVisiblePath()
+        mypath2 = self.getDeformedPath()
+        if not self.is3D:
+            canvas.stroke(mypath1, styles)
+            canvas.stroke(mypath2, styles)
+        else:
+            as, bs = mypath1.intersect(mypath2)
+            params1, params2 = [], []
+
+            parity1 = True
+            if self.parity3D == 0:
+                parity1 = False
+            for a in as:
+                if parity1:
+                    params1.append(a - self.skipsize3D)
+                    params1.append(a + self.skipsize3D)
+                parity1 = not parity1
+            pathbits1 = mypath1.split(params1)
+            on = True
+            for pathbit in pathbits1:
+                if on:
+                    canvas.stroke(pathbit, styles)
+                on = not on
+
+            parity2 = False
+            if self.parity3D == 0:
+                parity2 = True
+            for b in bs:
+                if parity2:
+                    params2.append(b - self.skipsize3D)
+                    params2.append(b + self.skipsize3D)
+                parity2 = not parity2
+            pathbits2 = mypath2.split(params2)
+            on = True
+            for pathbit in pathbits2:
+                if on:
+                    canvas.stroke(pathbit, styles)
+                on = not on
+
         for l in self.labels:
             l.draw(canvas)
 

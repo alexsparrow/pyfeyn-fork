@@ -1,7 +1,6 @@
-"""Diagramming classes - currently just FeynDiagram"""
+"""Classes for the actual diagram containers."""
 
 import pyx
-
 
 class OptionSet:
     """A container for options."""
@@ -19,6 +18,7 @@ class FeynDiagram:
     options.DEBUG = None
     options.VDEBUG = None
 
+
     def __init__(self, objects=None):
         """Objects for holding a set of Feynman diagram components."""
         self.__objs = objects
@@ -28,13 +28,22 @@ class FeynDiagram:
         FeynDiagram.currentCanvas = pyx.canvas.canvas()
         FeynDiagram.currentDiagram = self
 
+
     def add(self, *objs):
         """Add an object to the diagram."""
         for obj in objs:
             if FeynDiagram.options.DEBUG:
                 print "#objs = %d" % len(self.__objs)
-            obj.setDepth(self.highestautolayer + 1)
+            offset = 0
+            if obj.__dict__.has_key("layeroffset"):
+                #print "offset =", obj.layeroffset
+                offset = obj.layeroffset
             self.highestautolayer += 1
+            obj.setDepth(self.highestautolayer + offset)
+            if FeynDiagram.options.DEBUG:
+                print "Object %s layer = %d + %d = %d" % \
+                      (obj.__class__, self.highestautolayer, offset,
+                       self.highestautolayer + offset)
             self.__objs.append(obj)
 
 
@@ -59,6 +68,8 @@ class FeynDiagram:
 
 
     def draw(self, outfile):
+        """Draw the diagram to a file, with the filetype (EPS or PDF)
+        derived from the file extension."""
         c = self.drawToCanvas()
         if c is not None and outfile is not None:
             c.writetofile(outfile)

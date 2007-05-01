@@ -41,7 +41,6 @@ class Visible:
         
     def __cmp__(self, other):
         """Compare with another visible class, just using layers."""
-        #print "@" + str(other.__class__) + "@"
         if other is None:
             return -1
 

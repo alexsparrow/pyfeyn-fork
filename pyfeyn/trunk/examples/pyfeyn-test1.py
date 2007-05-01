@@ -11,6 +11,7 @@ in_vtx = Vertex(-2, 0, mark=CIRCLE)
 out_vtx = Vertex(2, 0, mark=CIRCLE)
 
 l1 = Label("Drell-Yan QCD vertex correction", x=0, y=2)
+
 fa1 = Fermion(in1, in_vtx).addArrow().addLabel(r"\Pelectron")
 fa2 = Fermion(in_vtx, in2).addArrow().addLabel(r"\Ppositron")
 bos = Photon(in_vtx, out_vtx).addLabel(r"\Pphoton/\PZ")

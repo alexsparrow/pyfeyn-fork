@@ -22,6 +22,7 @@ def distance(point1, point2):
 ## Point base class
 class Point:
     """Base class for all pointlike objects in Feynman diagrams."""
+
     def __init__(self, x, y, blob = None):
         self.setXY(x, y)
         self.setBlob(blob)
@@ -55,6 +56,7 @@ class Point:
             return self.getBlob().getPath()
         else:
             return None
+
 
     def midpoint(self, otherpoint):
         "Return the point midway between this point and the argument."
@@ -169,6 +171,7 @@ class DecoratedPoint(Point, Visible):
         self.labels = []
         self.setMark(copy(mark))
         self.setBlob(blob)
+        self.layeroffset = 1000
         self.fillstyles = copy(fill) # lists are mutable --
         self.strokestyles = copy(stroke) # hence make a copy!
         ## Add this to the current diagram automatically

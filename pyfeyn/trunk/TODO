@@ -1,6 +1,8 @@
 PyFeyn TODO
 -----------
 
+ * Automatically draw marks and blobs after everything else?
+
  * Add multi-lines. Should be defined by number of lines and
    max-width/half-width OR number and separation. Arrows shouldn't 
    necessarily be duplicated on all lines. Auto-sizing to blobs?
