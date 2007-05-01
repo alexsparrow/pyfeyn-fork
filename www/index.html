@@ -1,61 +1,123 @@
-<h2>pyfeyn</h2>
+<h2>PyFeyn</h2>
+<a href="pyfeyn-logo"><img style="margin:1em; border:0; float:right;" src="pyfeyn-logo-small" /></a>
 <p>
-  pyfeyn is a <a href="http://www.python.org">Python-language</a> based
+  PyFeyn is a <a href="http://www.python.org">Python-language</a> based
   system for drawing Feynman diagrams. It was inspired by the C++
   <a href="http://www.feyndiagram.com">FeynDiagram</a> system, and aims
   to provide the same functionality and quality of output as that, with
   the added benefits of a modern interpreted language, an improved interface
-  and output direct to both EPS and PDF. pyfeyn (pronounced like "python" if
-  you can's say "th"s properly...) is written as an object oriented wrapper
-  on the excellent <a href="http://pyx.sf.net">PyX</a> system.
+  and output direct to both EPS and PDF. Behind the scenes, PyFeyn uses
+  the excellent <a href="http://pyx.sf.net">PyX</a> system - you can use
+  PyX constructs in PyFeyn diagrams if you want, too.
 </p>
 
-<h3>Getting pyfeyn</h3>
+
+<h3>Getting PyFeyn</h3>
 <p>
-  pyfeyn is currently in pre-release status: you can currently draw lines, 
-  vertices, interaction blobs and do some semi-clever stuff with gluons 
-  and specifying points that lines should arc through. Work is still needed
-  to clean up the class structure, be better at joining blobs with lines
-  and to implement line deformers for gluons and vector particles.
-  Line arrows, labels (via PyX text objects) and scalar/gluon lines are
-  currently possible but need cleaned up.
-</p>
-<p>
-  <a href="http://www.ippp.dur.ac.uk/~buckley/">Contact me</a> if you
-  want to look at a pre-release version of pyfeyn (and especially if
-  you want to contribute ideas or code!)
+  PyFeyn is currently in pre-release status: you can currently draw lines, 
+  vertices, interaction blobs and do some semi-clever stuff with vectors,
+  gluons and specifying points that lines should arc through. You can see
+  a few demos of how it works lower down on this page.
 </p>
 
-<h3>Teaser screenshot</h3>
+
+<h3>Using PyFeyn</h3>
 <p>
-  Here's some sample output from pyfeyn. The following source code:
+  PyFeyn is almost ready for a public beta version. Thanks to Georg von Hippel
+  for providing some very nice functionality when I was too busy (for months!)
+  to do any work on it. You can try using the code from the Subversion
+  trunk now, but we'll have a "proper" release soon.
 </p>
-<textarea rows="25" cols="80" style="padding:1em; font-size:small; color:green; background:#eee; border:1px dashed grey;">
-<!--#include virtual="pyfeyn-test.py" -->
-</textarea>
+<p>
+  There's currently no "proper" manual, but there is automatically generated
+  <a href="doc/">code documentation</a> which should hopefully be enough. Hopefully
+  most of the examples above are fairly self-explanatory &mdash; please let us know
+  by email if you get confused.
+</ul>
+
+
+
+<h3>Examples</h3>
+<p>
+  Here's some sample output from pyfeyn, with the source code that produces it:
+</p>
+
+<h4>Drell-Yan with QCD vertex correction</h4>
+<p>Very little code is needed to produce simple diagrams like this one. Note that
+the labels on the lines are produced by LaTeX and use the predefined names in the
+hepnames LaTeX package if it's available.</p>
+<hf:highlight lang="python" src="pyfeyn-test1.py" />
 <p>produces (click to enlarge):</p>
-<a href="pyfeyn-test.png"><img src="pyfeyn-test-small.png" width="200" height="200" style="border:1px grey dashed;"/></a>
+<a href="pyfeyn-test1.png">
+  <img src="pyfeyn-test1-small.png" width="320" height="165" style="border:1px grey dashed; padding:0.5em;"/>
+</a>
+(<a href="pyfeyn-test1.pdf">PDF version</a>)
 
-<h3>TODO</h3>
-<p>
-  These things should happen before a public release:
-</p>
-<ul>
-  <li>Write PyX coil and sine line deformers (supporting "3D" look).</li>
-  <li>Provide comprehensive vector, scalar and gluon classes.</li>
-  <li>Stabilise class structure.</li>
-  <li>Use PyX connectors to make deformed lines attach nicely to blobs.</li>
-  <li>Write a manual!</li>
-</ul>
-<p>
-  And these can happen afterwards:
-</p>
-<ul>
-  <li>Integrating with <a href="/feynml">FeynML</a>.</li>
-  <li>Integrating with LaTeX <a href="http://www.tex.ac.uk/tex-archive/help/Catalogue/entries/hepnames.html">hepnames</a> packages.</li>
-  <li>Get smoother hatching lines.</li>
-</ul>
+<h4>Curves and blobs</h4>
+<p>Note that the curly lines automatically match themselves to the outlines
+of the interaction blobs! I hope this isn't meant to be a real process...</p>
+<hf:highlight lang="python" src="pyfeyn-test2.py" />
+<p>produces (click to enlarge):</p>
+<a href="pyfeyn-test2.png">
+  <img src="pyfeyn-test2-small.png" width="257" height="258" style="border:1px grey dashed; padding:0.5em;"/>
+</a>
+(<a href="pyfeyn-test2.pdf">PDF version</a>)
+
+<h4>B meson decay</h4>
+<p>This is a colour-suppressed penguin decay diagram. We'd like to improve the
+quality of the blob rendering.</p>
+<hf:highlight lang="python" src="pyfeyn-test3.py" />
+<p>produces (click to enlarge):</p>
+<a href="pyfeyn-test3.png">
+  <img src="pyfeyn-test3-small.png" width="458" height="383" style="border:1px grey dashed; padding:0.5em;"/>
+</a>
+(<a href="pyfeyn-test3.pdf">PDF version</a>)
+
+<h4>Higgs loop</h4>
+<p>A top loop contribution to the Higgs boson mass &mdash; the canonical "why we need SUSY"
+diagram. The main point is that it's pretty simple and the code is correspondingly short.</p>
+<hf:highlight lang="python" src="pyfeyn-test4.py" />
+<p>produces (click to enlarge):</p>
+<a href="pyfeyn-test4.png">
+  <img src="pyfeyn-test4-small.png" width="238" height="122" style="border:1px grey dashed; padding:0.5em;"/>
+</a>
+(<a href="pyfeyn-test4.pdf">PDF version</a>)
+
+<h4>Multi-lines</h4>
+<p>Multi-lines like these aren't finished yet, but with code like this you can at least get
+most of the right effect.</p>
+<hf:highlight lang="python" src="pyfeyn-test5.py" />
+<p>produces (click to enlarge):</p>
+<a href="pyfeyn-test5.png">
+  <img src="pyfeyn-test5-small.png" width="198" height="63" style="border:1px grey dashed; padding:0.5em;"/>
+</a>
+(<a href="pyfeyn-test5.pdf">PDF version</a>)
+
+<h4>Graviton and SUSY lines</h4>
+<p>No, we don't know why there are graviton and SUSY lines available by default. Oh, yes we do:
+they were fun to write!</p>
+<hf:highlight lang="python" src="pyfeyn-test6.py" />
+<p>produces (click to enlarge):</p>
+<a href="pyfeyn-test6.png">
+  <img src="pyfeyn-test6-small.png" width="316" height="173" style="border:1px grey dashed; padding:0.5em;"/>
+</a>
+(<a href="pyfeyn-test6.pdf">PDF version</a>)
+
+<h4>Silly effects</h4>
+<p>Where PyFeyn ends, <a href="http://pyx.sourceforge.net">PyX</a> begins. You can take the
+output of PyFeyn and use it to make silly effects like these transparency-based rotation and
+translation "blurs".</p>
+<hf:highlight lang="python" src="pyfeyn-test7.py" />
+<p>produces (click to enlarge):</p>
+<a href="pyfeyn-test7.png">
+  <img src="pyfeyn-test7-small.png" width="363" height="398" style="border:1px grey dashed; padding:0.5em;"/>
+</a>
+(<a href="pyfeyn-test7.pdf">PDF version</a>)
+
+
 
 <p style="font-size:small; color:darkgrey;">
-  pyfeyn is managed by <a href="http://www.ippp.dur.ac.uk/~buckley/">Andy Buckley</a>
+  PyFeyn is managed by
+  <a href="http://www.ippp.dur.ac.uk/~buckley/">Andy Buckley</a>, who
+  also wrote most of it (and is very, very modest).
 </p>
