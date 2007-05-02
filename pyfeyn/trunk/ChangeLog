@@ -1,3 +1,9 @@
+2007-05-02  Georg von Hippel <gmv22@cantab.net>
+
+	* Added code to FeynML writer to combine dangling vertices and lines
+	into external legs. Works only for diagrams where all internal
+	vertices have been connected properly (unlike the Drell-Yan example)
+
 2007-05-01  Georg von Hippel <gmv22@cantab.net>
 
 	* Added support for free labels to FeynML module.
