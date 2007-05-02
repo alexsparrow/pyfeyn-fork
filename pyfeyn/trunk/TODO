@@ -26,4 +26,4 @@ PyFeyn TODO
 
  * Do hatched patterns better than PyX (or fix PyX's implementation).
 
- * Reinstate FeynML functionality.
+ * Improve FeynML functionality.

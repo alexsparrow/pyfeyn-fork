@@ -24,6 +24,7 @@ class FeynMLWriter:
         root = Element("diagram")
         self.objects = fd._FeynDiagram__objs
         self.ids = {}
+        self.singletons = []
         self.linecount = 0
         self.vertexcount = 0
         self.blobcount = 0
@@ -46,6 +47,29 @@ class FeynMLWriter:
                 root.append(self.labelToXML(obj))
             else:
                 print "Can't convert object to XML!"
+        self.legcount = 0
+        for point in self.singletons: # Combine single vertices/props into legs
+            for tag in root.getchildren():
+                if tag.attrib["id"]==point:
+                   for tag2 in root.getchildren():
+                       if ((tag2.attrib.has_key("source") and
+                            tag2.attrib["source"]==point) or
+                           (tag2.attrib.has_key("target") and
+                            tag2.attrib["target"]==point)):
+                          attribs = tag2.attrib
+                          if (tag2.attrib.has_key("source") and
+                              tag2.attrib["source"]==point):
+                             del attribs["source"]
+                          if (tag2.attrib.has_key("target") and
+                              tag2.attrib["target"]==point):
+                             attribs["target"] = attribs["source"]
+                             del attribs["source"]
+                          attribs.update(tag.attrib)
+                          attribs["id"] = "E%s" % self.legcount
+                          self.legcount += 1
+                          root.append(Element("leg",attribs))
+                          root.remove(tag)
+                          root.remove(tag2)
         return tostring(root).replace(">",">\n")
 
     def blobToXML(self, b):
@@ -64,12 +88,16 @@ class FeynMLWriter:
         if source not in self.ids:
             s1 = self.pointToXML(l.p1)
         else:
-            s1 = None 
+            s1 = None
+            if self.ids[source] in self.singletons:
+               del self.singletons[self.singletons.index(self.ids[source])] 
         target = md5.md5(str((l.p2.xpos, l.p2.ypos))).hexdigest()
         if target not in self.ids:
             s2 = self.pointToXML(l.p2)
         else:
             s2 = None
+            if self.ids[target] in self.singletons:
+               del self.singletons[self.singletons.index(self.ids[target])]
         attribs = {"id" : "P%s" % self.linecount,
                    "source" : self.ids[source],
                    "target" : self.ids[target],
@@ -94,6 +122,7 @@ class FeynMLWriter:
                    "y" : str(p.ypos)}
         ele = Element("vertex", attribs)
         self.ids[md5.md5(str((p.xpos, p.ypos))).hexdigest()] = attribs["id"]
+        self.singletons.append(attribs["id"])
         self.vertexcount += 1
         return ele
 

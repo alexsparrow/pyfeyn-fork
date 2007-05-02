@@ -2,15 +2,18 @@
   <head>
     <meta name="Creator" value="G. von Hippel"/>
     <meta name="Info" value="Part of the feynML test suite"/>
+    <description>
+     This file contains a sample diagram in FeynML notation.
+    </description>
   </head>
   <diagram>
-    <label id="t1" x="0" y="2" text="Sample diagram"/>
+    <label id="t1" x="0" y="1" text="Sample diagram"/>
     <vertex id="v1" x="-1" y="0" label="$xx$"/>
     <vertex id="v2" x="1" y="0" style="mark-shape:circle;mark-size:0.1;"/>
     <leg id="l1" x="-2" y="0" target="v1" type="fermion"/>
     <leg id="l2" x="2" y="0" target="v2" type="fermion"/>
     <propagator id="p1" source="v1" target="v2" type="photon" bend="1"/>
-    <blob id="blob0" x="0" y="0" shape="circle" radius="0.5" label="$\large\Sigma$"/>
+    <blob id="blob0" x="0" y="0" shape="circle" radius="0.5" label="$\Sigma$"/>
     <connect id="b0c1" blob="blob0" dir="w" />
     <connect id="b0c2" blob="blob0" dir="e" />
     <propagator id="p2" source="v1" target="b0c1" type="fermion"/>

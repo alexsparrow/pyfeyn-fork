@@ -63,6 +63,8 @@
           <xsd:enumeration value="photon"/>
           <xsd:enumeration value="gluon"/>
           <xsd:enumeration value="vector"/>
+          <xsd:enumeration value="graviton"/>
+          <xsd:enumeration value="susy"/>
           <xsd:enumeration value="fermion"/>
           <xsd:enumeration value="scalar"/>
           <xsd:enumeration value="ghost"/>
