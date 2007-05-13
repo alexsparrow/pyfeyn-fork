@@ -3,7 +3,7 @@
           "DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>pyfeyn.lines.DecoratedLine</title>
+  <title>pyfeyn.lines.Gaugino</title>
   <link rel="stylesheet" href="epydoc.css" type="text/css" />
   <script type="text/javascript" src="epydoc.js"></script>
 </head>
@@ -39,7 +39,7 @@
       <span class="breadcrumbs">
         <a href="pyfeyn-module.html">Package&nbsp;pyfeyn</a> ::
         <a href="pyfeyn.lines-module.html">Module&nbsp;lines</a> ::
-        Class&nbsp;DecoratedLine
+        Class&nbsp;Gaugino
       </span>
     </td>
     <td>
@@ -49,49 +49,50 @@
     onclick="toggle_private();">hide private</a>]</span></td></tr>
         <tr><td align="right"><span class="options"
             >[<a href="frames.html" target="_top">frames</a
-            >]&nbsp;|&nbsp;<a href="pyfeyn.lines.DecoratedLine-class.html"
+            >]&nbsp;|&nbsp;<a href="pyfeyn.lines.Gaugino-class.html"
             target="_top">no&nbsp;frames</a>]</span></td></tr>
       </table>
     </td>
   </tr>
 </table>
 <!-- ==================== CLASS DESCRIPTION ==================== -->
-<h1 class="epydoc">Class DecoratedLine</h1><br /><br />
+<h1 class="epydoc">Class Gaugino</h1><br /><br />
 <center>
-<center>  <map id="uml_class_diagram_for_classdoc_8" name="uml_class_diagram_for_classdoc_8">
-<area shape="rect" href="pyfeyn.lines.Gluon&#45;class.html" title="pyfeyn.lines.Gluon" alt="" coords="5,584,77,622" />
+<center>  <map id="uml_class_diagram_for_classdoc_9" name="uml_class_diagram_for_classdoc_9">
+<area shape="rect" href="pyfeyn.lines.DecoratedLine&#45;class.html#getNumHalfCycles" title="Get the number of half cycles in this line." alt="" coords="133,503,280,522" />
+<area shape="rect" href="pyfeyn.lines.DecoratedLine&#45;class.html" title="pyfeyn.lines.DecoratedLine" alt="" coords="121,472,292,528" />
+<area shape="rect" href="pyfeyn.lines.Gaugino&#45;class.html#set3D" title="Make this line display in &#39;3D&#39;." alt="" coords="17,578,396,596" />
+<area shape="rect" href="pyfeyn.lines.Gaugino&#45;class.html#__init__" title="pyfeyn.lines.Gaugino.__init__" alt="" coords="17,596,396,615" />
+<area shape="rect" href="pyfeyn.lines.Gaugino&#45;class.html#invert" title="Reflect the decoration in the line itself." alt="" coords="17,615,396,634" />
+<area shape="rect" href="pyfeyn.lines.Gaugino&#45;class.html#draw" title="Draw the line on the supplied canvas." alt="" coords="17,634,396,652" />
+<area shape="rect" href="pyfeyn.lines.Gaugino&#45;class.html#getDeformedPath" title="Get the path with the decorative deformation." alt="" coords="17,652,396,671" />
+<area shape="rect" href="pyfeyn.lines.Gaugino&#45;class.html" title="pyfeyn.lines.Gaugino" alt="" coords="5,547,408,678" />
+<area shape="rect" href="pyfeyn.lines.Line&#45;class.html#bend" title="Bend the line to the right by a given distance." alt="" coords="44,167,369,186" />
+<area shape="rect" href="pyfeyn.lines.Line&#45;class.html#removeLabels" title="Remove the labels from this line." alt="" coords="44,186,369,204" />
+<area shape="rect" href="pyfeyn.lines.Line&#45;class.html#getVisiblePath" title="Find the subpath between the endpoints which isn&#39;t overshadowed by a blob  of some kind" alt="" coords="44,204,369,223" />
+<area shape="rect" href="pyfeyn.lines.Line&#45;class.html#getStyles" title="Get the styles associated with this line." alt="" coords="44,223,369,242" />
+<area shape="rect" href="pyfeyn.lines.Line&#45;class.html#getPath" title="Get the path taken by this line." alt="" coords="44,242,369,260" />
+<area shape="rect" href="pyfeyn.lines.Line&#45;class.html#setStyles" title="Set the styles associated with this line." alt="" coords="44,260,369,279" />
+<area shape="rect" href="pyfeyn.lines.Line&#45;class.html#addStyles" title="Add some styles to this line." alt="" coords="44,279,369,298" />
+<area shape="rect" href="pyfeyn.lines.Line&#45;class.html#addArrow" title="Add an arrow to the line at the specified position, which is a number  between 0 and 1, representing the fraction along the line at which the  arrow should be placed." alt="" coords="44,298,369,316" />
+<area shape="rect" href="pyfeyn.lines.Line&#45;class.html#setArrows" title="Define the arrows on this line." alt="" coords="44,316,369,335" />
+<area shape="rect" href="pyfeyn.lines.Line&#45;class.html#arcThru" title="Set the point through which this line will arc." alt="" coords="44,335,369,354" />
+<area shape="rect" href="pyfeyn.lines.Line&#45;class.html#fracpoint" title="Get a new Point representing the point at the given fraction along the  fundamental line (i.e." alt="" coords="44,354,369,372" />
+<area shape="rect" href="pyfeyn.lines.Line&#45;class.html#removeArrows" title="Remove all arrows from this line." alt="" coords="44,372,369,391" />
+<area shape="rect" href="pyfeyn.lines.Line&#45;class.html#addLabel" title="Add a LaTeX label to this line, either via parameters or actually as a  TeXLable object." alt="" coords="44,391,369,410" />
+<area shape="rect" href="pyfeyn.lines.Line&#45;class.html#addStyle" title="Add a style to this line." alt="" coords="44,410,369,428" />
+<area shape="rect" href="pyfeyn.lines.Line&#45;class.html#straighten" title="Make this line a straight line between start and end." alt="" coords="44,428,369,447" />
+<area shape="rect" href="pyfeyn.lines.Line&#45;class.html" title="pyfeyn.lines.Line" alt="" coords="32,136,381,454" />
 <area shape="rect" href="pyfeyn.utils.Visible&#45;class.html#getDepth" title="pyfeyn.utils.Visible.getDepth" alt="" coords="141,36,272,55" />
 <area shape="rect" href="pyfeyn.utils.Visible&#45;class.html#__cmp__" title="Compare with another visible class, just using layers." alt="" coords="141,55,272,74" />
 <area shape="rect" href="pyfeyn.utils.Visible&#45;class.html#isVisible" title="pyfeyn.utils.Visible.isVisible" alt="" coords="141,74,272,92" />
 <area shape="rect" href="pyfeyn.utils.Visible&#45;class.html#setDepth" title="pyfeyn.utils.Visible.setDepth" alt="" coords="141,92,272,111" />
 <area shape="rect" href="pyfeyn.utils.Visible&#45;class.html" title="pyfeyn.utils.Visible" alt="" coords="129,6,284,118" />
-<area shape="rect" href="pyfeyn.lines.Line&#45;class.html#bend" title="Bend the line to the right by a given distance." alt="" coords="64,167,349,186" />
-<area shape="rect" href="pyfeyn.lines.Line&#45;class.html#set3D" title="Make this line display in &#39;3D&#39;." alt="" coords="64,186,349,204" />
-<area shape="rect" href="pyfeyn.lines.Line&#45;class.html#removeLabels" title="Remove the labels from this line." alt="" coords="64,204,349,223" />
-<area shape="rect" href="pyfeyn.lines.Line&#45;class.html#__init__" title="pyfeyn.lines.Line.__init__" alt="" coords="64,223,349,242" />
-<area shape="rect" href="pyfeyn.lines.Line&#45;class.html#getVisiblePath" title="Find the subpath between the endpoints which isn&#39;t overshadowed by a blob  of some kind" alt="" coords="64,242,349,260" />
-<area shape="rect" href="pyfeyn.lines.Line&#45;class.html#getStyles" title="Get the styles associated with this line." alt="" coords="64,260,349,279" />
-<area shape="rect" href="pyfeyn.lines.Line&#45;class.html#getPath" title="Get the path taken by this line." alt="" coords="64,279,349,298" />
-<area shape="rect" href="pyfeyn.lines.Line&#45;class.html#setStyles" title="Set the styles associated with this line." alt="" coords="64,298,349,316" />
-<area shape="rect" href="pyfeyn.lines.Line&#45;class.html#addStyles" title="Add some styles to this line." alt="" coords="64,316,349,335" />
-<area shape="rect" href="pyfeyn.lines.Line&#45;class.html#addArrow" title="Add an arrow to the line at the specified position, which is a number  between 0 and 1, representing the fraction along the line at which the  arrow should be placed." alt="" coords="64,335,349,354" />
-<area shape="rect" href="pyfeyn.lines.Line&#45;class.html#draw" title="Drwa this line on the given canvas." alt="" coords="64,354,349,372" />
-<area shape="rect" href="pyfeyn.lines.Line&#45;class.html#setArrows" title="Define the arrows on this line." alt="" coords="64,372,349,391" />
-<area shape="rect" href="pyfeyn.lines.Line&#45;class.html#arcThru" title="Set the point through which this line will arc." alt="" coords="64,391,349,410" />
-<area shape="rect" href="pyfeyn.lines.Line&#45;class.html#straighten" title="Make this line a straight line between start and end." alt="" coords="64,428,349,447" />
-<area shape="rect" href="pyfeyn.lines.Line&#45;class.html" title="pyfeyn.lines.Line" alt="" coords="52,136,361,454" />
-<area shape="rect" href="pyfeyn.lines.Gaugino&#45;class.html" title="pyfeyn.lines.Gaugino" alt="" coords="107,584,192,622" />
-<area shape="rect" href="pyfeyn.lines.DecoratedLine&#45;class.html#invert" title="Reflect the line decoration about the line." alt="" coords="133,503,280,522" />
-<area shape="rect" href="pyfeyn.lines.DecoratedLine&#45;class.html#getNumHalfCycles" title="Get the number of half cycles in this line." alt="" coords="133,522,280,540" />
-<area shape="rect" href="pyfeyn.lines.DecoratedLine&#45;class.html#getDeformedPath" title="Get the deformed path." alt="" coords="133,540,280,559" />
-<area shape="rect" href="pyfeyn.lines.DecoratedLine&#45;class.html" title="pyfeyn.lines.DecoratedLine" alt="" coords="121,472,292,566" />
-<area shape="rect" href="pyfeyn.lines.Graviton&#45;class.html" title="pyfeyn.lines.Graviton" alt="" coords="221,584,307,622" />
-<area shape="rect" href="pyfeyn.lines.Vector&#45;class.html" title="pyfeyn.lines.Vector" alt="" coords="336,584,411,622" />
 </map>
-  <img src="uml_class_diagram_for_classdoc_8.gif" alt='' usemap="#uml_class_diagram_for_classdoc_8" ismap="ismap" class="graph-without-title">
+  <img src="uml_class_diagram_for_classdoc_9.gif" alt='' usemap="#uml_class_diagram_for_classdoc_9" ismap="ismap" class="graph-without-title">
 </center></center>
 <hr />
-Base class for spring and sine-like lines<br /><br />
+A line with a sinoid deformation and a normal line<br /><br />
 
 <!-- ==================== INSTANCE METHODS ==================== -->
 <a name="section-InstanceMethods"></a>
@@ -114,44 +115,65 @@ Base class for spring and sine-like lines<br /><br />
   <td width="15%" align="right" valign="top" class="summary">
     <code class="summary-type">&nbsp;</code>
   </td><td class="summary">
-    <span class="summary-sig"><a href="pyfeyn.lines.DecoratedLine-class.html#invert" class="summary-sig-name">invert</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Reflect the line decoration about the line.
+    <span class="summary-sig"><a href="pyfeyn.lines.Gaugino-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">point1</span>,
+        <span class="summary-sig-arg">point2</span>)</span>
   </td>
 </tr>
 <tr>
   <td width="15%" align="right" valign="top" class="summary">
     <code class="summary-type">&nbsp;</code>
   </td><td class="summary">
-    <span class="summary-sig"><a href="pyfeyn.lines.DecoratedLine-class.html#getNumHalfCycles" class="summary-sig-name">getNumHalfCycles</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Get the number of half cycles in this line.
+    <span class="summary-sig"><a href="pyfeyn.lines.Gaugino-class.html#set3D" class="summary-sig-name">set3D</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">is3D</span>=<span class="summary-sig-default">True</span>,
+        <span class="summary-sig-arg">skipsize</span>=<span class="summary-sig-default">pyx.unit.length(0.04)</span>,
+        <span class="summary-sig-arg">parity</span>=<span class="summary-sig-default">0</span>)</span><br />
+      Make this line display in '3D'.
   </td>
 </tr>
 <tr>
   <td width="15%" align="right" valign="top" class="summary">
     <code class="summary-type">&nbsp;</code>
   </td><td class="summary">
-    <span class="summary-sig"><a href="pyfeyn.lines.DecoratedLine-class.html#getDeformedPath" class="summary-sig-name">getDeformedPath</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Get the deformed path.
+    <span class="summary-sig"><a href="pyfeyn.lines.Gaugino-class.html#invert" class="summary-sig-name">invert</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Reflect the decoration in the line itself.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <code class="summary-type">&nbsp;</code>
+  </td><td class="summary">
+    <span class="summary-sig"><a href="pyfeyn.lines.Gaugino-class.html#getDeformedPath" class="summary-sig-name">getDeformedPath</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Get the path with the decorative deformation.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <code class="summary-type">&nbsp;</code>
+  </td><td class="summary">
+    <span class="summary-sig"><a href="pyfeyn.lines.Gaugino-class.html#draw" class="summary-sig-name">draw</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">canvas</span>)</span><br />
+      Draw the line on the supplied canvas.
   </td>
 </tr>
   <tr>
     <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="pyfeyn.lines.DecoratedLine-class.html">DecoratedLine</a></code></b>:
+      <code><a href="pyfeyn.lines.DecoratedLine-class.html#getNumHalfCycles">getNumHalfCycles</a></code>
+      </p>
     <p class="indent-wrapped-lines"><b>Inherited from <code><a href="pyfeyn.lines.Line-class.html">Line</a></code></b>:
-      <code><a href="pyfeyn.lines.Line-class.html#__init__">__init__</a></code>,
       <code><a href="pyfeyn.lines.Line-class.html#addArrow">addArrow</a></code>,
       <code><a href="pyfeyn.lines.Line-class.html#addLabel">addLabel</a></code>,
       <code><a href="pyfeyn.lines.Line-class.html#addStyle">addStyle</a></code>,
       <code><a href="pyfeyn.lines.Line-class.html#addStyles">addStyles</a></code>,
       <code><a href="pyfeyn.lines.Line-class.html#arcThru">arcThru</a></code>,
       <code><a href="pyfeyn.lines.Line-class.html#bend">bend</a></code>,
-      <code><a href="pyfeyn.lines.Line-class.html#draw">draw</a></code>,
       <code><a href="pyfeyn.lines.Line-class.html#fracpoint">fracpoint</a></code>,
       <code><a href="pyfeyn.lines.Line-class.html#getPath">getPath</a></code>,
       <code><a href="pyfeyn.lines.Line-class.html#getStyles">getStyles</a></code>,
       <code><a href="pyfeyn.lines.Line-class.html#getVisiblePath">getVisiblePath</a></code>,
       <code><a href="pyfeyn.lines.Line-class.html#removeArrows">removeArrows</a></code>,
       <code><a href="pyfeyn.lines.Line-class.html#removeLabels">removeLabels</a></code>,
-      <code><a href="pyfeyn.lines.Line-class.html#set3D">set3D</a></code>,
       <code><a href="pyfeyn.lines.Line-class.html#setArrows">setArrows</a></code>,
       <code><a href="pyfeyn.lines.Line-class.html#setStyles">setStyles</a></code>,
       <code><a href="pyfeyn.lines.Line-class.html#straighten">straighten</a></code>
@@ -185,6 +207,57 @@ Base class for spring and sine-like lines<br /><br />
   </td>
 </tr>
 </table>
+<a name="__init__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">point1</span>,
+        <span class="sig-arg">point2</span>)</span>
+    <br /><em class="fname">(Constructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  None
+  <dl><dt></dt><dd>
+    <dl><dt>Overrides:
+      <a href="pyfeyn.lines.Line-class.html#__init__">Line.__init__</a>
+    </dt></dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="set3D"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">set3D</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">is3D</span>=<span class="sig-default">True</span>,
+        <span class="sig-arg">skipsize</span>=<span class="sig-default">pyx.unit.length(0.04)</span>,
+        <span class="sig-arg">parity</span>=<span class="sig-default">0</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Make this line display in '3D'.
+  <dl><dt></dt><dd>
+    <dl><dt>Overrides:
+      <a href="pyfeyn.lines.Line-class.html#set3D">Line.set3D</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt></dl>
+  </dd></dl>
+</td></tr></table>
+</div>
 <a name="invert"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
@@ -199,27 +272,11 @@ Base class for spring and sine-like lines<br /><br />
     ></td>
   </table>
   
-  Reflect the line decoration about the line.
+  Reflect the decoration in the line itself.
   <dl><dt></dt><dd>
-  </dd></dl>
-</td></tr></table>
-</div>
-<a name="getNumHalfCycles"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">getNumHalfCycles</span>(<span class="sig-arg">self</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    >&nbsp;</span
-    ></td>
-  </table>
-  
-  Get the number of half cycles in this line.
-  <dl><dt></dt><dd>
+    <dl><dt>Overrides:
+      <a href="pyfeyn.lines.DecoratedLine-class.html#invert">DecoratedLine.invert</a>
+    </dt></dl>
   </dd></dl>
 </td></tr></table>
 </div>
@@ -237,8 +294,34 @@ Base class for spring and sine-like lines<br /><br />
     ></td>
   </table>
   
-  Get the deformed path.
+  Get the path with the decorative deformation.
   <dl><dt></dt><dd>
+    <dl><dt>Overrides:
+      <a href="pyfeyn.lines.DecoratedLine-class.html#getDeformedPath">DecoratedLine.getDeformedPath</a>
+    </dt></dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="draw"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">draw</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">canvas</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Draw the line on the supplied canvas.
+  <dl><dt></dt><dd>
+    <dl><dt>Overrides:
+      <a href="pyfeyn.lines.Line-class.html#draw">Line.draw</a>
+    </dt></dl>
   </dd></dl>
 </td></tr></table>
 </div>
