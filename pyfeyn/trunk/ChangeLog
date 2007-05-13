@@ -1,3 +1,9 @@
+2007-05-13  Andy Buckley  <andy@insectnation.org>
+
+	* paint.py: now colours, patterns and line thicknesses are defined here 
+	as upper-case constants (via import from PyX). The import * has been removed. 
+	The examples have been updated to match.
+
 2007-05-02  Georg von Hippel <gmv22@cantab.net>
 
 	* Added code to FeynML writer to combine dangling vertices and lines

@@ -360,6 +360,9 @@ class Scalar(Line):
 ## Higgs is an alias for Scalar
 Higgs = Scalar
 
+## Sfermion is also an alias for Scalar
+Sfermion = Scalar
+
 
 
 ## DecoratedLine base class
@@ -664,7 +667,7 @@ class Graviton(DecoratedLine):
 
 
 
-class SusyBoson(DecoratedLine):
+class Gaugino(DecoratedLine):
     """A line with a sinoid deformation and a normal line"""
     def __init__(self, point1, point2):
         self.p1 = point1

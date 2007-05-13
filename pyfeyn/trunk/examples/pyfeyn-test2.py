@@ -10,10 +10,10 @@ p4 = p1.midpoint(p2)
 p5 = p4.midpoint(p1)
 p6 = p4.midpoint(p2)
 
-c1 = Circle(center=p1, radius=0.5, fill=[color.rgb.red], points=[p1])
-c2 = Circle(center=p2, radius=0.3, fill=[color.rgb.green], points=[p2])
+c1 = Circle(center=p1, radius=0.5, fill=[RED], points=[p1])
+c2 = Circle(center=p2, radius=0.3, fill=[GREEN], points=[p2])
 e1 = Ellipse(center=p4, xradius=0.5, yradius=1.0,
-             fill=[color.cmyk.MidnightBlue], points=[p4])
+             fill=[MIDNIGHTBLUE], points=[p4])
 
 l0a = Fermion(p1, p4)
 l0b = Fermion(p2, p4)

@@ -33,8 +33,8 @@ f3 = Fermion(out1b, out1c).addArrow(0.8).addLabel(r"\APup")
 f4 = Fermion(out1c, out1d).arcThru(vtx)
 f5 = Fermion(out1d, out2a).addArrow(0.2).addLabel(r"\Pup")
 
-in_blob = Ellipse(x=1, y=3.5, xradius=1, yradius=3.5).setFillStyle(crosshatched45)
-out_blob1 = Ellipse(x=11, y=6, xradius=0.6, yradius=1).setFillStyle(hatched135)
-out_blob2 = Ellipse(x=11, y=1, xradius=0.6, yradius=1).setFillStyle(hatched135)
+in_blob = Ellipse(x=1, y=3.5, xradius=1, yradius=3.5).setFillStyle(CROSSHATCHED45)
+out_blob1 = Ellipse(x=11, y=6, xradius=0.6, yradius=1).setFillStyle(HATCHED135)
+out_blob2 = Ellipse(x=11, y=1, xradius=0.6, yradius=1).setFillStyle(HATCHED135)
 
 fd.draw("pyfeyn-test3.pdf")

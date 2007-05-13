@@ -1,7 +1,9 @@
 PyFeyn TODO
 -----------
 
- * Automatically draw marks and blobs after everything else?
+ * Add a Gluino line (a struck-through gluon)? Alternative is just a fermion.
+
+ * Add a Gravitino line (a struck-through graviton)? Alternative is just a fermion.
 
  * Add multi-lines. Should be defined by number of lines and
    max-width/half-width OR number and separation. Arrows shouldn't 
@@ -22,8 +24,11 @@ PyFeyn TODO
 
  * Every diagram element should know its parent diagram.
 
- * Allow multiple diagrams in a single output image.
+ * Allow multiple diagrams in a single output image (add a Page class or similar).
 
  * Do hatched patterns better than PyX (or fix PyX's implementation).
 
- * Improve FeynML functionality.
+ * Improve the global options / defaults mechanism.
+
+ * Allow tree-level diagrams to be generated automatically by minimising 
+   the "energy" of a specified graph topology (a la FeynMF).
