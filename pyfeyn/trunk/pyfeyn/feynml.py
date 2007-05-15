@@ -17,7 +17,16 @@ class FeynMLWriter:
     
     def __init__(self, filename):
         """Write FeynML to a file."""
-        pass
+        self.thefile = open(filename,"w")
+        self.theroot = Element("feynml")
+        head = Element("head")
+        self.theroot.append(head)
+        head.append(Element("meta",{"name":"creator", "value":"PyFeyn"}))
+
+    def close(self):
+        """Commit FeynML code to output file."""
+        self.thefile.write(tostring(self.theroot).replace(">",">\n"))
+        self.thefile.close()
     
     def diagramToXML(self, fd):
         """Create FeynML code for a diagram."""
@@ -70,6 +79,7 @@ class FeynMLWriter:
                           root.append(Element("leg",attribs))
                           root.remove(tag)
                           root.remove(tag2)
+        self.theroot.append(root)
         return tostring(root).replace(">",">\n")
 
     def blobToXML(self, b):

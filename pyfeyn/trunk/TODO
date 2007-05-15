@@ -16,8 +16,6 @@ PyFeyn TODO
 
  * Add unattached and line-parallel arrows (useful for momenta, helicities etc.)
 
- * Make custom gluon deformer with a 3D option.
-
  * Allow setting initial/final straight components of decorated lines.
 
  * Allow single lines to be deviated sharply (split?) round a vertex.

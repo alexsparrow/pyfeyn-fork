@@ -1,3 +1,7 @@
+2007-05-15  Georg von Hippel <gmv22@cantab.net>
+
+	* Improved FeynML writer so as to actually write to an XML file.
+
 2007-05-13  Andy Buckley  <andy@insectnation.org>
 
 	* paint.py: now colours, patterns and line thicknesses are defined here 
