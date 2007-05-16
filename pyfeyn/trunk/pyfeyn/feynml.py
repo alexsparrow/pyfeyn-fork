@@ -69,8 +69,10 @@ class FeynMLWriter:
                           if (tag2.attrib.has_key("source") and
                               tag2.attrib["source"]==point):
                              del attribs["source"]
+                             attribs["sense"] = "incoming"
                           if (tag2.attrib.has_key("target") and
                               tag2.attrib["target"]==point):
+                             attribs["sense"] = "outgoing"
                              attribs["target"] = attribs["source"]
                              del attribs["source"]
                           attribs.update(tag.attrib)
@@ -118,6 +120,17 @@ class FeynMLWriter:
             #vx = middle.x() - l.p1.x()
             bendamount = (l.arcthrupoint.x() - middle.x()) / nx
             attribs["bend"] = str(bendamount)
+        style = ""
+        labels = []
+        for arr in l.arrows:
+            style += "arrow-size:%f; arrow-angle:%f; arrow-constrict:%f; arrow-pos:%f; "%(arr.size/pyx.unit.v_cm,arr.angle,arr.constriction,arr.pos)
+        for lab in l.labels:
+            style += "label-pos:%f; label-displace:%f; label-angle:%f; "%(lab.pos,lab.displace/pyx.unit.v_cm,lab.angle)
+            labels.append(lab.text)
+        if style:
+            attribs["style"] = style[:-1]
+        if labels:
+            attribs["label"] = labels[0]
         ele = Element("propagator", attribs)
         self.ids[md5.md5(str((l.p1.xpos,l.p1.ypos,l.p2.xpos,l.p2.ypos,
                               l.arcthrupoint and (l.arcthrupoint.xpos,
@@ -153,8 +166,8 @@ class FeynMLWriter:
                                                         255 * x.color["b"])
         s = "mark-shape:%s; mark-size:%s; fill-style:%s; line-style:%s;" % \
             (p.marker.__class__.__name__[:-4].lower(),
-             hasattr(p.marker,"radius") and pyx.unit.tocm(p.marker.radius) \
-               or (hasattr(p.marker,"size") and pyx.unit.tocm(p.marker.size)\
+             hasattr(p.marker,"radius") and p.marker.radius/pyx.unit.v_cm \
+               or (hasattr(p.marker,"size") and p.marker.size/pyx.unit.v_cm \
                    or 0), fills, strokes )
         ele.attrib["style"] = s
         return ele
@@ -256,7 +269,7 @@ class FeynMLReader:
         if "style" in element.attrib:
             l = self.apply_layout(element.attrib["style"], l)
         if "label" in element.attrib:
-            l = l.style(Label(element.attrib["label"]))
+            l = l.addLabel(element.attrib["label"])
         try:
             thedict[element.attrib["id"]] = l
         except:
@@ -272,13 +285,19 @@ class FeynMLReader:
             x = float(element.attrib["x"])
             y = float(element.attrib["y"])
             p2 = thedict[element.attrib["target"]]
+            sense = element.attrib["sense"]
         except:
             raise Exception("FeynML Error: invalid attribute for <leg> element")
-        l = NamedLine[thetype](Point(x, y), p2)
+        if sense[:2]=="in" or sense[:8]=="anti-out":
+           l = NamedLine[thetype](Point(x, y), p2)
+        elif sense[:3]=="out" or sense[:7]=="anti-in":
+           l = NamedLine[thetype](p2, Point(x, y))
+        else:
+            raise Exception("FeynML Error: invalid sense for <leg> element")
         if "style" in element.attrib:
             l = self.apply_layout(element.attrib["style"], l)
         if "label" in element.attrib:
-            l = l.style(Label(element.attrib["label"]))
+            l = l.addLabel(element.attrib["label"])
         try:
             thedict[element.attrib["id"]] = l
         except:
@@ -372,6 +391,26 @@ class FeynMLReader:
                    obj.setMark(SQUARE)
                 else:
                    obj.setMark(marktype(size=float(styledict["mark-size"])))
+        if (styledict.has_key("arrow-size") or styledict.has_key("arrow-angle")
+            or styledict.has_key("arrow-constrict")
+            or styledict.has_key("arrow-pos")) and isinstance(obj, Line):
+           try:
+              arrsize = pyx.unit.length(float(styledict["arrow-size"]),unit="cm")
+           except:
+              arrsize = 6*pyx.unit.v_pt
+           try:
+              arrangle = float(styledict["arrow-angle"])
+           except:
+              arrangle = 45
+           try:
+              arrconstrict = float(styledict["arrow-constrict"])
+           except:
+              arrconstrict = 0.8
+           try:
+              arrpos = float(styledict["arrow-pos"])
+           except:
+              arrpos = 0.5
+           obj.addArrow(arrow=Arrow(arrpos,arrsize,arrangle,arrconstrict))
         return obj
 
 

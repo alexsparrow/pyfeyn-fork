@@ -44,7 +44,7 @@
 <!-- Style string type -->
 <xsd:simpleType name="style.type">
    <xsd:restriction base="xsd:string">
-          <xsd:pattern value="((mark-shape|mark-size|fill-style|line-style):.+;)+"/>
+          <xsd:pattern value="((mark-shape|mark-size|fill-style|line-style|arrow-pos|arrow-size|arrow-angle|arrow-constrict|label-pos|label-displace|label-angle):[^;]+;\s*)+"/>
    </xsd:restriction>
 </xsd:simpleType>
 
@@ -58,6 +58,13 @@
 </xsd:simpleType>
 
 <!-- Line type Type  -->
+<xsd:simpleType name="legsense.type">
+  <xsd:restriction base="xsd:string">
+         <xsd:pattern value="(anti-)?(in|out)(coming|going)?" />
+  </xsd:restriction>
+</xsd:simpleType>
+
+<!-- Leg sense Type -->
 <xsd:simpleType name="line-type.type">
   <xsd:restriction base="xsd:NMTOKEN">
           <xsd:enumeration value="photon"/>
@@ -71,6 +78,7 @@
           <xsd:enumeration value="phantom"/>
    </xsd:restriction>
 </xsd:simpleType>
+
 
 <!-- Angle type -->
 <xsd:simpleType name="angle.type">
@@ -179,6 +187,7 @@
 <!-- Leg attributes -->
 <xsd:attributeGroup name="leg-atts">
     <xsd:attribute name="target" type="idref.type" use="required"/>
+    <xsd:attribute name="sense" type="legsense.type" use="required"/>
 </xsd:attributeGroup>
 <!-- Leg type -->
 <xsd:complexType name="leg.type">

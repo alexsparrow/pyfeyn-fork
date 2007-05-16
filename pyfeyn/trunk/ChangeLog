@@ -1,5 +1,11 @@
 2007-05-15  Georg von Hippel <gmv22@cantab.net>
 
+	* Added support for further styling (arrows, labels) to FeynML module.
+	* Added leg sense (in/out, antiparticle) attribute to FeynML schema,
+	and corresponding support to FeynML module.
+
+2007-05-15  Georg von Hippel <gmv22@cantab.net>
+
 	* Improved FeynML writer so as to actually write to an XML file.
 
 2007-05-13  Andy Buckley  <andy@insectnation.org>
