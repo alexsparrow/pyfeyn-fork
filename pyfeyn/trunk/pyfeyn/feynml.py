@@ -27,6 +27,13 @@ class FeynMLWriter:
         """Commit FeynML code to output file."""
         self.thefile.write(tostring(self.theroot).replace(">",">\n"))
         self.thefile.close()
+
+    def describe(self, s):
+        """Add a description to the FeynML header."""
+        head = self.theroot.find("head")
+        desc = Element("description")
+        desc.text = s
+        head.append(desc)
     
     def diagramToXML(self, fd):
         """Create FeynML code for a diagram."""

@@ -1,4 +1,4 @@
-2007-05-15  Georg von Hippel <gmv22@cantab.net>
+2007-05-16  Georg von Hippel <gmv22@cantab.net>
 
 	* Added support for further styling (arrows, labels) to FeynML module.
 	* Added leg sense (in/out, antiparticle) attribute to FeynML schema,
