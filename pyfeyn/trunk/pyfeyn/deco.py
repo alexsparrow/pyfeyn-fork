@@ -28,6 +28,105 @@ class Arrow(pyx.deco.deco, pyx.attr.attr):
         return dp
 
 
+class FreeArrow(Visible):
+    """Arrow not attached to any line in a diagram."""
+    def __init__(self, length=0.5*pyx.unit.v_cm, size=6*pyx.unit.v_pt,
+                 angle=45, constriction=0.8, pos=None, x=None, y=None,
+                 direction=0):
+        self.x, self.y = 0, 0
+        if x is not None:
+            self.x = x
+        if y is not None:
+            self.y = y
+        if pos is not None:
+            self.x, self.y = pos.getXY()
+        self.direction = direction
+        self.length = length
+        self.size = size
+        self.angle = angle
+        self.constriction = constriction
+        ## Add this to the current diagram automatically
+        FeynDiagram.currentDiagram.add(self)        
+
+    def draw(self, canvas):
+        """Draw this arrow on the supplied canvas."""
+        endx, endy = self.x-self.length*math.sin(self.direction*math.pi/180.), \
+                     self.y-self.length*math.cos(self.direction*math.pi/180.)
+        linepath = pyx.deco.decoratedpath(
+                       pyx.path.path(pyx.path.moveto(endx,endy),
+                                     pyx.path.lineto(self.x,self.y)))
+        styles = [Arrow(pos=1.0, size=self.size, angle=self.angle,
+                        constriction=self.constriction)]
+        canvas.stroke(linepath.path,styles)
+
+
+class ParallelArrow(Visible):
+    """Arrow running parallel to a line, for momenta, helicities etc."""
+    def __init__(self, line, pos=0.5, displace=0.3, length=0.5*pyx.unit.v_cm,
+                 size=6*pyx.unit.v_pt, angle=45, constriction=0.8, sense=+1):
+        self.line = line
+        self.pos = pos
+        self.displace = pyx.unit.length(displace)
+        self.length = length
+        self.size = size
+        self.angle = angle
+        self.constriction = constriction
+        self.sense = sense
+
+    def draw(self, canvas):
+        """Draw this arrow on the supplied canvas."""
+        p = self.line.getPath()
+        posparam = p.begin() + self.pos * p.arclen() 
+        x, y = self.line.fracpoint(self.pos).getXY()
+        arrx, arry = self.line.fracpoint(self.pos+self.length/2./p.arclen()).getXY()
+        endx, endy = self.line.fracpoint(self.pos-self.length/2./p.arclen()).getXY() 
+
+        ## Calculate the displacement from the line
+        displacement = self.displace
+        intrinsicwidth = pyx.unit.length(0.1)
+        if hasattr(self.line, "arcradius"):
+            intrinsicwidth = self.line.arcradius
+        if displacement > 0:
+            displacement += intrinsicwidth
+        else:
+            displacement -= intrinsicwidth
+        if FeynDiagram.options.DEBUG:
+            print "Displacement = ", displacement
+
+        ## Position the arrow on the right hand side of lines
+        tangent = p.tangent(posparam, displacement)
+        normal = tangent.transformed(pyx.trafo.rotate(90, x, y))
+        nx, ny = normal.atend()
+        nxcm, nycm = pyx.unit.tocm(nx - x), pyx.unit.tocm(ny - y)
+        vx, vy = p.atbegin()
+        vxcm, vycm = pyx.unit.tocm(x - vx), pyx.unit.tocm(y - vy)
+
+        ## If the arrow is on the left, flip it by 180 degrees
+        if (vxcm * nycm - vycm * nxcm) > 0:
+            normal = normal.transformed(pyx.trafo.rotate(180, x, y))
+            nx, ny = normal.atend()
+        if displacement < 0:
+            normal = normal.transformed(pyx.trafo.rotate(180, x, y))
+            nx, ny = normal.atend()
+        if FeynDiagram.options.VDEBUG:
+            FeynDiagram.currentCanvas.stroke(normal)
+
+        ## Displace the arrow by this normal vector
+        endx, endy = endx + (nx-x), endy + (ny-y)
+        arrx, arry = arrx + (nx-x), arry + (ny-y)
+
+        if self.sense<0.:
+           arrx, arry, endx, endy = endx, endy, arrx, arry
+
+        linepath = pyx.deco.decoratedpath(
+                       pyx.path.path(pyx.path.moveto(endx,endy),
+                                     pyx.path.lineto(arrx,arry)))
+        styles = [Arrow(pos=1.0, size=self.size, angle=self.angle,
+                        constriction=self.constriction)]
+        canvas.stroke(linepath.path,styles)
+
+
+
 ## Label
 class Label(Visible):
     """General label, unattached to any diagram elements"""

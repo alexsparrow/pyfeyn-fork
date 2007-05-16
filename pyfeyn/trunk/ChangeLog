@@ -3,6 +3,8 @@
 	* Added support for further styling (arrows, labels) to FeynML module.
 	* Added leg sense (in/out, antiparticle) attribute to FeynML schema,
 	and corresponding support to FeynML module.
+	* Added FreeArrow and ParallelArrow classes for free-standing and
+	line-parallel arrows in diagrams.
 
 2007-05-15  Georg von Hippel <gmv22@cantab.net>
 

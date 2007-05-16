@@ -5,7 +5,7 @@ from pyx import color
 
 from pyfeyn.diagrams import FeynDiagram
 from pyfeyn.points import Point
-from pyfeyn.deco import Arrow, LineLabel
+from pyfeyn.deco import Arrow, ParallelArrow, LineLabel
 from pyfeyn.utils import Visible, defunit
 
 
@@ -37,6 +37,14 @@ class Line(Visible):
         self.labels.append(LineLabel(text=text, line=self, pos=pos, displace=displace, angle=angle))
         if FeynDiagram.options.DEBUG:
             print "Labels = " + str(self.labels)
+        return self
+
+    def addParallelArrow(self, pos=0.5, displace=0.3, length=0.5*pyx.unit.v_cm,
+                 size=6*pyx.unit.v_pt, angle=45, constriction=0.8, sense=+1):
+        self.labels.append(ParallelArrow(self, pos=pos, displace=displace,
+                                         length=length, size=size, angle=angle,
+                                         constriction=constriction,
+                                         sense=sense))
         return self
 
             
