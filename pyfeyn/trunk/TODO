@@ -1,8 +1,6 @@
 PyFeyn TODO
 -----------
 
- * Add a Gluino line (a struck-through gluon)? Alternative is just a fermion.
-
  * Add a Gravitino line (a struck-through graviton)? Alternative is just a fermion.
 
  * Add multi-lines. Should be defined by number of lines and
@@ -13,8 +11,6 @@ PyFeyn TODO
    internal function?
 
  * Fix pattern stroke colour problem.
-
- * Add unattached and line-parallel arrows (useful for momenta, helicities etc.)
 
  * Allow setting initial/final straight components of decorated lines.
 

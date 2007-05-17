@@ -27,12 +27,10 @@
 <!-- Boolean type -->
 <xsd:simpleType name="boolean.type">
   <xsd:restriction base="xsd:NMTOKEN">
-          <xsd:enumeration value="1"/>
-          <xsd:enumeration value="0"/>
-          <xsd:enumeration value="true"/>
-          <xsd:enumeration value="false"/>
-          <xsd:enumeration value="yes"/>
-          <xsd:enumeration value="no"/>
+          <xsd:enumeration value="1"/> <xsd:enumeration value="0"/>
+          <xsd:enumeration value="true"/> <xsd:enumeration value="false"/>
+          <xsd:enumeration value="yes"/> <xsd:enumeration value="no"/>
+          <xsd:enumeration value="on"/> <xsd:enumeration value="off"/>
    </xsd:restriction>
 </xsd:simpleType>
 
@@ -44,27 +42,27 @@
 <!-- Style string type -->
 <xsd:simpleType name="style.type">
    <xsd:restriction base="xsd:string">
-          <xsd:pattern value="((mark-shape|mark-size|fill-style|line-style|arrow-pos|arrow-size|arrow-angle|arrow-constrict|label-pos|label-displace|label-angle):[^;]+;\s*)+"/>
+          <xsd:pattern value="((mark-(shape|size)|(fill|line)-style|arrow-(pos|size|angle|constrict)|label-(pos|displace|angle)):[^;]+;\s*)+"/>
    </xsd:restriction>
 </xsd:simpleType>
 
 <!-- Blob shape Type  -->
 <xsd:simpleType name="blob-shape.type">
   <xsd:restriction base="xsd:NMTOKEN">
-	  <xsd:enumeration value="rectangle"/>
-	  <xsd:enumeration value="circle"/>
-	  <xsd:enumeration value="ellipse"/>
+          <xsd:enumeration value="rectangle"/>
+          <xsd:enumeration value="circle"/>
+          <xsd:enumeration value="ellipse"/>
    </xsd:restriction>
 </xsd:simpleType>
 
-<!-- Line type Type  -->
+<!-- Leg Sense Type  -->
 <xsd:simpleType name="legsense.type">
   <xsd:restriction base="xsd:string">
          <xsd:pattern value="(anti-)?(in|out)(coming|going)?" />
   </xsd:restriction>
 </xsd:simpleType>
 
-<!-- Leg sense Type -->
+<!-- Line type Type -->
 <xsd:simpleType name="line-type.type">
   <xsd:restriction base="xsd:NMTOKEN">
           <xsd:enumeration value="photon"/>
@@ -82,9 +80,9 @@
 
 <!-- Angle type -->
 <xsd:simpleType name="angle.type">
-   <xsd:restriction base="xsd:string">
-	  <xsd:pattern value="((\+|-)?\d*|n|ne|e|se|s|sw|w|nw)"/>
-   </xsd:restriction>
+  <xsd:restriction base="xsd:string">
+          <xsd:pattern value="((\+|-)?\d*|n|ne|e|se|s|sw|w|nw)"/>
+  </xsd:restriction>
 </xsd:simpleType>
 
 
@@ -93,7 +91,7 @@
 
 <!-- Global Attributes -->
 <xsd:attributeGroup name="global-atts">
-		<xsd:attribute name="id" type="id.type" use="required" />
+                <xsd:attribute name="id" type="id.type" use="required" />
                 <xsd:attribute name="label" type="texstring.type"/>
                 <xsd:attribute name="style" type="style.type"/> 
 </xsd:attributeGroup>

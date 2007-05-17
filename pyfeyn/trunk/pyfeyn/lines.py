@@ -332,11 +332,25 @@ Fermion = Line
 
 class MultiLine(Line):
     """A class for drawing multiple parallel straight lines."""
+    def __init__(self, point1, point2, n=5, dist=0.2):
+        self.p1 = point1
+        self.p2 = point2
+        self.styles = []
+        self.arcthrupoint = None
+        self.is3D = False
+        self.arrows = []
+        self.labels = []
+        self.n = n
+        self.dist = dist 
+
+        ## Add this to the current diagram automatically
+        FeynDiagram.currentDiagram.add(self)
+
 
     def draw(self, canvas):
         """Draw this multiline on the supplied canvas."""
-        dist = 0.2
-        n = 5
+        dist = self.dist
+        n = self.n
         path = pyx.deformer.parallel(-n/2.0 * dist).deform(self.getPath())
         paths = [path]
         defo = pyx.deformer.parallel(dist)
@@ -766,10 +780,120 @@ class Gaugino(DecoratedLine):
             l.draw(canvas)
 
 
+class Gluino(DecoratedLine):
+    """A line with a cycloid deformation and a normal line"""
+    def __init__(self, point1, point2):
+        self.p1 = point1
+        self.p2 = point2
+        self.styles = []
+        self.arcthrupoint = None
+        self.is3D = False
+        self.skipsize3D = pyx.unit.length(0.04)
+        self.parity3D = 0
+        self.inverted = False
+        self.arrows = []
+        self.labels = []
+        self.arcradius = pyx.unit.length(0.25)
+        self.linetype = "susygluon"
+        ## Add this to the current diagram automatically
+        FeynDiagram.currentDiagram.add(self)
+
+
+    def set3D(self, is3D=True, skipsize=pyx.unit.length(0.04), parity=0):
+        self.is3D = is3D
+        self.skipsize3D = skipsize
+        self.parity3D = parity
+        return self
+
+
+    def invert(self):
+        """Reflect the decoration in the line itself."""
+        self.inverted = not self.inverted
+        return self
+
+
+    def getDeformedPath(self):
+        """Get the path with the decorative deformation."""
+        needwindings = 1.2 * \
+                       pyx.unit.tocm(self.getVisiblePath().arclen()) / \
+                       pyx.unit.tocm(self.arcradius)
+        ## Get the whole number of windings and make sure that it's odd so we
+        ## don't get a weird double-back thing
+        intwindings = int(needwindings)
+        if intwindings % 2 == 0:
+            intwindings -= 1
+        deficit = needwindings - intwindings
+        sign = 1
+        if self.inverted: sign = -1
+        defo = pyx.deformer.cycloid(self.arcradius, intwindings, curvesperhloop=10,
+                                    skipfirst = 0.0, skiplast = 0.0, sign = sign)
+        return defo.deform(self.getVisiblePath())
+
+
+    def draw(self, canvas):
+        """Draw the line on the supplied canvas."""
+        styles = self.styles + self.arrows
+        if FeynDiagram.options.DEBUG:
+            print "Drawing " + str(self.__class__) + " with styles = " + str(styles)
+        mypath1 = self.getVisiblePath()
+        mypath2 = self.getDeformedPath()
+        if not self.is3D:
+            canvas.stroke(mypath1, styles)
+            canvas.stroke(mypath2, styles)
+        else:
+            as, bs = mypath1.intersect(mypath2)
+            params1, params2 = [], []
+
+            parity1 = True
+            if self.parity3D == 0:
+                parity1 = False
+            for a in as:
+                if parity1:
+                    params1.append(a - self.skipsize3D)
+                    params1.append(a + self.skipsize3D)
+                parity1 = not parity1
+            pathbits1 = mypath1.split(params1)
+            on = True
+            for pathbit in pathbits1:
+                if on:
+                    canvas.stroke(pathbit, styles)
+                on = not on
+
+            parity2 = False
+            if self.parity3D == 0:
+                parity2 = True
+
+            for b in bs:
+                if parity2:
+                    params2.append(b - self.skipsize3D)
+                    params2.append(b + self.skipsize3D)
+                parity2 = not parity2
+            para = pyx.deformer.parallel(0.001)
+            sas, sbs, scs = para.normpath_selfintersections(mypath2.normpath(), epsilon=0.01)
+            coil_params = []
+            for b in sbs:
+                coil_params.append(b[self.parity3D] - self.skipsize3D)
+                coil_params.append(b[self.parity3D] + self.skipsize3D)
+            params2 += coil_params
+            params2.sort()
+            pathbits2 = mypath2.split(params2)
+            on = True
+            for pathbit in pathbits2:
+                if on:
+                   canvas.stroke(pathbit, styles)
+                on = not on
+
+        for l in self.labels:
+            l.draw(canvas)
+
+
+
 
 # A dictionary for mapping FeynML line types to line classes
 NamedLine = { "higgs"    : Higgs,
               "photon"   : Photon,
               "gluon"    : Gluon,
               "fermion"  : Fermion,
-              "graviton" : Graviton }
+              "graviton" : Graviton,
+              "gaugino"  : Gaugino,
+              "gluino"   : Gluino }
