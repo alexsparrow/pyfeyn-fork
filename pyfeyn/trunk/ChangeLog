@@ -1,13 +1,26 @@
+2007-05-21  Andy Buckley  <andy@insectnation.org>
+
+	* Incremented version number to 0.3b2 - approaching 0.3 stable release.
+
+	* Made number of curves per half loop scale with the maximum sampled 
+	curvature of the underlying line.
+
+	* Added draft mode, so that rapid turnaround of diagrams with complex 3D 
+	constructions is possible without changing any code.
+
 2007-05-17  Georg von Hippel <gmv22@cantab.net>
 
 	* Updated FeynML schema to reflect recent changes to FeynML module.
+
 	* Added Gluino line class.
 
 2007-05-16  Georg von Hippel <gmv22@cantab.net>
 
 	* Added support for further styling (arrows, labels) to FeynML module.
+
 	* Added leg sense (in/out, antiparticle) attribute to FeynML schema,
 	and corresponding support to FeynML module.
+
 	* Added FreeArrow and ParallelArrow classes for free-standing and
 	line-parallel arrows in diagrams.
 

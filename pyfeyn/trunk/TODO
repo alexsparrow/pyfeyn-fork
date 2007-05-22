@@ -1,6 +1,26 @@
 PyFeyn TODO
 -----------
 
+ * Make sure there are docstrings for all methods.
+
+ * Write a manual.
+
+ * Make/allow parallel arrows to curve like the curve at that point.
+
+ * Transparently pass single options and lists of them using isinstance(foo, list).
+
+ * Add a variety of standard vertex shapes: filled and unfilled circles, 
+   squares, pentagons, etc.
+
+ * Add => type arrows for helicities.
+
+ * Add defaults mechanism for 3Dness, thicknesses, colours.
+
+ * Introduce unit testing
+
+ * setStrokeStyle(color=None, thickness=None, color=None, trans=None, others=None) 
+   etc. - hide PyX options.
+
  * Add a Gravitino line (a struck-through graviton)? Alternative is just a fermion.
 
  * Add multi-lines. Should be defined by number of lines and

@@ -7,6 +7,7 @@ class OptionSet:
     def __init__(self):
         self.DEBUG = None
         self.VDEBUG = None
+        self.DRAFT = None
 
 
 ## Diagram class
@@ -56,8 +57,11 @@ class FeynDiagram:
 
         ## Sort drawing objects by layer
         drawingobjs = self.__objs
-        drawingobjs.sort()
-
+        try:
+            drawingobjs.sort()
+        except:
+            pass
+            
         ## Draw each object
         for obj in drawingobjs:
             if FeynDiagram.options.DEBUG:

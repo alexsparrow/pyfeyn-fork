@@ -492,7 +492,7 @@ class Gluon(DecoratedLine):
         if FeynDiagram.options.DEBUG:
             print "Drawing " + str(self.__class__) + " with styles = " + str(styles)
         mypath = self.getDeformedPath()
-        if not self.is3D:
+        if FeynDiagram.options.DRAFT or not self.is3D:
             canvas.stroke(mypath, styles)
         else:
             para = pyx.deformer.parallel(0.001)
@@ -630,9 +630,24 @@ class Graviton(DecoratedLine):
         """Get the path with the decorative deformation."""
         intwindings = int(0.6 * pyx.unit.tocm(self.getVisiblePath().arclen()) /
                           pyx.unit.tocm(self.arcradius))
-        defo = pyx.deformer.cycloid(self.arcradius, intwindings, curvesperhloop=5,
+
+        vispath = self.getVisiblePath()
+        curvatures = vispath.curveradius([i/10.0 for i in range(0,11)])
+        maxcurvature = None
+        for curvature in curvatures:
+            if curvature is not None:
+                curvature = abs(curvature/pyx.unit.m)
+                #if FeynDiagram.options.DEBUG:
+                #    print self.__class__, "- curvature = ", curvature
+                if (maxcurvature is None or curvature > maxcurvature):
+                    maxcurvature = curvature
+        numhloopcurves = 5 + int(0.1/maxcurvature)
+        if FeynDiagram.options.DEBUG:
+            print self.__class__, "- max curvature = ", maxcurvature, "->", numhloopcurves, "curves/hloop"                    
+
+        defo = pyx.deformer.cycloid(self.arcradius, intwindings, curvesperhloop=numhloopcurves,
                                     skipfirst=0.0, skiplast=0.0, turnangle=0, sign=sign)
-        return defo.deform(self.getVisiblePath())
+        return defo.deform(vispath)
 
         
     def draw(self, canvas):
@@ -646,7 +661,7 @@ class Graviton(DecoratedLine):
             mypathtmp = mypath1
             mypath1 = mypath2
             mypath2 = mypathtmp
-        if not self.is3D:
+        if FeynDiagram.options.DRAFT or not self.is3D:
             canvas.stroke(mypath1, styles)
             canvas.stroke(mypath2, styles)
         else:
@@ -691,6 +706,7 @@ class Graviton(DecoratedLine):
 
 class Gaugino(DecoratedLine):
     """A line with a sinoid deformation and a normal line"""
+    
     def __init__(self, point1, point2):
         self.p1 = point1
         self.p2 = point2
@@ -703,12 +719,13 @@ class Gaugino(DecoratedLine):
         self.arrows = []
         self.labels = []
         self.arcradius = pyx.unit.length(0.25)
-        self.linetype = "susyboson"
+        self.linetype = "gaugino"
         ## Add this to the current diagram automatically
         FeynDiagram.currentDiagram.add(self)
 
 
     def set3D(self, is3D=True, skipsize=pyx.unit.length(0.04), parity=0):
+        """Make the line look 3-dimensional by 'cutting' one line where self-intersections occur."""
         self.is3D = is3D
         self.skipsize3D = skipsize
         self.parity3D = parity
@@ -726,10 +743,25 @@ class Gaugino(DecoratedLine):
         intwindings = int(pyx.unit.tocm(self.getVisiblePath().arclen()) /
                           pyx.unit.tocm(self.arcradius))
         sign = 1
-        if self.inverted: sign = -1 
-        defo = pyx.deformer.cycloid(self.arcradius, intwindings, curvesperhloop=5,
+        if self.inverted: sign = -1
+        
+        vispath = self.getVisiblePath()
+        curvatures = vispath.curveradius([i/10.0 for i in range(0,11)])
+        maxcurvature = None
+        for curvature in curvatures:
+            if curvature is not None:
+                curvature = abs(curvature/pyx.unit.m)
+                #if FeynDiagram.options.DEBUG:
+                #    print self.__class__, "- curvature = ", curvature
+                if (maxcurvature is None or curvature > maxcurvature):
+                    maxcurvature = curvature
+        numhloopcurves = 5 + int(0.1/maxcurvature)
+        if FeynDiagram.options.DEBUG:
+            print self.__class__, "- max curvature = ", maxcurvature, "->", numhloopcurves, "curves/hloop"
+
+        defo = pyx.deformer.cycloid(self.arcradius, intwindings, curvesperhloop=numhloopcurves,
                                     skipfirst=0.0, skiplast=0.0, turnangle=0, sign=sign)
-        return defo.deform(self.getVisiblePath())
+        return defo.deform(vispath)
 
         
     def draw(self, canvas):
@@ -739,7 +771,7 @@ class Gaugino(DecoratedLine):
             print "Drawing " + str(self.__class__) + " with styles = " + str(styles)
         mypath1 = self.getVisiblePath()
         mypath2 = self.getDeformedPath()
-        if not self.is3D:
+        if FeynDiagram.options.DRAFT or not self.is3D:
             canvas.stroke(mypath1, styles)
             canvas.stroke(mypath2, styles)
         else:
@@ -825,9 +857,24 @@ class Gluino(DecoratedLine):
         deficit = needwindings - intwindings
         sign = 1
         if self.inverted: sign = -1
-        defo = pyx.deformer.cycloid(self.arcradius, intwindings, curvesperhloop=10,
-                                    skipfirst = 0.0, skiplast = 0.0, sign = sign)
-        return defo.deform(self.getVisiblePath())
+
+        vispath = self.getVisiblePath()
+        curvatures = vispath.curveradius([i/10.0 for i in range(0,11)])
+        maxcurvature = None
+        for curvature in curvatures:
+            if curvature is not None:
+                curvature = abs(curvature/pyx.unit.m)
+                #if FeynDiagram.options.DEBUG:
+                #    print self.__class__, "- curvature = ", curvature
+                if (maxcurvature is None or curvature > maxcurvature):
+                    maxcurvature = curvature
+        numhloopcurves = 10 + int(0.2/maxcurvature)
+        if FeynDiagram.options.DEBUG:
+            print self.__class__, "- max curvature = ", maxcurvature, "->", numhloopcurves, "curves/hloop"
+
+        defo = pyx.deformer.cycloid(self.arcradius, intwindings, curvesperhloop=numhloopcurves,
+                                    skipfirst=0.0, skiplast=0.0, sign=sign)
+        return defo.deform(vispath)
 
 
     def draw(self, canvas):
@@ -837,7 +884,7 @@ class Gluino(DecoratedLine):
             print "Drawing " + str(self.__class__) + " with styles = " + str(styles)
         mypath1 = self.getVisiblePath()
         mypath2 = self.getDeformedPath()
-        if not self.is3D:
+        if FeynDiagram.options.DRAFT or not self.is3D:
             canvas.stroke(mypath1, styles)
             canvas.stroke(mypath2, styles)
         else:

@@ -16,7 +16,7 @@ is based around."""
 
 ## Setup definition
 setup(name = 'pyfeyn',
-      version = '0.3.0b1',
+      version = '0.3.0b2',
       packages = ['pyfeyn'],
       install_requires = 'pyx >= 0.9',
       author = 'Andy Buckley',

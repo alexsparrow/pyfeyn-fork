@@ -42,5 +42,7 @@ _parser.add_option("-V", "--visual-debug", dest="VDEBUG", action = "store_true",
                    default = False, help="produce visual debug output")
 _parser.add_option("-D", "--debug", dest="DEBUG", action = "store_true",
                    default = False, help="produce debug output")
+_parser.add_option("-d", "--draft", dest="DRAFT", action = "store_true",
+                   default = False, help="produce draft output, skipping time-consuming calculations")
 from pyfeyn.diagrams import FeynDiagram
 (FeynDiagram.options, args) = _parser.parse_args()
