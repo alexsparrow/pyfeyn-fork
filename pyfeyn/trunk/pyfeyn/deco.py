@@ -55,7 +55,7 @@ class FreeArrow(Visible):
         linepath = pyx.deco.decoratedpath(
                        pyx.path.path(pyx.path.moveto(endx,endy),
                                      pyx.path.lineto(self.x,self.y)))
-        styles = [Arrow(pos=1.0, size=self.size, angle=self.angle,
+        styles = [pyx.deco.earrow(size=self.size, angle=self.angle,
                         constriction=self.constriction)]
         canvas.stroke(linepath.path,styles)
 
@@ -121,7 +121,7 @@ class ParallelArrow(Visible):
         linepath = pyx.deco.decoratedpath(
                        pyx.path.path(pyx.path.moveto(endx,endy),
                                      pyx.path.lineto(arrx,arry)))
-        styles = [Arrow(pos=1.0, size=self.size, angle=self.angle,
+        styles = [pyx.deco.earrow(size=self.size, angle=self.angle,
                         constriction=self.constriction)]
         canvas.stroke(linepath.path,styles)
 

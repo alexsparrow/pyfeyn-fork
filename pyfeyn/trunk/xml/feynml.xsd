@@ -15,15 +15,6 @@
 
 <!-- ***** General type declarations ***** -->
 
-<!-- ID type -->
-<xsd:simpleType name="id.type">
-  <xsd:restriction base="xsd:NMTOKEN"/>
-</xsd:simpleType>
-<!-- ID Reference type -->
-<xsd:simpleType name="idref.type">
-  <xsd:restriction base="xsd:NMTOKEN"/>
-</xsd:simpleType>
-
 <!-- Boolean type -->
 <xsd:simpleType name="boolean.type">
   <xsd:restriction base="xsd:NMTOKEN">
@@ -69,14 +60,14 @@
           <xsd:enumeration value="gluon"/>
           <xsd:enumeration value="vector"/>
           <xsd:enumeration value="graviton"/>
-          <xsd:enumeration value="susy"/>
+          <xsd:enumeration value="gaugino"/>
+          <xsd:enumeration value="gluino"/>
           <xsd:enumeration value="fermion"/>
           <xsd:enumeration value="scalar"/>
           <xsd:enumeration value="ghost"/>
           <xsd:enumeration value="phantom"/>
    </xsd:restriction>
 </xsd:simpleType>
-
 
 <!-- Angle type -->
 <xsd:simpleType name="angle.type">
@@ -91,7 +82,7 @@
 
 <!-- Global Attributes -->
 <xsd:attributeGroup name="global-atts">
-                <xsd:attribute name="id" type="id.type" use="required" />
+                <xsd:attribute name="id" type="xsd:ID" use="required" />
                 <xsd:attribute name="label" type="texstring.type"/>
                 <xsd:attribute name="style" type="style.type"/> 
 </xsd:attributeGroup>
@@ -135,7 +126,7 @@
 
 <!-- Diagram Attributes -->
 <xsd:attributeGroup name="diagram-atts">
-      <xsd:attribute name="id" type="id.type"/>
+      <xsd:attribute name="id" type="xsd:ID"/>
       <xsd:attribute name="legs" type="xsd:nonNegativeInteger"/>
       <xsd:attribute name="loops" type="xsd:nonNegativeInteger"/>
 </xsd:attributeGroup>
@@ -169,8 +160,8 @@
 
 <!-- Propagator Attributes -->
 <xsd:attributeGroup name="propagator-atts">
-    <xsd:attribute name="source" type="idref.type" use="required"/>
-    <xsd:attribute name="target" type="idref.type" use="required"/>
+    <xsd:attribute name="source" type="xsd:IDREF" use="required"/>
+    <xsd:attribute name="target" type="xsd:IDREF" use="required"/>
 </xsd:attributeGroup>
 <!-- Propagator type -->
 <xsd:complexType name="propagator.type">
@@ -184,7 +175,7 @@
 
 <!-- Leg attributes -->
 <xsd:attributeGroup name="leg-atts">
-    <xsd:attribute name="target" type="idref.type" use="required"/>
+    <xsd:attribute name="target" type="xsd:IDREF" use="required"/>
     <xsd:attribute name="sense" type="legsense.type" use="required"/>
 </xsd:attributeGroup>
 <!-- Leg type -->
@@ -213,7 +204,7 @@
 <xsd:element name="connect">
    <xsd:complexType>
       <xsd:attributeGroup ref="global-atts"/>
-      <xsd:attribute name="blob" type="idref.type"/>
+      <xsd:attribute name="blob" type="xsd:IDREF"/>
       <xsd:attribute name="dir" type="angle.type"/> 
    </xsd:complexType>
 </xsd:element>
