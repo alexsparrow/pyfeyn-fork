@@ -28,6 +28,11 @@ class FeynMLWriter:
         self.thefile.write(tostring(self.theroot).replace(">",">\n"))
         self.thefile.close()
 
+    def addMetadata(self, name, value):
+        """Add a meta tag to the FeynML header."""
+        head = self.theroot.find("head")
+        head.append(Element("meta",{"name":name, "value":value}))
+
     def describe(self, s):
         """Add a description to the FeynML header."""
         head = self.theroot.find("head")
@@ -35,7 +40,7 @@ class FeynMLWriter:
         desc.text = s
         head.append(desc)
     
-    def diagramToXML(self, fd):
+    def diagramToXML(self, fd, convertlegs=True):
         """Create FeynML code for a diagram."""
         root = Element("diagram")
         self.objects = fd._FeynDiagram__objs
@@ -63,9 +68,11 @@ class FeynMLWriter:
                 root.append(self.labelToXML(obj))
             else:
                 print "Can't convert object to XML!"
+        # Combine single vertices/props into legs
         self.legcount = 0
-        for point in self.singletons: # Combine single vertices/props into legs
-            for tag in root.getchildren():
+        if convertlegs:
+           for point in self.singletons: 
+             for tag in root.getchildren():
                 if tag.attrib["id"]==point:
                    for tag2 in root.getchildren():
                        if ((tag2.attrib.has_key("source") and
@@ -95,9 +102,30 @@ class FeynMLWriter:
         """Create FeynML code for a blob."""
         attribs = {"id" : "B%s" % self.blobcount,
                    "x" : str(b.xpos), "y" : str(b.ypos),
-                   "shape" : hasattr(b,"blobshape") and b.blobshape or "circle"}
+                   "shape" : hasattr(b,"blobshape") and b.blobshape or "circle",
+                   "radius" : hasattr(b,"radius") and str(b.radius) or \
+                              (hasattr(b,"xrad") and "%s %s"%(b.xrad,b.yrad)) \
+                              or "0"}
         ele = Element("blob", attribs)
-        self.ids[md5.md5(str(b.xpos, b.ypos)).hexdigest()] = attribs["id"]
+        self.ids[md5.md5(str((b.xpos, b.ypos))).hexdigest()] = attribs["id"]
+        style = ""
+        fills = ""
+        for x in b.fillstyles:
+            if isinstance(x, pyx.color.rgb):
+                fills = fills + " #%02x%02x%02x" % (255 * x.color["r"],
+                                                   255 * x.color["g"],
+                                                   255 * x.color["b"])
+        if fills:
+           style += "fill-style:%s; "%fills
+        strokes = ""
+        for x in b.strokestyles:
+            if isinstance(x, pyx.color.rgb):
+                strokes = strokes + " #%02x%02x%02x" % (255 * x.color["r"],
+                                                        255 * x.color["g"],
+                                                        255 * x.color["b"])
+        if strokes:
+           style += "line-style:%s;"%strokes
+        ele.attrib["style"] = style
         self.blobcount += 1
         return ele
 
@@ -123,9 +151,12 @@ class FeynMLWriter:
                    "type" : hasattr(l,"linetype") and l.linetype or "fermion"}
         if l.arcthrupoint:
             middle = l.p1.midpoint(l.p2)
-            nx = (middle.y() - l.p1.y()) / abs(l.p1.distance(middle))
-            #vx = middle.x() - l.p1.x()
-            bendamount = (l.arcthrupoint.x() - middle.x()) / nx
+            nx = (middle.y() - l.p1.y()) / l.p1.distance(middle)
+            if nx:
+               bendamount = (l.arcthrupoint.x() - middle.x()) / nx
+            else:
+               ny = (middle.x() - l.p1.x()) / l.p1.distance(middle)
+               bendamount = -(l.arcthrupoint.y() - middle.y()) / ny
             attribs["bend"] = str(bendamount)
         style = ""
         labels = []
@@ -159,24 +190,30 @@ class FeynMLWriter:
     def decopointToXML(self, p):
         """Create FeynML code for a decorated point."""
         ele = self.pointToXML(p)
+        style = ""
+        if p.marker is not None:
+          style += "mark-shape:%s; mark-size:%s; "%\
+                (p.marker.__class__.__name__[:-4].lower(),\
+                 hasattr(p.marker,"radius") and p.marker.radius \
+                 or (hasattr(p.marker,"size") and p.marker.size)\
+                 or 0)
         fills = ""
         for x in p.fillstyles:
             if isinstance(x, pyx.color.rgb):
                 fills = fills + " #%02x%02x%02x" % (255 * x.color["r"],
                                                    255 * x.color["g"],
                                                    255 * x.color["b"])
+        if fills:
+           style += "fill-style:%s; "%fills
         strokes = ""
         for x in p.strokestyles:
             if isinstance(x, pyx.color.rgb): 
                 strokes = strokes + " #%02x%02x%02x" % (255 * x.color["r"],
                                                         255 * x.color["g"],
                                                         255 * x.color["b"])
-        s = "mark-shape:%s; mark-size:%s; fill-style:%s; line-style:%s;" % \
-            (p.marker.__class__.__name__[:-4].lower(),
-             hasattr(p.marker,"radius") and p.marker.radius/pyx.unit.v_cm \
-               or (hasattr(p.marker,"size") and p.marker.size/pyx.unit.v_cm \
-                   or 0), fills, strokes )
-        ele.attrib["style"] = s
+        if strokes:
+           style += "line-style:%s;"%strokes
+        ele.attrib["style"] = style
         return ele
 
     def labelToXML(self, l):
@@ -205,7 +242,7 @@ class FeynMLReader:
         self.diagrams = []
         self.dicts = []
         if self.root.tag != "feynml":
-            raise "FeynML Error: <Feynml> must be root element" % self.root.tag
+            raise "FeynML Error: <feynml> must be root element" % self.root.tag
         for element in self.root:
             if element.tag == "head":
                 pass # ignore header for now
@@ -269,10 +306,13 @@ class FeynMLReader:
             p1 = thedict[element.attrib["source"]]
             p2 = thedict[element.attrib["target"]]
         except:
-            raise "FeynML Error: invalid attribute for <propagator> element"
+            raise "FeynML Error: invalid attributes for <propagator> element"
         l = NamedLine[thetype](p1, p2)
         if "bend" in element.attrib:
-            l.bend(float(element.attrib["bend"]))
+            try:
+                l.bend(float(element.attrib["bend"]))
+            except:
+                raise "FeynML Error: invalid bend amount %s for <propagator> element"%element.attrib["bend"]
         if "style" in element.attrib:
             l = self.apply_layout(element.attrib["style"], l)
         if "label" in element.attrib:
@@ -317,10 +357,20 @@ class FeynMLReader:
             x = float(element.attrib["x"])
             y = float(element.attrib["y"])
             shape = element.attrib["shape"]
-            radius = float(element.attrib["radius"])
+            if shape=="circle":
+               radius = float(element.attrib["radius"])
+            else:
+               split = element.attrib["radius"].index(" ")
+               xradius = float(element.attrib["radius"][:split])
+               yradius = float(element.attrib["radius"][split:])
         except:
             raise "FeynML Error: invalid attribute for <blob> element"
-        b = NamedBlob[shape](x=x, y=y, radius=radius)
+        if shape=="circle":
+            b = Circle(x=x, y=y, radius=radius)
+        elif shape=="ellipse":
+            b = Ellipse(x=x, y=y, xradius=xradius, yradius=yradius)
+        else:
+            raise "FeynML Error: invalid shape attribute for <blob> element"
         if "style" in element.attrib:
             b = self.apply_layout(element.attrib["style"], b)
         if "label" in element.attrib:
@@ -342,18 +392,20 @@ class FeynMLReader:
         try:
             angle = float(direction) * math.pi/180.
         except:
-            winds = {"n" : 90,
-                     "s" : -90,
-                     "e" : 0,
-                     "w" : 180,
-                     "ne" : 45,
-                     "se" : -45,
-                     "nw" : 135,
-                     "sw" : -135}
-        try:
-            angle = winds[direction] * math.pi/180.
-        except:
-            raise Exception("FeynML Error: invalid direction %s" % direction)
+            angle = None
+        winds = {"n" : 90,
+                 "s" : -90,
+                 "e" : 0,
+                 "w" : 180,
+                 "ne" : 45,
+                 "se" : -45,
+                 "nw" : 135,
+                 "sw" : -135}
+        if angle is None:
+           try:
+               angle = winds[direction] * math.pi/180.
+           except:
+               raise Exception("FeynML Error: invalid direction %s" % direction)
         if parent.blobshape == "circle":
             x = parent.x() + parent.radius * math.cos(angle)
             y = parent.y() + parent.radius * math.sin(angle)
@@ -395,9 +447,10 @@ class FeynMLReader:
                 obj.setMark(marktype())
         if styledict.has_key("mark-size") and isinstance(obj, DecoratedPoint):
                 if obj.marker is None:
-                   obj.setMark(SQUARE)
+                   marktype = SQUARE
                 else:
-                   obj.setMark(marktype(size=float(styledict["mark-size"])))
+                   marktype = obj.marker.__class__
+                obj.setMark(marktype(size=float(styledict["mark-size"])))
         if (styledict.has_key("arrow-size") or styledict.has_key("arrow-angle")
             or styledict.has_key("arrow-constrict")
             or styledict.has_key("arrow-pos")) and isinstance(obj, Line):

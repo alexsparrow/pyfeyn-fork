@@ -18,7 +18,7 @@ PyFeyn TODO
 
  * Introduce unit testing
 
- * setStrokeStyle(color=None, thickness=None, color=None, trans=None, others=None) 
+ * setStrokeStyle(color=None, thickness=None, trans=None, others=None) 
    etc. - hide PyX options.
 
  * Add a Gravitino line (a struck-through graviton)? Alternative is just a fermion.

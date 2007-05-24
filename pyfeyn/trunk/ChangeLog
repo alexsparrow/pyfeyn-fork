@@ -1,3 +1,13 @@
+2007-05-23  Georg von Hippel <gmv22@cantab.net>
+
+	* Made free and line-parallel arrows properly pointy.
+
+	* Added blob support to FeynML module, improved FeynML styling,
+	  added metadata support to FeynML output.
+
+	* Removed redundant type definitions from FeynML schema,
+	  added needed types.
+
 2007-05-21  Andy Buckley  <andy@insectnation.org>
 
 	* Incremented version number to 0.3b2 - approaching 0.3 stable release.

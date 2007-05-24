@@ -265,7 +265,7 @@ class SquareMark(Mark):
     def getPath(self):
         if self.getPoint() is not None:
             x, y = self.point.getXY()
-            return box.rect(x-self.size, y-self.size, 2*self.size, 2*self.size).path()
+            return pyx.box.rect(x-self.size, y-self.size, 2*self.size, 2*self.size).path()
         return None    
 
 

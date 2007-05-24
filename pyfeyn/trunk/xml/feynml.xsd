@@ -25,6 +25,20 @@
    </xsd:restriction>
 </xsd:simpleType>
 
+<!-- Double or Pair type -->
+<xsd:simpleType name="double-or-pair.type">
+ <xsd:union>
+  <xsd:simpleType>
+   <xsd:restriction base="xsd:string">
+       <xsd:pattern value="\d+\.\d+ \d+\.\d+"/>
+   </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType>
+   <xsd:restriction base="xsd:double"/>
+  </xsd:simpleType>
+ </xsd:union>
+</xsd:simpleType>
+
 <!-- TeX string type -->
 <xsd:simpleType name="texstring.type">
   <xsd:restriction base="xsd:string"/>
@@ -33,7 +47,7 @@
 <!-- Style string type -->
 <xsd:simpleType name="style.type">
    <xsd:restriction base="xsd:string">
-          <xsd:pattern value="((mark-(shape|size)|(fill|line)-style|arrow-(pos|size|angle|constrict)|label-(pos|displace|angle)):[^;]+;\s*)+"/>
+          <xsd:pattern value="((mark-(shape|size)|(fill|line)-style|(parallel)?arrow-(pos|size|angle|constrict)|label-(pos|displace|angle)|is3d):[^;]+;\s*)+"/>
    </xsd:restriction>
 </xsd:simpleType>
 
@@ -192,7 +206,7 @@
 <!-- Blob Element -->
 <xsd:attributeGroup name="blob-atts">
    <xsd:attribute name="shape" type="blob-shape.type" use="required"/>
-   <xsd:attribute name="radius" type="xsd:double"/>
+   <xsd:attribute name="radius" type="double-or-pair.type"/>
 </xsd:attributeGroup>
 <!-- Blob type -->
 <xsd:complexType name="blob.type">

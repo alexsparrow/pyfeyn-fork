@@ -23,7 +23,7 @@ fb2 = Fermion(glue2, out2).addArrow(0.8).addLabel(r"\Pquark")
 glu = Gluon(glue1, glue2)
 glu.invert().bend(0.5).addLabel("\Pgluon", displace=0.25)
 
-fmlwriter = FeynMLWriter("test")
+fmlwriter = FeynMLWriter("test.xml")
 fmlwriter.describe("""A sample diagram showing a QCD correction to the Drell-Yan process.""")
 fmlwriter.diagramToXML(fd)
 fmlwriter.close()
