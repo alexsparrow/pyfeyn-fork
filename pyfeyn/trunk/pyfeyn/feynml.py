@@ -442,15 +442,17 @@ class FeynMLReader:
                break
             s = styling.split(":")
             styledict[s[0]] = s[1]
-        if styledict.has_key("mark-shape") and isinstance(obj, DecoratedPoint):
+        if (styledict.has_key("mark-shape") or styledict.has_key("mark-size"))\
+            and isinstance(obj, DecoratedPoint):
+           try:
                 marktype = NamedMark[styledict["mark-shape"]]
-                obj.setMark(marktype())
-        if styledict.has_key("mark-size") and isinstance(obj, DecoratedPoint):
-                if obj.marker is None:
-                   marktype = SQUARE
-                else:
-                   marktype = obj.marker.__class__
-                obj.setMark(marktype(size=float(styledict["mark-size"])))
+           except:
+                marktype = SQUARE
+           try:
+                marksize = float(styledict["mark-size"])
+           except:
+                marksize = 0.075
+           obj.setMark(marktype(size=marksize))
         if (styledict.has_key("arrow-size") or styledict.has_key("arrow-angle")
             or styledict.has_key("arrow-constrict")
             or styledict.has_key("arrow-pos")) and isinstance(obj, Line):
@@ -471,6 +473,51 @@ class FeynMLReader:
            except:
               arrpos = 0.5
            obj.addArrow(arrow=Arrow(arrpos,arrsize,arrangle,arrconstrict))
+        if (styledict.has_key("parallel-arrow-size")
+            or styledict.has_key("parallel-arrow-angle")
+            or styledict.has_key("parallel-arrow-constrict")
+            or styledict.has_key("parallel-arrow-pos")
+            or styledict.has_key("parallel-arrow-length")
+            or styledict.has_key("parallel-arrow-displace")
+            or styledict.has_key("parallel-arrow-sense")) \
+           and isinstance(obj, Line):
+           try:
+              arrsize = pyx.unit.length(float(styledict["parallel-arrow-size"]),unit="cm")
+           except:
+              arrsize = 6*pyx.unit.v_pt
+           try:
+              arrangle = float(styledict["parallel-arrow-angle"])
+           except:
+              arrangle = 45
+           try:
+              arrconstrict = float(styledict["parallel-arrow-constrict"])
+           except:
+              arrconstrict = 0.8
+           try:
+              arrpos = float(styledict["parallel-arrow-pos"])
+           except:
+              arrpos = 0.5
+           try:
+              arrlen = float(styledict["parallel-arrow-length"])
+           except:
+              arrlen = 0.5*pyx.unit.v_cm
+           try:
+              arrdisp = float(styledict["parallel-arrow-displace"])
+           except:
+              arrdisp = 0.3
+           try:
+              arrsense = int(styledict["parallel-arrow-sense"])
+           except:
+              arrsense = +1
+           obj.addParallelArrow(arrpos, arrdisp, arrlen, arrsize, arrangle,
+                                arrconstrict, arrsense)
+        if styledict.has_key("is3d") and isinstance(obj, Line):
+           fwords = ["0", "no", "false", "f", "off"]
+           twords = ["1", "yes", "true", "t", "on"]
+           if styledict["is3d"].lstrip().lower() in fwords:
+              obj.set3D(False)
+           elif styledict["is3d"].lstrip().lower() in twords:
+              obj.set3D(True)
         return obj
 
 

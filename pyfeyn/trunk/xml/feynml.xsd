@@ -30,7 +30,7 @@
  <xsd:union>
   <xsd:simpleType>
    <xsd:restriction base="xsd:string">
-       <xsd:pattern value="\d+\.\d+ \d+\.\d+"/>
+       <xsd:pattern value="\d*\.\d* \d*\.\d*"/>
    </xsd:restriction>
   </xsd:simpleType>
   <xsd:simpleType>
@@ -47,7 +47,7 @@
 <!-- Style string type -->
 <xsd:simpleType name="style.type">
    <xsd:restriction base="xsd:string">
-          <xsd:pattern value="((mark-(shape|size)|(fill|line)-style|(parallel)?arrow-(pos|size|angle|constrict)|label-(pos|displace|angle)|is3d):[^;]+;\s*)+"/>
+          <xsd:pattern value="((mark-(shape|size)|(fill|line)-style|arrow-(pos|size|angle|constrict)|parallel-arrow-(pos|size|angle|constrict|length|displace|sense)|label-(pos|displace|angle)|is3d):[^;]+;\s*)+"/>
    </xsd:restriction>
 </xsd:simpleType>
 
