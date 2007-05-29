@@ -2,6 +2,7 @@
   <head>
     <meta name="Creator" value="G. von Hippel"/>
     <meta name="Info" value="Part of the feynML test suite"/>
+    <link rel="homepage" href="http://projects.hepforge.org/pyfeyn/"/>
     <description>
      This file contains a sample diagram in FeynML notation.
     </description>

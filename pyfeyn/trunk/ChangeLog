@@ -1,3 +1,12 @@
+2007-05-29  Georg von Hippel <gmv22@cantab.net>
+
+	* Added additional header tags to FeynML schema (those are not being
+	parsed at the moment)
+
+	* Added support for line-parallel arrows to FeynML I/O classes
+
+	* Added a second FeynML test case (with blobs)
+
 2007-05-23  Georg von Hippel <gmv22@cantab.net>
 
 	* Made free and line-parallel arrows properly pointy.

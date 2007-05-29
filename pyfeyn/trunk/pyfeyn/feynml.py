@@ -95,6 +95,7 @@ class FeynMLWriter:
                           root.append(Element("leg",attribs))
                           root.remove(tag)
                           root.remove(tag2)
+           root.attrib["legs"]=str(self.legcount) 
         self.theroot.append(root)
         return tostring(root).replace(">",">\n")
 
@@ -163,8 +164,11 @@ class FeynMLWriter:
         for arr in l.arrows:
             style += "arrow-size:%f; arrow-angle:%f; arrow-constrict:%f; arrow-pos:%f; "%(arr.size/pyx.unit.v_cm,arr.angle,arr.constriction,arr.pos)
         for lab in l.labels:
-            style += "label-pos:%f; label-displace:%f; label-angle:%f; "%(lab.pos,lab.displace/pyx.unit.v_cm,lab.angle)
-            labels.append(lab.text)
+            if isinstance(lab,LineLabel):
+               style += "label-pos:%f; label-displace:%f; label-angle:%f; "%(lab.pos,lab.displace/pyx.unit.v_cm,lab.angle)
+               labels.append(lab.text)
+            elif isinstance(lab,ParallelArrow):
+               style += "parallel-arrow-size:%f; parallel-arrow-angle:%f; parallel-arrow-constrict:%f; parallel-arrow-pos:%f; parallel-arrow-displace:%f; parallel-arrow-sense:%s; "%(lab.size,lab.angle,lab.constriction,lab.pos,lab.displace/pyx.unit.v_cm,lab.sense)
         if style:
             attribs["style"] = style[:-1]
         if labels:
@@ -441,7 +445,7 @@ class FeynMLReader:
             if styling == "":
                break
             s = styling.split(":")
-            styledict[s[0]] = s[1]
+            styledict[s[0].lstrip().rstrip()] = s[1]
         if (styledict.has_key("mark-shape") or styledict.has_key("mark-size"))\
             and isinstance(obj, DecoratedPoint):
            try:

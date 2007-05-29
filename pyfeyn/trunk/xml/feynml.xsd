@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!-- XML schema for feynML 0.1 -->
+<!-- XML schema for feynML 0.2 -->
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
 	xmlns:xml="http://www.w3.org/XML/1998/namespace"
 	elementFormDefault="qualified"
@@ -244,6 +244,8 @@
    <xsd:complexType>
       <xsd:sequence><xsd:choice minOccurs="0" maxOccurs="unbounded">
          <xsd:element ref="meta"/>
+         <xsd:element ref="link"/>
+         <xsd:element ref="style" maxOccurs="1"/>
          <xsd:element ref="description" maxOccurs="1"/>
       </xsd:choice></xsd:sequence>
    </xsd:complexType>
@@ -255,6 +257,16 @@
       <xsd:attribute name="value" type="xsd:string"/>
    </xsd:complexType>
 </xsd:element>
+<!-- Link element -->
+<xsd:element name="link">
+   <xsd:complexType>
+      <xsd:attribute name="href" type="xsd:anyURI"/>
+      <xsd:attribute name="rel" type="xsd:string"/>
+      <xsd:attribute name="type" type="xsd:string"/>
+   </xsd:complexType>
+</xsd:element>
+<!-- Style element -->
+<xsd:element name="style" type="xsd:string"/>
 <!-- Description element -->
 <xsd:element name="description" type="xsd:string"/>
 
