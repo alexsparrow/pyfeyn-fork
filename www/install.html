@@ -12,7 +12,11 @@
 <h3>Dependencies</h3>
 <p>
   PyFeyn depends on the <a href="http://pyx.sf.net">PyX</a> Python graphics
-  library - you'll have to install it for PyFeyn to work.
+  library - you'll have to install it for PyFeyn to work. You can either install
+  it using the methods described on the PyX web page, via an automatic EasyInstall
+  dependency when installing PyFeyn (untested, but should work in principle),
+  or via your operating system's package manager, if it knows about PyX
+  &mdash; Ubuntu Linux does, for example, under the name <kbd>python-pyx</kbd>.
 </p>
 <p>
   If you want to have LaTeX output in your Feynman graphs, then obviously
@@ -67,8 +71,28 @@
 
 <h3>Installation with <kbd>easy_install</kbd></h3>
 <p>
-  I haven't made <kbd>easy_install</kbd> work quite right yet &mdash; I'll remedy this
-  soon!
+  As the name suggests, the EasyInstall system is a very simple way to
+  install Python packages. PyFeyn now supports network installation using
+  EasyInstall. To use this method, you'll first have to make sure that
+  EasyInstall itself is installed on your system - you can either do this
+  explicitly following the <a href="http://peak.telecommunity.com/DevCenter/EasyInstall">official
+  instructions</a> or, if you're a Linux/BSD/Fink user, via your distribution's
+  packaging system.
+</p>
+<p>
+  Once EasyInstall is installed, and you can run the <kbd>easy_install</kbd>
+  executable from your command line, the choice again is whether to install
+  system-wide or locally. If system-side, then you'll need to become root, and run
+  <kbd>easy_install pyfeyn</kbd>. This will go to the <a href="http://cheeseshop.python.org/pypi/">PyPI
+  package index</a>, download PyFeyn and install it in the system-wide packages
+  directory.
+</p>
+<p>
+  If you want to make a local installation in your home directory, then
+  you'll need to make a directory for Python libraries, say <kbd>$HOME/local/lib/python</kbd>,
+  and add it to your <kbd>PYTHONPATH</kbd> environment variable. Then run
+  <kbd>easy_install --install-dir $HOME/local/lib/python pyfeyn</kbd> and
+  everything should work nicely.
 </p>
 
 
