@@ -1,4 +1,4 @@
-<link rel="stylesheet" type="text/css" href="https://common.cedar.ac.uk/include/srchighlight.css" />
+<link rel="stylesheet" type="text/css" href="/common/include/srchighlight.css" />
 <style type="text/css">
   h4 { color:grey; }
 </style>
@@ -7,17 +7,14 @@
   <td class="noprint" style="vertical-align:top; padding-top:0.5em;">
     <ul class="nowrap" style="background:#eec; border:#cca 5px solid; padding:1em; padding-left:2em; margin-right:2em;">
     <strong><em>pyfeyn</em></strong>
-      <li><a href="/pyfeyn">Home</a></li>
-      <li><a href="/pyfeyn/svn/">Subversion</a></li>
-      <li><a href="/pyfeyn/bugtrack/">Tracker</a>
-        <ul style="padding-left:0.8em">
-          <li style="font-size:smaller"><a href="/pyfeyn/bugtrack/roadmap/">Milestones</a></li>
-          <li style="font-size:smaller"><a href="/pyfeyn/bugtrack/report/3">Tickets</a></li>
-          <li style="font-size:smaller"><a href="/pyfeyn/bugtrack/timeline">Timeline</a></li>
-        </ul>
-      </li>
-      <li><a href="/pyfeyn/bugtrack/wiki/">Wiki</a></li>
+      <li><a href="/pyfeyn">Home</a></li> 
+      <li><a href="/pyfeyn/examples">Examples</a></li> 
+      <li><a href="/pyfeyn/install">Installation</a></li> 
+      <li><a href="/pyfeyn/doc">API documentation</a></li> 
       <li><a href="/pyfeyn/downloads">Downloads</a></li>
+      <li><a href="/pyfeyn/bugtrack/report/3">Bug tracking</a></li>
+      <li><a href="/pyfeyn/svn/">Subversion</a></li>
+      <li><a href="/pyfeyn/bugtrack/wiki/">Wiki</a></li>
       <li><a href="mailto:pyfeyn@cedar.ac.uk">Contact</a></li>
     </ul>
   </td>

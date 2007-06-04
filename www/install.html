@@ -1,0 +1,84 @@
+<h2>PyFeyn installation guide</h2>
+<a href="pyfeyn-logo"><img style="margin:1em; border:0; float:right;" src="pyfeyn-logo-small" /></a>
+<p>
+  PyFeyn is a standard Python package using the
+  <a href="http://peak.telecommunity.com/DevCenter/setuptools">setuptools</a>
+  system, which for the main part behaves just like Python's normal "distutils".
+  For now, installation can only be carried out using the <kbd>setup.py</kbd>
+  script - we'll get the automatic <kbd>easy_install</kbd> method working soon.
+</p>
+
+
+<h3>Dependencies</h3>
+<p>
+  PyFeyn depends on the <a href="http://pyx.sf.net">PyX</a> Python graphics
+  library - you'll have to install it for PyFeyn to work.
+</p>
+<p>
+  If you want to have LaTeX output in your Feynman graphs, then obviously
+  you need to have LaTeX installed on your system. If you want to have access
+  to the convenient particle name macros used in the examples, then you'll need
+  to install the LaTeX <a href="http://www.ctan.org/tex-archive/help/Catalogue/entries/hepnames.html">hepnames</a>
+  package. This in turn requires two other non-standard LaTeX packages,
+  <kbd>hepparticles</kbd> and <kbd>maybemath</kbd>, but it's worth it!
+</p>
+
+
+<h3>Installing using <kbd>setup.py</kbd></h3>
+<p>
+  The "normal" way to install a Python package applies for PyFeyn. There are
+  <a href="http://docs.python.org/inst/trivial-install.html">good instructions</a>
+  in the <a href="http://docs.python.org">Python documentation</a>, otherwise
+  my comparably haphazard instructions are below :-)
+</p>
+<p>
+  So, first download and expand the source tarball, then <kbd>cd</kbd> to the
+  expanded directory. Now the command that you'll run depends on whether you
+  have root access on your system.
+</p>
+<p>
+  If you do have root access and want to make a system-wide installation, run
+  <kbd>python setup.py install</kbd>. This will probably install the libraries into
+  your <kbd>/usr/local/lib/python2.x/site-packages/pyfeyn</kbd> directory. That
+  should be all you need to do (please let us know if it isn't).
+</p>
+<p>
+  If you don't have root privileges or for other reasons just want to make a local
+  installation, then you probably want to run the <kbd>setup.py</kbd> script with
+  an argument to point at a local Python library directory. The Python docs have a
+  <a href="http://docs.python.org/inst/alt-install-windows.html">page which specially
+  covers this situation</a> &mdash; I'm going to use the "home" scheme here.
+</p>
+<p>
+  We're going to install PyFeyn into a directory within my home directory. I put <em>my</em>
+  local Python libraries into <kbd>$HOME/local/lib/python</kbd>, and include this
+  directory in the colon-delimited <kbd>PYTHONPATH</kbd> shell variable, by putting
+  the line <kbd>export PYTHONPATH="$PYTHONPATH:$HOME/local/lib/python"</kbd> into my
+  <kbd>.bashrc</kbd> file. This is standard Python configuration stuff &mdash; I
+  hope you can work out the equivalent statement if you use a CSH-type shell.
+</p>
+<p>
+  Now, assuming that you've made such a directory and added it to <kbd>PYTHONPATH</kbd>,
+  you should run <kbd>setup.py</kbd> as above, but with the <kbd>--home</kbd> option:
+  <kbd>./setup.py install --home $HOME/local</kbd>. PyFeyn should now install itself
+  neatly into the <kbd>lib/python</kbd> directory in your chosen "home" path.
+</p>
+
+
+<h3>Installation with <kbd>easy_install</kbd></h3>
+<p>
+  I haven't made <kbd>easy_install</kbd> work quite right yet &mdash; I'll remedy this
+  soon!
+</p>
+
+
+<h3>Testing the installation</h3>
+<p>
+  We don't yet have a proper suite of unit tests, so the best check that PyFeyn has
+  installed properly is to run <kbd>python</kbd> and then type <code>import pyfeyn</code>
+  at the Python prompt. If it doesn't complain, chances are it's worked: now try running
+  one of the <a href="examples">test examples</a> and check that the output looks okay.
+  Make sure you do the tests somewhere other than the expanded tarball, otherwise Python
+  will use the local sources (in the <kbd>pyfeyn</kbd> directory) rather than the installed
+  library.
+</p>
