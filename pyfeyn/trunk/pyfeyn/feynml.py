@@ -113,17 +113,21 @@ class FeynMLWriter:
         fills = ""
         for x in b.fillstyles:
             if isinstance(x, pyx.color.rgb):
-                fills = fills + " #%02x%02x%02x" % (255 * x.color["r"],
-                                                   255 * x.color["g"],
-                                                   255 * x.color["b"])
+                fills = fills + " solid #%02x%02x%02x" % (255 * x.color["r"],
+                                                          255 * x.color["g"],
+                                                          255 * x.color["b"])
+            elif isinstance(x, pyx.pattern.hatched):
+                fills = fills + " hatched %s %s"%(x.dist/pyx.unit.v_cm, x.angle)
+            elif isinstance(x, pyx.pattern.crosshatched):
+                fills = fills + " crosshatched %s %s"%(x.dist/pyx.unit.v_cm, x.angle)
         if fills:
            style += "fill-style:%s; "%fills
         strokes = ""
         for x in b.strokestyles:
             if isinstance(x, pyx.color.rgb):
-                strokes = strokes + " #%02x%02x%02x" % (255 * x.color["r"],
-                                                        255 * x.color["g"],
-                                                        255 * x.color["b"])
+               strokes = strokes +" solid #%02x%02x%02x" % (255 * x.color["r"],
+                                                            255 * x.color["g"],
+                                                            255 * x.color["b"])
         if strokes:
            style += "line-style:%s;"%strokes
         ele.attrib["style"] = style
@@ -203,18 +207,22 @@ class FeynMLWriter:
                  or 0)
         fills = ""
         for x in p.fillstyles:
-            if isinstance(x, pyx.color.rgb):
-                fills = fills + " #%02x%02x%02x" % (255 * x.color["r"],
-                                                   255 * x.color["g"],
-                                                   255 * x.color["b"])
+           if isinstance(x, pyx.color.rgb):
+                fills = fills + " solid #%02x%02x%02x" % (255 * x.color["r"],
+                                                          255 * x.color["g"],
+                                                          255 * x.color["b"])
+           elif isinstance(x, pyx.pattern.hatched):
+                fills = fills + " hatched %s %s"%(x.dist/pyx.unit.v_cm, x.angle)
+           elif isinstance(x, pyx.pattern.crosshatched):
+                fills = fills + " crosshatched %s %s"%(x.dist/pyx.unit.v_cm, x.angle)
         if fills:
            style += "fill-style:%s; "%fills
         strokes = ""
         for x in p.strokestyles:
             if isinstance(x, pyx.color.rgb): 
-                strokes = strokes + " #%02x%02x%02x" % (255 * x.color["r"],
-                                                        255 * x.color["g"],
-                                                        255 * x.color["b"])
+              strokes = strokes + " solid #%02x%02x%02x" % (255 * x.color["r"],
+                                                            255 * x.color["g"],
+                                                            255 * x.color["b"])
         if strokes:
            style += "line-style:%s;"%strokes
         ele.attrib["style"] = style
@@ -242,14 +250,16 @@ class FeynMLReader:
     def __init__(self, filename):
         """Read FeynML from a file."""
         elementtree = ElementTree()
-        self.root = elementtree.parse(filename) #.getroot()
+        self.root = elementtree.parse(filename)
         self.diagrams = []
         self.dicts = []
+        self.defaults = {}
         if self.root.tag != "feynml":
             raise "FeynML Error: <feynml> must be root element" % self.root.tag
         for element in self.root:
             if element.tag == "head":
                 pass # ignore header for now
+                self.get_header(element)
             elif element.tag == "diagram":
                 self.diagrams.append(element)
                 self.dicts.append({})
@@ -437,6 +447,21 @@ class FeynMLReader:
             raise Exception("FeynML Error: missing id attribute in <label> element")
         return v
 
+    def get_header(self, header):
+        """Read information contained in the FeynML header."""
+        for element in header:
+            if element.tag == "meta":
+               pass #can't do anything with this
+            elif element.tag == "description":
+               pass #can't do anything with this, either
+            elif element.tag == "link":
+               pass #or this, really
+            elif element.tag =="style":
+               pass #read in the default styling information
+            else:
+               raise Exception("FeynML Error: invalid tag <%s> in <head>"%\
+                      element.tag)
+
     def apply_layout(self, stylestring, obj):
         """Apply the decorators encoded in a style string to an object."""
         styleelements = stylestring.split(";")
@@ -446,6 +471,17 @@ class FeynMLReader:
                break
             s = styling.split(":")
             styledict[s[0].lstrip().rstrip()] = s[1]
+        if (styledict.has_key("fill-style")):
+           filltype = styledict["fill-style"].split()
+           if filltype[0]=="solid":
+              R,G,B = map(lambda x:eval("0x%s"%x)/255.,[filltype[1][n:n+2] for n in (1,3,5)])
+              obj.fillstyles = [pyx.color.rgb(R,G,B)]
+           elif filltype[0]=="hatched":
+              D,A = float(filltype[1]), int(filltype[2])
+              obj.fillstyles = [pyx.pattern.hatched(D,A)]
+           elif filltype[0]=="crosshatched":
+              D,A = float(filltype[1]), int(filltype[2])
+              obj.fillstyles = [pyx.pattern.crosshatched(D,A)]
         if (styledict.has_key("mark-shape") or styledict.has_key("mark-size"))\
             and isinstance(obj, DecoratedPoint):
            try:

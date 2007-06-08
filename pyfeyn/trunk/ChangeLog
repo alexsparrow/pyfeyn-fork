@@ -1,3 +1,7 @@
+2007-06-07  Georg von Hippel <gmv22@cantab.net>
+
+	* Added fill pattern support to FeynML I/O
+
 2007-05-29  Georg von Hippel <gmv22@cantab.net>
 
 	* Added additional header tags to FeynML schema (those are not being
