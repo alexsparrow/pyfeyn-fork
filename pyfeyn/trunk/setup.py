@@ -7,6 +7,8 @@ import ez_setup
 ez_setup.use_setuptools()
 from setuptools import setup
 
+from pyfeyn import __version__
+
 longdesc = """PyFeyn is a package which makes drawing Feynman diagrams simple and programmatic.
 Feynman diagrams are important constructs in perturbative field theory, so being able to draw them
 in a programmatic fashion is important if attempting to enumerate a large number of diagram
@@ -16,7 +18,7 @@ is based around."""
 
 ## Setup definition
 setup(name = 'pyfeyn',
-      version = '0.3.0b3',
+      version = __version__,
       packages = ['pyfeyn'],
       install_requires = ['pyx >= 0.9'],
       scripts = ['mkfeyndiag'],

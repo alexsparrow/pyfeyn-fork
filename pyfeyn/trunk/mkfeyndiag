@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 
-from pyfeyn import _parser
+from pyfeyn import _parser, __version__
 from pyfeyn.feynml import *
 from optparse import OptionParser
 import sys, re
@@ -8,7 +8,7 @@ import sys, re
 
 ## Parse command line options
 _usage = "Usage: %prog [options] hepmlfile"
-_version = "%prog 1.0"
+_version = "%prog " + __version__
 _parser = OptionParser(usage=_usage, version=_version)
 #_parser.add_option("-V", "--verbose", action="store_true", dest="VERBOSE",
 #                   default=False, help="print status messages")
