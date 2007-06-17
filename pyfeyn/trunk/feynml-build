@@ -1,0 +1,6 @@
+from pyfeyn.feynml import *
+import sys
+
+reader = FeynMLReader(sys.argv[1])
+_f = reader.get_diagram(0)
+_f.draw(sys.argv[1] + ".pdf")
