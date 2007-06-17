@@ -16,10 +16,10 @@ is based around."""
 
 ## Setup definition
 setup(name = 'pyfeyn',
-      version = '0.3.0',
+      version = '0.3.0b3',
       packages = ['pyfeyn'],
       install_requires = ['pyx >= 0.9'],
-      scripts = ['feynml-build'],
+      scripts = ['mkfeyndiag'],
       author = 'Andy Buckley',
       author_email = 'andy@insectnation.org',
       url = 'http://projects.hepforge.org/pyfeyn/',

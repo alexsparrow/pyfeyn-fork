@@ -1,0 +1,54 @@
+#! /usr/bin/env python
+
+from pyfeyn import _parser
+from pyfeyn.feynml import *
+from optparse import OptionParser
+import sys, re
+
+
+## Parse command line options
+_usage = "Usage: %prog [options] hepmlfile"
+_version = "%prog 1.0"
+_parser = OptionParser(usage=_usage, version=_version)
+#_parser.add_option("-V", "--verbose", action="store_true", dest="VERBOSE",
+#                   default=False, help="print status messages")
+#_parser.add_option("-D", "--debug", action="store_true", dest="DEBUG",
+#                   default=False, help="print debug (very verbose) messages")
+#_parser.add_option("-Q", "--quiet", action="store_true", dest="QUIET",
+#                   default=False, help="be very quiet (overrides verbose and debug)")
+_parser.add_option("--pdf", action="store_true", dest="PDF_OUTPUT",
+                   default=True, help="write output in PDF format")
+_parser.add_option("--eps", action="store_false", dest="PDF_OUTPUT",
+                   default=True, help="write output in EPS format")
+_parser.add_option("-o", "--out", dest="OUTPUT_FILE",
+                   default=None, help="file to write the output to. An appropriate file extension will be appended if needed")
+
+(_opts, _args) = _parser.parse_args()
+
+
+## Check right number of arguments
+if len(_args) != 2:
+    sys.stderr.write("Wrong number of arguments... exiting.\n")
+    _parser.print_help()
+    sys.exit(1)
+
+
+## Select input and output files
+_infile = _args[0]
+_outfile = _infile
+if _opts.OUTPUT_FILE:
+    _outfile = _opts.OUTPUT_FILE
+
+
+## Get the output file suffix right
+_suffix = ".pdf"
+if not _opts.PDF_OUTPUT:
+    _suffix = ".eps"
+if not re.search(r'%s$' % _suffix, _outfile):
+    _outfile += _suffix
+
+
+## Read the file and write out to the chosen filename
+reader = FeynMLReader(_infile)
+_f = reader.get_diagram(0)
+_f.draw(_outfile)
