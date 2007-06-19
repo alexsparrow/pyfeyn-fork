@@ -2,6 +2,7 @@
 
 import pyx
 from pyfeyn.diagrams import FeynDiagram
+from pyfeyn import options
 
 
 ## Default units
@@ -44,7 +45,7 @@ class Visible:
         if other is None:
             return -1
 
-        if FeynDiagram.options.DEBUG:
+        if options.options.DEBUG:
             print "Comparing visible classes: ", \
                   self.__class__, "->", self.getDepth(), "vs.", \
                   other.__class__, "->", other.getDepth()

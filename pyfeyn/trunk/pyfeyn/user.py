@@ -7,3 +7,4 @@ from pyfeyn.blobs import *
 from pyfeyn.deco import *
 #from pyfeyn.utils import *
 from pyfeyn.paint import *
+from pyfeyn.options import *

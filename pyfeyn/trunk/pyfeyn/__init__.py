@@ -1,18 +1,16 @@
 """
-PyFeyn - a simple Python interface for making Feynman
-diagrams (pre-release version >= 0.2.0b1).
+PyFeyn - a simple Python interface for making Feynman diagrams.
 """
 
 __author__ = "Andy Buckley (andy@insectnation.org)"
-__version__ = "0.3.0b3"
-__date__ = "$Date: 2006/08/05 00:14:20 $"
+__version__ = "0.3.0"
+__date__ = "$Date$"
 __copyright__ = "Copyright (c) 2007 Andy Buckley"
 __license__ = "GPL"
 
-import pyx
 
-## Version check
-import re
+## Import PyX and check the version
+import pyx, re
 _majorversionstr = re.sub(r"(\d+\.\d+).*", r"\1", pyx.version.version)
 if float(_majorversionstr) < 0.9:
     print "Warning: PyFeyn may not work with PyX versions older than 0.9!"
@@ -32,17 +30,4 @@ else:
 
 
 ## Set __all__ (for "import * from pyfeyn")
-__all__ = ["diagrams", "points", "blobs", "lines", "deco", "utils"]
-
-
-## Option parsing
-from optparse import OptionParser 
-_parser = OptionParser()
-_parser.add_option("-V", "--visual-debug", dest="VDEBUG", action = "store_true",
-                   default = False, help="produce visual debug output")
-_parser.add_option("-D", "--debug", dest="DEBUG", action = "store_true",
-                   default = False, help="produce debug output")
-_parser.add_option("-d", "--draft", dest="DRAFT", action = "store_true",
-                   default = False, help="produce draft output, skipping time-consuming calculations")
-from pyfeyn.diagrams import FeynDiagram
-(FeynDiagram.options, args) = _parser.parse_args()
+__all__ = ["diagrams", "points", "blobs", "lines", "deco", "utils", "options"]

@@ -1,6 +1,7 @@
 #! /usr/bin/env python
 
-from pyfeyn import _parser, __version__
+from pyfeyn import __version__
+from pyfeyn.options import *
 from pyfeyn.feynml import *
 from optparse import OptionParser
 import sys, re
@@ -10,6 +11,7 @@ import sys, re
 _usage = "Usage: %prog [options] hepmlfile"
 _version = "%prog " + __version__
 _parser = OptionParser(usage=_usage, version=_version)
+options.addPyfeynOptions(_parser)
 #_parser.add_option("-V", "--verbose", action="store_true", dest="VERBOSE",
 #                   default=False, help="print status messages")
 #_parser.add_option("-D", "--debug", action="store_true", dest="DEBUG",
@@ -22,7 +24,6 @@ _parser.add_option("--eps", action="store_false", dest="PDF_OUTPUT",
                    default=True, help="write output in EPS format")
 _parser.add_option("-o", "--out", dest="OUTPUT_FILE",
                    default=None, help="file to write the output to. An appropriate file extension will be appended if needed")
-
 (_opts, _args) = _parser.parse_args()
 
 

@@ -3,6 +3,7 @@
 import pyx, math
 from pyfeyn.diagrams import FeynDiagram
 from pyfeyn.utils import Visible
+from pyfeyn import options
 
 
 ## Arrow decorator class
@@ -90,7 +91,7 @@ class ParallelArrow(Visible):
             displacement += intrinsicwidth
         else:
             displacement -= intrinsicwidth
-        if FeynDiagram.options.DEBUG:
+        if options.options.DEBUG:
             print "Displacement = ", displacement
 
         ## Position the arrow on the right hand side of lines
@@ -108,7 +109,7 @@ class ParallelArrow(Visible):
         if displacement < 0:
             normal = normal.transformed(pyx.trafo.rotate(180, x, y))
             nx, ny = normal.atend()
-        if FeynDiagram.options.VDEBUG:
+        if options.options.VDEBUG:
             FeynDiagram.currentCanvas.stroke(normal)
 
         ## Displace the arrow by this normal vector
@@ -179,7 +180,7 @@ class PointLabel(Label):
 
     def draw(self, canvas):
         """Draw this label on the supplied canvas."""
-        if FeynDiagram.options.VDEBUG:
+        if options.options.VDEBUG:
             canvas.fill(pyx.path.circle(self.point.getX(),
                                         self.point.getY(), 0.05), [pyx.color.rgb.green])
         x = self.point.getX() + self.displace * math.cos(math.radians(self.angle))
@@ -232,7 +233,7 @@ class LineLabel(Label):
             displacement += intrinsicwidth
         else:
             displacement -= intrinsicwidth
-        if FeynDiagram.options.DEBUG:
+        if options.options.DEBUG:
             print "Displacement = ", displacement
 
         ## Position the label on the right hand side of lines
@@ -250,7 +251,7 @@ class LineLabel(Label):
         if displacement < 0:
             normal = normal.transformed(pyx.trafo.rotate(180, x, y)) 
             nx, ny = normal.atend()
-        if FeynDiagram.options.VDEBUG:
+        if options.options.VDEBUG:
             FeynDiagram.currentCanvas.stroke(normal)
 
         ## Displace the label by this normal vector
