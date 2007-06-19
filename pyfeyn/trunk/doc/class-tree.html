@@ -58,15 +58,15 @@
     <li> <strong class="uidlink"><a href="pyfeyn.diagrams.FeynDiagram-class.html">pyfeyn.diagrams.FeynDiagram</a></strong>:
       <em class="summary">The main PyFeyn diagram class.</em>
     </li>
-    <li> <strong class="uidlink"><a href="pyfeyn.diagrams.OptionSet-class.html">pyfeyn.diagrams.OptionSet</a></strong>:
-      <em class="summary">A container for options.</em>
-    </li>
     <li> <strong class="uidlink"><a href="pyfeyn.feynml.FeynMLReader-class.html">pyfeyn.feynml.FeynMLReader</a></strong>:
       <em class="summary">Class to construct a Feynman diagram from its FeynML 
         representation.</em>
     </li>
     <li> <strong class="uidlink"><a href="pyfeyn.feynml.FeynMLWriter-class.html">pyfeyn.feynml.FeynMLWriter</a></strong>:
       <em class="summary">Class to write a FeynML representation of a Feynman diagram.</em>
+    </li>
+    <li> <strong class="uidlink"><a href="pyfeyn.options.OptionSet-class.html">pyfeyn.options.OptionSet</a></strong>:
+      <em class="summary">A container for options.</em>
     </li>
     <li> <strong class="uidlink"><a href="pyfeyn.points.Mark-class.html">pyfeyn.points.Mark</a></strong>
     <ul>
@@ -97,45 +97,6 @@
     </li>
     <li> <strong class="uidlink"><a href="pyfeyn.utils.Visible-class.html">pyfeyn.utils.Visible</a></strong>
     <ul>
-    <li> <strong class="uidlink"><a href="pyfeyn.points.DecoratedPoint-class.html">pyfeyn.points.DecoratedPoint</a></strong>:
-      <em class="summary">Class for a point drawn with a marker</em>
-    </li>
-    <li> <strong class="uidlink"><a href="pyfeyn.lines.Line-class.html">pyfeyn.lines.Line</a></strong>:
-      <em class="summary">Base class for all objects which connect points in Feynman 
-        diagrams</em>
-    <ul>
-    <li> <strong class="uidlink"><a href="pyfeyn.lines.Scalar-class.html">pyfeyn.lines.Scalar</a></strong>:
-      <em class="summary">A scalar particle line, like a Higgs boson.</em>
-    </li>
-    <li> <strong class="uidlink"><a href="pyfeyn.lines.MultiLine-class.html">pyfeyn.lines.MultiLine</a></strong>:
-      <em class="summary">A class for drawing multiple parallel straight lines.</em>
-    </li>
-    <li> <strong class="uidlink"><a href="pyfeyn.lines.DecoratedLine-class.html">pyfeyn.lines.DecoratedLine</a></strong>:
-      <em class="summary">Base class for spring and sine-like lines</em>
-    <ul>
-    <li> <strong class="uidlink"><a href="pyfeyn.lines.Gluino-class.html">pyfeyn.lines.Gluino</a></strong>:
-      <em class="summary">A line with a cycloid deformation and a normal line</em>
-    </li>
-    <li> <strong class="uidlink"><a href="pyfeyn.lines.Vector-class.html">pyfeyn.lines.Vector</a></strong>:
-      <em class="summary">A line with a sinoid deformation</em>
-    </li>
-    <li> <strong class="uidlink"><a href="pyfeyn.lines.Gaugino-class.html">pyfeyn.lines.Gaugino</a></strong>:
-      <em class="summary">A line with a sinoid deformation and a normal line</em>
-    </li>
-    <li> <strong class="uidlink"><a href="pyfeyn.lines.Gluon-class.html">pyfeyn.lines.Gluon</a></strong>:
-      <em class="summary">A line with a cycloid deformation</em>
-    </li>
-    <li> <strong class="uidlink"><a href="pyfeyn.lines.Graviton-class.html">pyfeyn.lines.Graviton</a></strong>:
-      <em class="summary">A line with a double sinoid deformation</em>
-    </li>
-    </ul>
-    </li>
-    </ul>
-    </li>
-    <li> <strong class="uidlink"><a href="pyfeyn.deco.ParallelArrow-class.html">pyfeyn.deco.ParallelArrow</a></strong>:
-      <em class="summary">Arrow running parallel to a line, for momenta, helicities 
-        etc.</em>
-    </li>
     <li> <strong class="uidlink"><a href="pyfeyn.blobs.Blob-class.html">pyfeyn.blobs.Blob</a></strong>:
       <em class="summary">Base class for all blob-like objects in Feynman diagrams</em>
     <ul>
@@ -158,8 +119,47 @@
     </li>
     </ul>
     </li>
+    <li> <strong class="uidlink"><a href="pyfeyn.lines.Line-class.html">pyfeyn.lines.Line</a></strong>:
+      <em class="summary">Base class for all objects which connect points in Feynman 
+        diagrams</em>
+    <ul>
+    <li> <strong class="uidlink"><a href="pyfeyn.lines.Scalar-class.html">pyfeyn.lines.Scalar</a></strong>:
+      <em class="summary">A scalar particle line, like a Higgs boson.</em>
+    </li>
+    <li> <strong class="uidlink"><a href="pyfeyn.lines.DecoratedLine-class.html">pyfeyn.lines.DecoratedLine</a></strong>:
+      <em class="summary">Base class for spring and sine-like lines</em>
+    <ul>
+    <li> <strong class="uidlink"><a href="pyfeyn.lines.Gluino-class.html">pyfeyn.lines.Gluino</a></strong>:
+      <em class="summary">A line with a cycloid deformation and a normal line</em>
+    </li>
+    <li> <strong class="uidlink"><a href="pyfeyn.lines.Graviton-class.html">pyfeyn.lines.Graviton</a></strong>:
+      <em class="summary">A line with a double sinoid deformation</em>
+    </li>
+    <li> <strong class="uidlink"><a href="pyfeyn.lines.Gaugino-class.html">pyfeyn.lines.Gaugino</a></strong>:
+      <em class="summary">A line with a sinoid deformation and a normal line</em>
+    </li>
+    <li> <strong class="uidlink"><a href="pyfeyn.lines.Vector-class.html">pyfeyn.lines.Vector</a></strong>:
+      <em class="summary">A line with a sinoid deformation</em>
+    </li>
+    <li> <strong class="uidlink"><a href="pyfeyn.lines.Gluon-class.html">pyfeyn.lines.Gluon</a></strong>:
+      <em class="summary">A line with a cycloid deformation</em>
+    </li>
+    </ul>
+    </li>
+    <li> <strong class="uidlink"><a href="pyfeyn.lines.MultiLine-class.html">pyfeyn.lines.MultiLine</a></strong>:
+      <em class="summary">A class for drawing multiple parallel straight lines.</em>
+    </li>
+    </ul>
+    </li>
+    <li> <strong class="uidlink"><a href="pyfeyn.points.DecoratedPoint-class.html">pyfeyn.points.DecoratedPoint</a></strong>:
+      <em class="summary">Class for a point drawn with a marker</em>
+    </li>
     <li> <strong class="uidlink"><a href="pyfeyn.deco.FreeArrow-class.html">pyfeyn.deco.FreeArrow</a></strong>:
       <em class="summary">Arrow not attached to any line in a diagram.</em>
+    </li>
+    <li> <strong class="uidlink"><a href="pyfeyn.deco.ParallelArrow-class.html">pyfeyn.deco.ParallelArrow</a></strong>:
+      <em class="summary">Arrow running parallel to a line, for momenta, helicities 
+        etc.</em>
     </li>
     </ul>
     </li>
@@ -207,7 +207,7 @@
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">Generated by Epydoc
-        3.0alpha3 on Mon May 21 21:12:00 2007</td>
+        3.0alpha3 on Wed Jun 20 00:48:52 2007</td>
     <td align="right" class="footer">
       <a href="http://epydoc.sourceforge.net">http://epydoc.sourceforge.net</a>
     </td>

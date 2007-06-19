@@ -55,8 +55,7 @@
 </table>
 <!-- ==================== PACKAGE DESCRIPTION ==================== -->
 <h1 class="epydoc">Package pyfeyn</h1><br /><br />
-PyFeyn - a simple Python interface for making Feynman diagrams 
-  (pre-release version &gt;= 0.2.0b1).<br /><br />
+PyFeyn - a simple Python interface for making Feynman diagrams.<br /><br />
 
 <!-- ==================== SUBMODULES ==================== -->
 <a name="section-Submodules"></a>
@@ -84,6 +83,7 @@ PyFeyn - a simple Python interface for making Feynman diagrams
     <li> <strong class="uidlink"><a href="pyfeyn.hepnames-module.html">pyfeyn.hepnames</a></strong>: <em class="summary">Convenience interfaces between the hepnames LaTeX package and 
         pyfeyn.</em></li>
     <li> <strong class="uidlink"><a href="pyfeyn.lines-module.html">pyfeyn.lines</a></strong>: <em class="summary">Various particle line types.</em></li>
+    <li> <strong class="uidlink"><a href="pyfeyn.options-module.html">pyfeyn.options</a></strong>: <em class="summary">Handle runtime options and command line option parsing.</em></li>
     <li> <strong class="uidlink"><a href="pyfeyn.paint-module.html">pyfeyn.paint</a></strong>: <em class="summary">Convenience imports for colouring etc.</em></li>
     <li> <strong class="uidlink"><a href="pyfeyn.points-module.html">pyfeyn.points</a></strong>: <em class="summary">Various types of points for vertices etc.</em></li>
     <li> <strong class="uidlink"><a href="pyfeyn.user-module.html">pyfeyn.user</a></strong>: <em class="summary">Convenience imports to make things easier for typical users.</em></li>
@@ -120,14 +120,14 @@ PyFeyn - a simple Python interface for making Feynman diagrams
   <td width="15%" align="right" valign="top" class="summary">
     <code class="summary-type">&nbsp;</code>
   </td><td class="summary">
-    <a href="pyfeyn-module.html#__version__">__version__</a> = <code title="'0.2.1b1'">'0.2.1b1'</code>
+    <a href="pyfeyn-module.html#__version__">__version__</a> = <code title="'0.3.0'">'0.3.0'</code>
   </td>
 </tr>
 <tr class="private">
   <td width="15%" align="right" valign="top" class="summary">
     <code class="summary-type">&nbsp;</code>
   </td><td class="summary">
-    <a href="pyfeyn-module.html#__date__">__date__</a> = <code title="'$Date: 2006/08/05 00:14:20 $'">'$Date: 2006/08/05 00:14:20 $'</code>
+    <a href="pyfeyn-module.html#__date__">__date__</a> = <code title="'$Date: 2007-06-19 23:46:28 +0100 (Tue, 19 Jun 2007) $'">'$Date: 2007-06-19 23:46:28 +0100 (Tue, 19 Jun 2007) $'</code>
   </td>
 </tr>
 <tr class="private">
@@ -149,20 +149,6 @@ PyFeyn - a simple Python interface for making Feynman diagrams
     <code class="summary-type">&nbsp;</code>
   </td><td class="summary">
     <a href="pyfeyn-module.html#_majorversionstr">_majorversionstr</a> = <code title="'0.9'">'0.9'</code>
-  </td>
-</tr>
-<tr class="private">
-  <td width="15%" align="right" valign="top" class="summary">
-    <code class="summary-type">&nbsp;</code>
-  </td><td class="summary">
-    <a href="pyfeyn-module.html#_parser">_parser</a> = <code title="&lt;optparse.OptionParser instance at 0xb79ad6ac&gt;">&lt;optparse.OptionParser instance at 0xb79ad6ac&gt;</code>
-  </td>
-</tr>
-<tr class="private">
-  <td width="15%" align="right" valign="top" class="summary">
-    <code class="summary-type">&nbsp;</code>
-  </td><td class="summary">
-    <a href="pyfeyn-module.html#args">args</a> = <code title="[]">[]</code>
   </td>
 </tr>
 </table>
@@ -212,7 +198,7 @@ PyFeyn - a simple Python interface for making Feynman diagrams
   <dl><dt></dt><dd>
     <dl><dt>Value:</dt>
       <dd><table><tr><td><pre class="variable">
-<span class="variable-quote">'</span>0.2.1b1<span class="variable-quote">'</span>                                                              
+<span class="variable-quote">'</span>0.3.0<span class="variable-quote">'</span>                                                                
       </pre></td></tr></table></dd>
     </dl>
   </dd></dl>
@@ -228,7 +214,7 @@ PyFeyn - a simple Python interface for making Feynman diagrams
   <dl><dt></dt><dd>
     <dl><dt>Value:</dt>
       <dd><table><tr><td><pre class="variable">
-<span class="variable-quote">'</span>$Date: 2006/08/05 00:14:20 $<span class="variable-quote">'</span>                                         
+<span class="variable-quote">'</span>$Date: 2007-06-19 23:46:28 +0100 (Tue, 19 Jun 2007) $<span class="variable-quote">'</span>                
       </pre></td></tr></table></dd>
     </dl>
   </dd></dl>
@@ -282,38 +268,6 @@ PyFeyn - a simple Python interface for making Feynman diagrams
   </dd></dl>
 </td></tr></table>
 </div>
-<a name="_parser"></a>
-<div class="private">
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <h3 class="epydoc">_parser</h3>
-  None
-  <dl><dt></dt><dd>
-    <dl><dt>Value:</dt>
-      <dd><table><tr><td><pre class="variable">
-&lt;optparse.OptionParser instance at 0xb79ad6ac&gt;                         
-      </pre></td></tr></table></dd>
-    </dl>
-  </dd></dl>
-</td></tr></table>
-</div>
-<a name="args"></a>
-<div class="private">
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <h3 class="epydoc">args</h3>
-  None
-  <dl><dt></dt><dd>
-    <dl><dt>Value:</dt>
-      <dd><table><tr><td><pre class="variable">
-[]                                                                     
-      </pre></td></tr></table></dd>
-    </dl>
-  </dd></dl>
-</td></tr></table>
-</div>
 <br />
 <!-- ==================== NAVIGATION BAR ==================== -->
 <table class="navbar" border="0" width="100%" cellpadding="0"
@@ -341,7 +295,7 @@ PyFeyn - a simple Python interface for making Feynman diagrams
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">Generated by Epydoc
-        3.0alpha3 on Mon May 21 21:12:00 2007</td>
+        3.0alpha3 on Wed Jun 20 00:48:52 2007</td>
     <td align="right" class="footer">
       <a href="http://epydoc.sourceforge.net">http://epydoc.sourceforge.net</a>
     </td>

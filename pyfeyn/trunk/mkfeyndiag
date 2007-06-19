@@ -28,7 +28,7 @@ _parser.add_option("-o", "--out", dest="OUTPUT_FILE",
 
 
 ## Check right number of arguments
-if len(_args) != 2:
+if len(_args) != 1:
     sys.stderr.write("Wrong number of arguments... exiting.\n")
     _parser.print_help()
     sys.exit(1)
