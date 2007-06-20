@@ -7,7 +7,7 @@ import math
 from pyfeyn.diagrams import FeynDiagram
 from pyfeyn.utils import Visible
 from pyfeyn.deco import PointLabel
-from pyfeyn import options
+from pyfeyn import config
 
 
 def midpoint(point1, point2):
@@ -33,10 +33,10 @@ class Point:
     def addLabel(self, text, displace=0.3, angle = 0):
         """Add a LaTeX label to this point, either via parameters or actually as
         a PointLable object."""
-        if options.options.DEBUG:
+        if config.options.DEBUG:
             print "Adding label: " + text
         self.labels.append(PointLabel(text=text, point=self, displace=displace, angle=angle))
-        if options.options.DEBUG:
+        if config.options.DEBUG:
             print "Labels = " + str(self.labels)
         return self
 

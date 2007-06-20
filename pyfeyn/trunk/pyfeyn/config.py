@@ -16,7 +16,7 @@ def addPyfeynOptions(parser):
 def processOptions(parser=None):
     if parser is None:
         parser = OptionParser()
-        addOptions(parser)
+        addPyfeynOptions(parser)
     (_options, _args) = parser.parse_args()
     options = _options
     return _options, _args

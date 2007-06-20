@@ -1,7 +1,8 @@
 """Classes for the actual diagram containers."""
 
 import pyx
-from pyfeyn import options
+from pyfeyn import config
+
 
 ## Diagram class
 class FeynDiagram:
@@ -22,7 +23,7 @@ class FeynDiagram:
     def add(self, *objs):
         """Add an object to the diagram."""
         for obj in objs:
-            if options.options.DEBUG:
+            if config.options.DEBUG:
                 print "#objs = %d" % len(self.__objs)
             offset = 0
             if obj.__dict__.has_key("layeroffset"):
@@ -30,7 +31,7 @@ class FeynDiagram:
                 offset = obj.layeroffset
             self.highestautolayer += 1
             obj.setDepth(self.highestautolayer + offset)
-            if options.options.DEBUG:
+            if config.options.DEBUG:
                 print "Object %s layer = %d + %d = %d" % \
                       (obj.__class__, self.highestautolayer, offset,
                        self.highestautolayer + offset)
@@ -39,9 +40,9 @@ class FeynDiagram:
 
     def drawToCanvas(self):
         """Draw the components of this diagram in a well-defined order."""
-        if options.options.DEBUG:
+        if config.options.DEBUG:
             print "Final #objs = %d" % len(self.__objs)
-        if options.options.VDEBUG:
+        if config.options.VDEBUG:
             print "Running in visual debug mode"
 
         ## Sort drawing objects by layer
@@ -53,7 +54,7 @@ class FeynDiagram:
             
         ## Draw each object
         for obj in drawingobjs:
-            if options.options.DEBUG:
+            if config.options.DEBUG:
                 print "Depth = ", obj.getDepth()
             obj.draw(FeynDiagram.currentCanvas)
 

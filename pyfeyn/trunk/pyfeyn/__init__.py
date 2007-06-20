@@ -30,4 +30,4 @@ else:
 
 
 ## Set __all__ (for "import * from pyfeyn")
-__all__ = ["diagrams", "points", "blobs", "lines", "deco", "utils", "options"]
+__all__ = ["diagrams", "points", "blobs", "lines", "deco", "utils", "config"]

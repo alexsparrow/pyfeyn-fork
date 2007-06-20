@@ -6,7 +6,7 @@ from pyfeyn.diagrams import FeynDiagram
 from pyfeyn.points import Point
 from pyfeyn.utils import Visible
 from pyfeyn.deco import PointLabel
-from pyfeyn import options
+from pyfeyn import config
 
 
 ## Blob base class
@@ -62,11 +62,11 @@ class Blob(Point, Visible):
 
     def addLabel(self, text, displace=-0.15, angle = 0):
         """Add a label."""
-        if options.options.DEBUG:
+        if config.options.DEBUG:
             print "Adding label: " + text
         self.labels.append(PointLabel(text=text, point=self,
                                       displace=displace, angle=angle))
-        if options.options.DEBUG:
+        if config.options.DEBUG:
             print "Labels = " + str(self.labels)
         return self
 

@@ -1,6 +1,7 @@
 from pyfeyn import *
 from pyfeyn.user import *
 
+processOptions()
 fd = FeynDiagram()
 
 in1 = Point(-4,  2)
