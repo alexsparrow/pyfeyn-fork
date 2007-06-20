@@ -24,7 +24,7 @@ _parser.add_option("--eps", action="store_false", dest="PDF_OUTPUT",
                    default=True, help="write output in EPS format")
 _parser.add_option("-o", "--out", dest="OUTPUT_FILE",
                    default=None, help="file to write the output to. An appropriate file extension will be appended if needed")
-(_opts, _args) = _parser.parse_args()
+(_opts, _args) = options.processOptions(_parser)
 
 
 ## Check right number of arguments
