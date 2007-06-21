@@ -1,3 +1,16 @@
+2007-06-21  Andy Buckley  <andy@insectnation.org>
+
+	* 0.3 release!
+
+	* Updated docs and web page for release.
+
+	* Fixed crosshatch pattern constants.
+
+	* Added mkfeyndiag script.
+
+	* Overhaul of the options system - it now works again AND can be
+	integrated with command line options on executables.
+
 2007-06-07  Georg von Hippel <gmv22@cantab.net>
 
 	* Added fill pattern support to FeynML I/O
