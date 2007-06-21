@@ -8,16 +8,11 @@ import sys, re
 
 
 ## Parse command line options
+print config.getOptions().DEBUG
 _usage = "Usage: %prog [options] hepmlfile"
 _version = "%prog " + __version__
 _parser = OptionParser(usage=_usage, version=_version)
 config.addPyfeynOptions(_parser)
-#_parser.add_option("-V", "--verbose", action="store_true", dest="VERBOSE",
-#                   default=False, help="print status messages")
-#_parser.add_option("-D", "--debug", action="store_true", dest="DEBUG",
-#                   default=False, help="print debug (very verbose) messages")
-#_parser.add_option("-Q", "--quiet", action="store_true", dest="QUIET",
-#                   default=False, help="be very quiet (overrides verbose and debug)")
 _parser.add_option("--pdf", action="store_true", dest="PDF_OUTPUT",
                    default=True, help="write output in PDF format")
 _parser.add_option("--eps", action="store_false", dest="PDF_OUTPUT",
@@ -25,6 +20,7 @@ _parser.add_option("--eps", action="store_false", dest="PDF_OUTPUT",
 _parser.add_option("-o", "--out", dest="OUTPUT_FILE",
                    default=None, help="file to write the output to. An appropriate file extension will be appended if needed")
 (_opts, _args) = config.processOptions(_parser)
+print config.getOptions().DEBUG
 
 
 ## Check right number of arguments

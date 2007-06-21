@@ -14,20 +14,25 @@ def addPyfeynOptions(parser):
 
 
 def processOptions(parser=None):
+    global _opts
     if parser is None:
         parser = OptionParser()
         addPyfeynOptions(parser)
     (_options, _args) = parser.parse_args()
-    options = _options
+    _opts = _options
     return _options, _args
 
 
 class OptionSet:
     """A container for options."""
     def __init__(self):
-        self.DEBUG = None
-        self.VDEBUG = None
-        self.DRAFT = None
+        self.DEBUG = False
+        self.VDEBUG = False
+        self.DRAFT = False
 
 
-options = OptionSet()
+_opts = OptionSet()
+
+
+def getOptions():
+    return _opts

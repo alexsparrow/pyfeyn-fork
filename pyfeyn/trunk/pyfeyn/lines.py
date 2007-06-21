@@ -30,13 +30,13 @@ class Line(Visible):
     def addLabel(self, text, pos=0.5, displace=-0.25, angle = 0):
         """Add a LaTeX label to this line, either via parameters or actually as
         a TeXLable object."""
-        if config.options.DEBUG:
+        if config.getOptions().DEBUG:
             print "Adding label: " + text
         #if text.__class__ == "Label":
         #    self.labels.append(label)
         #else:
         self.labels.append(LineLabel(text=text, line=self, pos=pos, displace=displace, angle=angle))
-        if config.options.DEBUG:
+        if config.getOptions().DEBUG:
             print "Labels = " + str(self.labels)
         return self
 
@@ -125,14 +125,14 @@ class Line(Visible):
             nx *= -1
             ny *= -1
         arcpoint = Point(middle.x() + amount * nx, middle.y() + amount * ny)
-        if config.options.VDEBUG:
+        if config.getOptions().VDEBUG:
             FeynDiagram.currentCanvas.stroke(
                 pyx.path.line(middle.x(), middle.y(), arcpoint.x(),
                               arcpoint.y()), [color.rgb.blue] )
         self.arcThru(arcpoint)
-        if config.options.DEBUG:
+        if config.getOptions().DEBUG:
             print self.getVisiblePath()
-        if config.options.VDEBUG:
+        if config.getOptions().VDEBUG:
             FeynDiagram.currentCanvas.stroke(self.getVisiblePath(), [color.rgb.blue])
         return self
 
@@ -183,7 +183,7 @@ class Line(Visible):
             cargs = (arccenter.x(), arccenter.y(), arcradius)
             circle = pyx.path.circle(*cargs)
             line = pyx.path.line( self.p1.x(), self.p1.y(), arccenter.x(), arccenter.y())
-            if config.options.VDEBUG:
+            if config.getOptions().VDEBUG:
                 FeynDiagram.currentCanvas.stroke(line, [color.rgb.green])
             as, bs = circle.intersect(line)
             subpaths = circle.split(as[0])
@@ -202,14 +202,14 @@ class Line(Visible):
             try:
                 n13 = (self.p1.y() - self.arcthrupoint.y()) / (self.p1.x() - self.arcthrupoint.x())
             except ZeroDivisionError:
-                if config.options.DEBUG:
+                if config.getOptions().DEBUG:
                     print "Grad 1 diverges"
                 n13 = 1e100
                 
             try:
                 n23 = (self.p2.y() - self.arcthrupoint.y()) / (self.p2.x() - self.arcthrupoint.x())
             except ZeroDivisionError:
-                if config.options.DEBUG:
+                if config.getOptions().DEBUG:
                     print "Grad 2 diverges"
                 n23 = 1e100
 
@@ -248,7 +248,7 @@ class Line(Visible):
             arcangle3 = arccenter.arg(self.arcthrupoint)
             arcargs = (arccenter.x(), arccenter.y(), arcradius, arcangle1, arcangle2)
 
-            if config.options.DEBUG and arcangle1 == arcangle2:
+            if config.getOptions().DEBUG and arcangle1 == arcangle2:
                 print "Arc angles are the same - not drawing anything"
 
             ## Calculate cross product to determine direction of arc
@@ -269,23 +269,23 @@ class Line(Visible):
         p1path = self.p1.getPath()
         p2path = self.p2.getPath()
         vispath = self.getPath()
-        if config.options.VDEBUG:
+        if config.getOptions().VDEBUG:
             FeynDiagram.currentCanvas.stroke(vispath, [color.rgb.green])
         if p1path:
             as, bs = p1path.intersect(vispath)
             for b in bs:
                 subpaths = vispath.split(b)
                 if len(subpaths) > 1:
-                    if config.options.DEBUG:
+                    if config.getOptions().DEBUG:
                         print "Num subpaths 1 = %d" % len(subpaths)
                     subpaths.sort(
                         lambda x, y :
                         int(pyx.unit.tocm(x.arclen() - y.arclen()) /
                             math.fabs(pyx.unit.tocm(x.arclen() - y.arclen()))) )
                     vispath = subpaths[-1]
-                    if config.options.VDEBUG:
+                    if config.getOptions().VDEBUG:
                         FeynDiagram.currentCanvas.stroke(subpaths[0], [color.rgb.blue])
-                if config.options.VDEBUG:
+                if config.getOptions().VDEBUG:
                     for a in as:
                         ix, iy = p1path.at(a)
                         FeynDiagram.currentCanvas.fill(pyx.path.circle(ix, iy, 0.05),
@@ -295,21 +295,21 @@ class Line(Visible):
             for b in bs:
                 subpaths = vispath.split(b)
                 if len(subpaths) > 1:
-                    if config.options.DEBUG:
+                    if config.getOptions().DEBUG:
                         print "Num subpaths 2 = %d" % len(subpaths)
                     subpaths.sort(
                         lambda x, y :
                         int(pyx.unit.tocm(x.arclen() - y.arclen()) /
                             math.fabs(pyx.unit.tocm(x.arclen() - y.arclen()))) )
                     vispath = subpaths[-1]
-                    if config.options.VDEBUG:
+                    if config.getOptions().VDEBUG:
                         FeynDiagram.currentCanvas.stroke(subpaths[0], [color.rgb.red])
-                if config.options.VDEBUG:
+                if config.getOptions().VDEBUG:
                     for a in as:
                         ix, iy = p2path.at(a)
                         FeynDiagram.currentCanvas.fill(pyx.path.circle(ix, iy, 0.05),
                                                        [color.rgb.blue])
-        if config.options.VDEBUG:
+        if config.getOptions().VDEBUG:
             FeynDiagram.currentCanvas.stroke(vispath, [color.rgb.red])
         #return pyx.path.circle(-2,-1,0.2)
         return vispath
@@ -319,7 +319,7 @@ class Line(Visible):
         """Drwa this line on the given canvas."""
         path = self.getVisiblePath()
         styles = self.styles + self.arrows
-        if config.options.DEBUG:
+        if config.getOptions().DEBUG:
             print "Drawing " + str(self.__class__) + " with styles = " + str(styles)
             print path
         canvas.stroke(path, styles)
@@ -371,7 +371,7 @@ class Scalar(Line):
         path = self.getVisiblePath()
         styles = self.styles + [pyx.style.linestyle.dashed] + self.arrows
         ## TODO: call base class method?
-        if config.options.DEBUG:
+        if config.getOptions().DEBUG:
             print "Drawing " + str(self.__class__) + " with styles = " + str(styles)
             print path
         canvas.stroke(path, styles)
@@ -490,10 +490,10 @@ class Gluon(DecoratedLine):
     def draw(self, canvas):
         """Draw the line on the supplied canvas."""
         styles = self.styles + self.arrows
-        if config.options.DEBUG:
+        if config.getOptions().DEBUG:
             print "Drawing " + str(self.__class__) + " with styles = " + str(styles)
         mypath = self.getDeformedPath()
-        if config.options.DRAFT or not self.is3D:
+        if config.getOptions().DRAFT or not self.is3D:
             canvas.stroke(mypath, styles)
         else:
             para = pyx.deformer.parallel(0.001)
@@ -584,7 +584,7 @@ class Vector(DecoratedLine):
     def draw(self, canvas):
         """Draw the line on the supplied canvas."""
         styles = self.styles + self.arrows
-        if config.options.DEBUG:
+        if config.getOptions().DEBUG:
             print "Drawing " + str(self.__class__) + " with styles = " + str(styles)
         canvas.stroke(self.getDeformedPath(), styles)
         for l in self.labels:
@@ -638,12 +638,12 @@ class Graviton(DecoratedLine):
         for curvature in curvatures:
             if curvature is not None:
                 curvature = abs(curvature/pyx.unit.m)
-                #if config.options.DEBUG:
+                #if config.getOptions().DEBUG:
                 #    print self.__class__, "- curvature = ", curvature
                 if (maxcurvature is None or curvature > maxcurvature):
                     maxcurvature = curvature
         numhloopcurves = 5 + int(0.1/maxcurvature)
-        if config.options.DEBUG:
+        if config.getOptions().DEBUG:
             print self.__class__, "- max curvature = ", maxcurvature, "->", numhloopcurves, "curves/hloop"                    
 
         defo = pyx.deformer.cycloid(self.arcradius, intwindings, curvesperhloop=numhloopcurves,
@@ -654,7 +654,7 @@ class Graviton(DecoratedLine):
     def draw(self, canvas):
         """Draw the line on the supplied canvas."""
         styles = self.styles + self.arrows
-        if config.options.DEBUG:
+        if config.getOptions().DEBUG:
             print "Drawing " + str(self.__class__) + " with styles = " + str(styles)
         mypath1 = self.getDeformedPath(+1)
         mypath2 = self.getDeformedPath(-1)
@@ -662,7 +662,7 @@ class Graviton(DecoratedLine):
             mypathtmp = mypath1
             mypath1 = mypath2
             mypath2 = mypathtmp
-        if config.options.DRAFT or not self.is3D:
+        if config.getOptions().DRAFT or not self.is3D:
             canvas.stroke(mypath1, styles)
             canvas.stroke(mypath2, styles)
         else:
@@ -752,12 +752,12 @@ class Gaugino(DecoratedLine):
         for curvature in curvatures:
             if curvature is not None:
                 curvature = abs(curvature/pyx.unit.m)
-                #if config.options.DEBUG:
+                #if config.getOptions().DEBUG:
                 #    print self.__class__, "- curvature = ", curvature
                 if (maxcurvature is None or curvature > maxcurvature):
                     maxcurvature = curvature
         numhloopcurves = 5 + int(0.1/maxcurvature)
-        if config.options.DEBUG:
+        if config.getOptions().DEBUG:
             print self.__class__, "- max curvature = ", maxcurvature, "->", numhloopcurves, "curves/hloop"
 
         defo = pyx.deformer.cycloid(self.arcradius, intwindings, curvesperhloop=numhloopcurves,
@@ -768,11 +768,11 @@ class Gaugino(DecoratedLine):
     def draw(self, canvas):
         """Draw the line on the supplied canvas."""
         styles = self.styles + self.arrows
-        if config.options.DEBUG:
+        if config.getOptions().DEBUG:
             print "Drawing " + str(self.__class__) + " with styles = " + str(styles)
         mypath1 = self.getVisiblePath()
         mypath2 = self.getDeformedPath()
-        if config.options.DRAFT or not self.is3D:
+        if config.getOptions().DRAFT or not self.is3D:
             canvas.stroke(mypath1, styles)
             canvas.stroke(mypath2, styles)
         else:
@@ -865,12 +865,12 @@ class Gluino(DecoratedLine):
         for curvature in curvatures:
             if curvature is not None:
                 curvature = abs(curvature/pyx.unit.m)
-                #if config.options.DEBUG:
+                #if config.getOptions().DEBUG:
                 #    print self.__class__, "- curvature = ", curvature
                 if (maxcurvature is None or curvature > maxcurvature):
                     maxcurvature = curvature
         numhloopcurves = 10 + int(0.2/maxcurvature)
-        if config.options.DEBUG:
+        if config.getOptions().DEBUG:
             print self.__class__, "- max curvature = ", maxcurvature, "->", numhloopcurves, "curves/hloop"
 
         defo = pyx.deformer.cycloid(self.arcradius, intwindings, curvesperhloop=numhloopcurves,
@@ -881,11 +881,11 @@ class Gluino(DecoratedLine):
     def draw(self, canvas):
         """Draw the line on the supplied canvas."""
         styles = self.styles + self.arrows
-        if config.options.DEBUG:
+        if config.getOptions().DEBUG:
             print "Drawing " + str(self.__class__) + " with styles = " + str(styles)
         mypath1 = self.getVisiblePath()
         mypath2 = self.getDeformedPath()
-        if config.options.DRAFT or not self.is3D:
+        if config.getOptions().DRAFT or not self.is3D:
             canvas.stroke(mypath1, styles)
             canvas.stroke(mypath2, styles)
         else:
