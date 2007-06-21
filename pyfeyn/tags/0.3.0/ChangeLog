@@ -1,0 +1,275 @@
+2007-06-07  Georg von Hippel <gmv22@cantab.net>
+
+	* Added fill pattern support to FeynML I/O
+
+2007-05-29  Georg von Hippel <gmv22@cantab.net>
+
+	* Added additional header tags to FeynML schema (those are not being
+	parsed at the moment)
+
+	* Added support for line-parallel arrows to FeynML I/O classes
+
+	* Added a second FeynML test case (with blobs)
+
+2007-05-23  Georg von Hippel <gmv22@cantab.net>
+
+	* Made free and line-parallel arrows properly pointy.
+
+	* Added blob support to FeynML module, improved FeynML styling,
+	  added metadata support to FeynML output.
+
+	* Removed redundant type definitions from FeynML schema,
+	  added needed types.
+
+2007-05-21  Andy Buckley  <andy@insectnation.org>
+
+	* Incremented version number to 0.3b2 - approaching 0.3 stable release.
+
+	* Made number of curves per half loop scale with the maximum sampled 
+	curvature of the underlying line.
+
+	* Added draft mode, so that rapid turnaround of diagrams with complex 3D 
+	constructions is possible without changing any code.
+
+2007-05-17  Georg von Hippel <gmv22@cantab.net>
+
+	* Updated FeynML schema to reflect recent changes to FeynML module.
+
+	* Added Gluino line class.
+
+2007-05-16  Georg von Hippel <gmv22@cantab.net>
+
+	* Added support for further styling (arrows, labels) to FeynML module.
+
+	* Added leg sense (in/out, antiparticle) attribute to FeynML schema,
+	and corresponding support to FeynML module.
+
+	* Added FreeArrow and ParallelArrow classes for free-standing and
+	line-parallel arrows in diagrams.
+
+2007-05-15  Georg von Hippel <gmv22@cantab.net>
+
+	* Improved FeynML writer so as to actually write to an XML file.
+
+2007-05-13  Andy Buckley  <andy@insectnation.org>
+
+	* paint.py: now colours, patterns and line thicknesses are defined here 
+	as upper-case constants (via import from PyX). The import * has been removed. 
+	The examples have been updated to match.
+
+2007-05-02  Georg von Hippel <gmv22@cantab.net>
+
+	* Added code to FeynML writer to combine dangling vertices and lines
+	into external legs. Works only for diagrams where all internal
+	vertices have been connected properly (unlike the Drell-Yan example)
+
+2007-05-01  Georg von Hippel <gmv22@cantab.net>
+
+	* Added support for free labels to FeynML module.
+
+2007-05-01  Andy Buckley  <andy@insectnation.org>
+
+	* Added 3D deformations to the SUSY and graviton lines. Again, they're
+	time-consuming to render, but they look pretty.
+
+	* Points are now drawn by definition after lines (well, there's a
+	layer offset of 1000, which should be enough).
+
+2007-04-26  Andy Buckley  <andy@insectnation.org>
+
+	* Added silly example using multiple canvases and transparency.
+
+	* Added a 3D version of the gluon line (can be time-consuming).
+
+2007-04-25  Andy Buckley  <andy@insectnation.org>
+
+	* Added frequency, amplitude and "extra (half) cycles" methods to
+	decorated lines.
+
+	* Now using copy when assigning a mark constant to a DecoratedPoint.
+
+	* Cleaned up the code a bit based on output from pylint.
+
+2007-04-24  Georg von Hippel <gmv22@cantab.net>
+
+	* Repaired FeynML support broken by Andy's recent changes.
+
+2007-04-24  Andy Buckley  <andy@insectnation.org>
+
+	* Added graviton and SUSY lines - rather silly but hey...
+
+2007-04-23  Andy Buckley  <andy@insectnation.org>
+
+	* Added speculative MultiLine and test #5. Very alpha and ropey.
+
+	* Replaced the NamedMark lookup with mark classes and module
+	constants for the defaults. Might reinstate the size attr on the
+	DecoratedPoint.
+
+2007-04-03  Georg von Hippel <gmv22@cantab.net>
+
+	* Added label support for blobs.
+	* Further repairs to the FeynML module.
+
+2007-03-28  Georg von Hippel <gmv22@cantab.net>
+
+	* Started to repair the FeynML module
+	* Fixed a bug in lines.py (never use == or != with None, use is/is not
+	  instead).
+
+2007-03-18  Andy Buckley  <andy@insectnation.org>
+
+	* Added layer-based sorting of the object list before drawing, and
+	a get/setDepth() method via the Visible interface.
+
+	* Tidied up a bit: in particular, removed a mutual dependence bug
+	between the deco and points modules.
+
+2007-03-07  Andy Buckley  <andy@insectnation.org>
+
+	* Added point-attached labels.
+
+	* Added unattached label implementation and updated example 1 to
+	demonstrate it.
+
+2007-03-05  Andy Buckley  <andy@insectnation.org>
+
+	* Moved Label to LineLabel and introduced placeholders for Label
+	and PointLabel.
+
+2007-02-09  Andy Buckley  <andy@insectnation.org>
+
+	* Added Vector and Scalar/Higgs line types.
+
+2006-12-29  Andy Buckley  <andy@insectnation.org>
+
+	* Added a fix to the Point.arc method to deal with the sign
+	ambiguity when the end points are purely vertically separated.
+
+2006-12-23  Andy Buckley  <andy@insectnation.org>
+
+	* Added distutils setup.py installation script.
+
+	* Moved various files into pyfeyn modules, examples and tests
+	directories.
+
+	* Rehacked the module import structure a bit more to get epydoc to
+	treat the modules as public (as it should).
+
+2006-12-22  Andy Buckley  <andy@insectnation.org>
+
+	* Removed feyn module and added initialisation stuff to
+	__init__.py
+
+2006-12-21  Andy Buckley  <andy@insectnation.org>
+
+	* Made logo.
+
+	* Added 4x scaling to get output resolution more reasonable.
+
+	* Removed explicit units dependencies in the coil deformer and
+	label displacement code.
+
+2006-12-20  Andy Buckley  <andy@insectnation.org>
+
+	* Changed number of curves per half-loop to get nicer gluons and
+	photons.
+
+	* Added test1 program (e+ e- -> q q~).
+	
+        * Various other interface hacks... too many changes this evening
+	to remember them all!
+	
+	* Changed bend() to use a displacement which is always on the left
+	of the line, as viewed from start to end.
+
+	* Rewrote labels as the Label class, which computes its offsets
+	using the normal to the curve at that point.
+
+	* Neatened up the point, line and blob interfaces a lot with
+	additions of get/set/add prefixes in lots of places.
+
+2006-11-24  Andy Buckley  <andy@insectnation.org>
+
+	* Added Fermion and Vertex as aliases to Line and DecoratedPoint.
+
+	* Made visible objects add themselves to the current diagram.
+
+	* Made fd.draw() take a filename argument: PyX canvases are now 
+	hidden from the user.
+	
+	* Added get/set/add methods to Lines for labels and arrows, so
+	that the Element.style([...]) methods don't need to be exposed to
+	the user.
+
+	* Fixed tadpole loop "visible path" interpretation: more complex
+	than the usual case because the line gets split twice.
+
+2006-10-13  Andy Buckley  <andy@insectnation.org>
+
+	* Added command line option handling as class property of
+	FeynDiagram. -D enables text-based debugging statements, -V
+	enables visual debugging. Accessed via FeynDiagram.options.
+	
+	* Made it possible for Blobs to be attached to Points.
+	
+	* Added	"visible line" functionality, so that lines whose ends are
+	attached to Blobs will only be deformed and drawn for the portion 
+	outside the blobs.
+
+2006-09-25  Andy Buckley  <andy@insectnation.org>
+
+	* Moved XML functionality out of classes and into an external
+	module. Currently broken.
+
+2006-06-30  Georg von Hippel <gmv22@cantab.net>, <vonhippg@uregina.ca>
+
+	* Added rudimentary style support to feynML read/write functions
+	
+        * Added label support to feynML read/write functions
+	
+        * Added a new class for labels attached to points rather than lines
+	
+	* Improved interface of DecoratedPoint class
+
+2006-06-29  Georg von Hippel <gmv22@cantab.net>, <vonhippg@uregina.ca>
+
+	* Improved feynML Schema to look more like proposed
+	
+	* Corresponding changes to feynML code
+	
+	* Added bend method to lines (autmoatically finds an arcpoint)
+
+2006-06-28  Georg von Hippel <gmv22@cantab.net>, <vonhippg@uregina.ca>
+
+	* Fixed some divide-by-zero bugs in points.py
+	
+	* Added feynML as a W3C XML Schema
+	
+	* Added feynML reader support module
+	
+	* Added rudimentary feynML writing support to feyn submodules
+
+2006-06-22  Georg von Hippel <gmv22@cantab.net>, <vonhippg@uregina.ca>
+
+        * Fixed Arrow code to work with PyX 0.9
+	
+        * Split code into submodules for convenience
+	
+	* Removed StraightLine class, moved trig. code into Point class
+	
+        * Added hepnames module
+	
+        * Added Photon line class
+	
+	* Added Support for tadpole-type loops into Line class
+	
+	* Added TexLabel decorator
+	
+	* Added DecoratedPoint class
+
+2005-09-23  Andy Buckley  <andy@insectnation.org>
+
+        * Start of ChangeLog. Basic functionality aready exists.
+	
+	* Added Arrow class, courtest of Andre Wobst.

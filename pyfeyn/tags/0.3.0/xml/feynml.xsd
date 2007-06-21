@@ -1,0 +1,276 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!-- XML schema for feynML 0.2 -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+	xmlns:xml="http://www.w3.org/XML/1998/namespace"
+	elementFormDefault="qualified"
+	attributeFormDefault="unqualified"
+	version="feynml 0.2">
+
+<!-- get access to the xml: attribute groups for xml:lang -->
+<xsd:import namespace="http://www.w3.org/XML/1998/namespace" 
+	schemaLocation="http://www.w3.org/2001/xml.xsd"/>
+
+
+
+<!-- ***** General type declarations ***** -->
+
+<!-- Boolean type -->
+<xsd:simpleType name="boolean.type">
+  <xsd:restriction base="xsd:NMTOKEN">
+          <xsd:enumeration value="1"/> <xsd:enumeration value="0"/>
+          <xsd:enumeration value="true"/> <xsd:enumeration value="false"/>
+          <xsd:enumeration value="yes"/> <xsd:enumeration value="no"/>
+          <xsd:enumeration value="on"/> <xsd:enumeration value="off"/>
+   </xsd:restriction>
+</xsd:simpleType>
+
+<!-- Double or Pair type -->
+<xsd:simpleType name="double-or-pair.type">
+ <xsd:union>
+  <xsd:simpleType>
+   <xsd:restriction base="xsd:string">
+       <xsd:pattern value="\d*\.\d* \d*\.\d*"/>
+   </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType>
+   <xsd:restriction base="xsd:double"/>
+  </xsd:simpleType>
+ </xsd:union>
+</xsd:simpleType>
+
+<!-- TeX string type -->
+<xsd:simpleType name="texstring.type">
+  <xsd:restriction base="xsd:string"/>
+</xsd:simpleType>
+
+<!-- Style string type -->
+<xsd:simpleType name="style.type">
+   <xsd:restriction base="xsd:string">
+          <xsd:pattern value="((mark-(shape|size)|(fill|line)-style|arrow-(pos|size|angle|constrict)|parallel-arrow-(pos|size|angle|constrict|length|displace|sense)|label-(pos|displace|angle)|is3d):[^;]+;\s*)+"/>
+   </xsd:restriction>
+</xsd:simpleType>
+
+<!-- Blob shape Type  -->
+<xsd:simpleType name="blob-shape.type">
+  <xsd:restriction base="xsd:NMTOKEN">
+          <xsd:enumeration value="rectangle"/>
+          <xsd:enumeration value="circle"/>
+          <xsd:enumeration value="ellipse"/>
+   </xsd:restriction>
+</xsd:simpleType>
+
+<!-- Leg Sense Type  -->
+<xsd:simpleType name="legsense.type">
+  <xsd:restriction base="xsd:string">
+         <xsd:pattern value="(anti-)?(in|out)(coming|going)?" />
+  </xsd:restriction>
+</xsd:simpleType>
+
+<!-- Line type Type -->
+<xsd:simpleType name="line-type.type">
+  <xsd:restriction base="xsd:NMTOKEN">
+          <xsd:enumeration value="photon"/>
+          <xsd:enumeration value="gluon"/>
+          <xsd:enumeration value="vector"/>
+          <xsd:enumeration value="graviton"/>
+          <xsd:enumeration value="gaugino"/>
+          <xsd:enumeration value="gluino"/>
+          <xsd:enumeration value="fermion"/>
+          <xsd:enumeration value="scalar"/>
+          <xsd:enumeration value="ghost"/>
+          <xsd:enumeration value="phantom"/>
+   </xsd:restriction>
+</xsd:simpleType>
+
+<!-- Angle type -->
+<xsd:simpleType name="angle.type">
+  <xsd:restriction base="xsd:string">
+          <xsd:pattern value="((\+|-)?\d*|n|ne|e|se|s|sw|w|nw)"/>
+  </xsd:restriction>
+</xsd:simpleType>
+
+
+
+<!-- ***** General attribute declarations ***** -->
+
+<!-- Global Attributes -->
+<xsd:attributeGroup name="global-atts">
+                <xsd:attribute name="id" type="xsd:ID" use="required" />
+                <xsd:attribute name="label" type="texstring.type"/>
+                <xsd:attribute name="style" type="style.type"/> 
+</xsd:attributeGroup>
+
+<!-- Standard XML Attributes -->
+<xsd:attributeGroup name="xml-atts">
+		<xsd:attribute ref="xml:lang"/>
+		<xsd:attribute ref="xml:space"/>
+</xsd:attributeGroup>
+
+<!-- Point Attributes -->
+<xsd:attributeGroup name="point-atts">
+                <xsd:attribute name="x" type="xsd:double"/>
+                <xsd:attribute name="y" type="xsd:double"/>
+</xsd:attributeGroup>
+
+<!-- Line Attributes -->
+<xsd:attributeGroup name="line-atts">
+                <xsd:attribute name="type" type="line-type.type"/>
+                <xsd:attribute name="bend" type="xsd:double"/>
+</xsd:attributeGroup>
+
+
+
+<!-- ***** Root element ***** -->
+
+<!-- FeynML root element -->
+<xsd:element name="feynml">
+   <xsd:complexType>
+      <xsd:sequence>
+         <xsd:element ref="head" minOccurs="0" maxOccurs="1"/>
+         <xsd:element ref="diagram" minOccurs="1" maxOccurs="unbounded"/>
+      </xsd:sequence>
+         <xsd:attributeGroup ref="xml-atts"/>
+   </xsd:complexType>
+</xsd:element>
+
+
+
+<!-- ***** Structural elements ***** -->
+
+<!-- Diagram Attributes -->
+<xsd:attributeGroup name="diagram-atts">
+      <xsd:attribute name="id" type="xsd:ID"/>
+      <xsd:attribute name="legs" type="xsd:nonNegativeInteger"/>
+      <xsd:attribute name="loops" type="xsd:nonNegativeInteger"/>
+</xsd:attributeGroup>
+<!-- Diagram type -->
+<xsd:complexType name="diagram.type">
+   <xsd:sequence>
+      <xsd:choice minOccurs="0" maxOccurs="unbounded"> 
+            <xsd:element ref="vertex"/>
+	    <xsd:element ref="propagator"/>
+            <xsd:element ref="leg"/>
+            <xsd:element ref="blob"/>
+            <xsd:element ref="connect"/>
+            <xsd:element ref="label"/>
+      </xsd:choice>
+   </xsd:sequence>
+      <xsd:attributeGroup ref="diagram-atts"/>
+</xsd:complexType>
+<!-- Diagram Element -->
+<xsd:element name="diagram" type="diagram.type"/>
+
+
+<!-- Vertex Attributes -->
+<!-- Vertex type -->
+<xsd:complexType name="vertex.type">
+      <xsd:attributeGroup ref="global-atts"/>
+      <xsd:attributeGroup ref="point-atts"/>
+</xsd:complexType>
+<!-- Vertex Element -->
+<xsd:element name="vertex" type="vertex.type"/>
+
+
+<!-- Propagator Attributes -->
+<xsd:attributeGroup name="propagator-atts">
+    <xsd:attribute name="source" type="xsd:IDREF" use="required"/>
+    <xsd:attribute name="target" type="xsd:IDREF" use="required"/>
+</xsd:attributeGroup>
+<!-- Propagator type -->
+<xsd:complexType name="propagator.type">
+      <xsd:attributeGroup ref="global-atts"/>
+      <xsd:attributeGroup ref="line-atts"/>
+      <xsd:attributeGroup ref="propagator-atts"/>
+</xsd:complexType>
+<!-- Propagator Element -->
+<xsd:element name="propagator" type="propagator.type"/>
+
+
+<!-- Leg attributes -->
+<xsd:attributeGroup name="leg-atts">
+    <xsd:attribute name="target" type="xsd:IDREF" use="required"/>
+    <xsd:attribute name="sense" type="legsense.type" use="required"/>
+</xsd:attributeGroup>
+<!-- Leg type -->
+<xsd:complexType name="leg.type">
+      <xsd:attributeGroup ref="global-atts"/>
+      <xsd:attributeGroup ref="point-atts"/>
+      <xsd:attributeGroup ref="line-atts"/>
+      <xsd:attributeGroup ref="leg-atts"/>
+</xsd:complexType>
+<!-- Leg Element -->
+<xsd:element name="leg" type="leg.type"/>
+
+
+<!-- Blob Element -->
+<xsd:attributeGroup name="blob-atts">
+   <xsd:attribute name="shape" type="blob-shape.type" use="required"/>
+   <xsd:attribute name="radius" type="double-or-pair.type"/>
+</xsd:attributeGroup>
+<!-- Blob type -->
+<xsd:complexType name="blob.type">
+      <xsd:attributeGroup ref="global-atts"/>
+      <xsd:attributeGroup ref="point-atts"/>
+      <xsd:attributeGroup ref="blob-atts"/>
+</xsd:complexType>
+<!-- Connect Element -->
+<xsd:element name="connect">
+   <xsd:complexType>
+      <xsd:attributeGroup ref="global-atts"/>
+      <xsd:attribute name="blob" type="xsd:IDREF"/>
+      <xsd:attribute name="dir" type="angle.type"/> 
+   </xsd:complexType>
+</xsd:element>
+<!-- Blob Element -->
+<xsd:element name="blob" type="blob.type"/>
+
+
+<!-- Free-floating Label type -->
+<xsd:complexType name="label.type">
+         <xsd:attributeGroup ref="global-atts"/>
+         <xsd:attributeGroup ref="point-atts"/>
+         <xsd:attribute name="text" type="texstring.type"/>
+</xsd:complexType>
+<!-- Label Element -->
+<xsd:element name="label" type="label.type"/>
+
+
+
+<!-- ***** Header elements  ***** -->
+
+<!-- Head element -->
+<xsd:element name="head">
+   <xsd:complexType>
+      <xsd:sequence><xsd:choice minOccurs="0" maxOccurs="unbounded">
+         <xsd:element ref="meta"/>
+         <xsd:element ref="link"/>
+         <xsd:element ref="style" maxOccurs="1"/>
+         <xsd:element ref="description" maxOccurs="1"/>
+      </xsd:choice></xsd:sequence>
+   </xsd:complexType>
+</xsd:element>
+<!-- Meta element -->
+<xsd:element name="meta">
+   <xsd:complexType>
+      <xsd:attribute name="name" type="xsd:string"/>
+      <xsd:attribute name="value" type="xsd:string"/>
+   </xsd:complexType>
+</xsd:element>
+<!-- Link element -->
+<xsd:element name="link">
+   <xsd:complexType>
+      <xsd:attribute name="href" type="xsd:anyURI"/>
+      <xsd:attribute name="rel" type="xsd:string"/>
+      <xsd:attribute name="type" type="xsd:string"/>
+   </xsd:complexType>
+</xsd:element>
+<!-- Style element -->
+<xsd:element name="style" type="xsd:string"/>
+<!-- Description element -->
+<xsd:element name="description" type="xsd:string"/>
+
+
+</xsd:schema>
+
+

@@ -1,0 +1,48 @@
+PyFeyn TODO
+-----------
+
+ * Make sure there are docstrings for all methods.
+
+ * Write a manual.
+
+ * Make/allow parallel arrows to curve like the curve at that point.
+
+ * Transparently pass single options and lists of them using isinstance(foo, list).
+
+ * Add a variety of standard vertex shapes: filled and unfilled circles, 
+   squares, pentagons, etc.
+
+ * Add => type arrows for helicities.
+
+ * Add defaults mechanism for 3Dness, thicknesses, colours.
+
+ * Introduce unit testing
+
+ * setStrokeStyle(color=None, thickness=None, trans=None, others=None) 
+   etc. - hide PyX options.
+
+ * Add a Gravitino line (a struck-through graviton)? Alternative is just a fermion.
+
+ * Add multi-lines. Should be defined by number of lines and
+   max-width/half-width OR number and separation. Arrows shouldn't 
+   necessarily be duplicated on all lines. Auto-sizing to blobs?
+   Should definitely crop to a visible path on the markers/blobs -
+   should the visible path cropper be broken out as a standalone 
+   internal function?
+
+ * Fix pattern stroke colour problem.
+
+ * Allow setting initial/final straight components of decorated lines.
+
+ * Allow single lines to be deviated sharply (split?) round a vertex.
+
+ * Every diagram element should know its parent diagram.
+
+ * Allow multiple diagrams in a single output image (add a Page class or similar).
+
+ * Do hatched patterns better than PyX (or fix PyX's implementation).
+
+ * Improve the global options / defaults mechanism.
+
+ * Allow tree-level diagrams to be generated automatically by minimising 
+   the "energy" of a specified graph topology (a la FeynMF).

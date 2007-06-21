@@ -1,0 +1,776 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>pyfeyn.lines.Line</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyfeyn-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="pyfeyn-module.html">Package&nbsp;pyfeyn</a> ::
+        <a href="pyfeyn.lines-module.html">Module&nbsp;lines</a> ::
+        Class&nbsp;Line
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript: void(0);" class="privatelink"
+    onclick="toggle_private();">hide private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="pyfeyn.lines.Line-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class Line</h1><br /><br />
+<center>
+<center>  <map id="uml_class_diagram_for_classdoc_15" name="uml_class_diagram_for_classdoc_15">
+<area shape="rect" href="pyfeyn.lines.Gluino&#45;class.html" title="pyfeyn.lines.Gluino" alt="" coords="279,528,353,566" />
+<area shape="rect" href="pyfeyn.lines.MultiLine&#45;class.html" title="pyfeyn.lines.MultiLine" alt="" coords="257,472,345,510" />
+<area shape="rect" href="pyfeyn.lines.Graviton&#45;class.html" title="pyfeyn.lines.Graviton" alt="" coords="383,528,468,566" />
+<area shape="rect" href="pyfeyn.lines.Scalar&#45;class.html" title="pyfeyn.lines.Scalar" alt="" coords="375,472,449,510" />
+<area shape="rect" href="pyfeyn.lines.Gaugino&#45;class.html" title="pyfeyn.lines.Gaugino" alt="" coords="497,528,583,566" />
+<area shape="rect" href="pyfeyn.lines.DecoratedLine&#45;class.html" title="pyfeyn.lines.DecoratedLine" alt="" coords="479,472,601,510" />
+<area shape="rect" href="pyfeyn.lines.Gluon&#45;class.html" title="pyfeyn.lines.Gluon" alt="" coords="612,528,684,566" />
+<area shape="rect" href="pyfeyn.lines.Vector&#45;class.html" title="pyfeyn.lines.Vector" alt="" coords="713,528,788,566" />
+<area shape="rect" href="pyfeyn.lines.Line&#45;class.html#bend" title="Bend the line to the right by a given distance." alt="" coords="17,167,807,186" />
+<area shape="rect" href="pyfeyn.lines.Line&#45;class.html#set3D" title="Make this line display in &#39;3D&#39;." alt="" coords="17,186,807,204" />
+<area shape="rect" href="pyfeyn.lines.Line&#45;class.html#removeLabels" title="Remove the labels from this line." alt="" coords="17,204,807,223" />
+<area shape="rect" href="pyfeyn.lines.Line&#45;class.html#__init__" title="pyfeyn.lines.Line.__init__" alt="" coords="17,223,807,242" />
+<area shape="rect" href="pyfeyn.lines.Line&#45;class.html#getVisiblePath" title="Find the subpath between the endpoints which isn&#39;t overshadowed by a blob  of some kind" alt="" coords="17,242,807,260" />
+<area shape="rect" href="pyfeyn.lines.Line&#45;class.html#getStyles" title="Get the styles associated with this line." alt="" coords="17,260,807,279" />
+<area shape="rect" href="pyfeyn.lines.Line&#45;class.html#getPath" title="Get the path taken by this line." alt="" coords="17,279,807,298" />
+<area shape="rect" href="pyfeyn.lines.Line&#45;class.html#setStyles" title="Set the styles associated with this line." alt="" coords="17,298,807,316" />
+<area shape="rect" href="pyfeyn.lines.Line&#45;class.html#addStyles" title="Add some styles to this line." alt="" coords="17,316,807,335" />
+<area shape="rect" href="pyfeyn.lines.Line&#45;class.html#addArrow" title="Add an arrow to the line at the specified position, which is a number  between 0 and 1, representing the fraction along the line at which the  arrow should be placed." alt="" coords="17,335,807,354" />
+<area shape="rect" href="pyfeyn.lines.Line&#45;class.html#draw" title="Drwa this line on the given canvas." alt="" coords="17,354,807,372" />
+<area shape="rect" href="pyfeyn.lines.Line&#45;class.html#setArrows" title="Define the arrows on this line." alt="" coords="17,372,807,391" />
+<area shape="rect" href="pyfeyn.lines.Line&#45;class.html#arcThru" title="Set the point through which this line will arc." alt="" coords="17,391,807,410" />
+<area shape="rect" href="pyfeyn.lines.Line&#45;class.html#addParallelArrow" title="pyfeyn.lines.Line.addParallelArrow" alt="" coords="17,428,807,447" />
+<area shape="rect" href="pyfeyn.lines.Line&#45;class.html" title="pyfeyn.lines.Line" alt="" coords="5,136,819,454" />
+<area shape="rect" href="pyfeyn.utils.Visible&#45;class.html#getDepth" title="pyfeyn.utils.Visible.getDepth" alt="" coords="347,36,477,55" />
+<area shape="rect" href="pyfeyn.utils.Visible&#45;class.html#__cmp__" title="Compare with another visible class, just using layers." alt="" coords="347,55,477,74" />
+<area shape="rect" href="pyfeyn.utils.Visible&#45;class.html#isVisible" title="pyfeyn.utils.Visible.isVisible" alt="" coords="347,74,477,92" />
+<area shape="rect" href="pyfeyn.utils.Visible&#45;class.html#setDepth" title="pyfeyn.utils.Visible.setDepth" alt="" coords="347,92,477,111" />
+<area shape="rect" href="pyfeyn.utils.Visible&#45;class.html" title="pyfeyn.utils.Visible" alt="" coords="335,6,489,118" />
+</map>
+  <img src="uml_class_diagram_for_classdoc_15.gif" alt='' usemap="#uml_class_diagram_for_classdoc_15" ismap="ismap" class="graph-without-title">
+</center></center>
+<hr />
+Base class for all objects which connect points in Feynman 
+  diagrams<br /><br />
+
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <code class="summary-type">&nbsp;</code>
+  </td><td class="summary">
+    <span class="summary-sig"><a href="pyfeyn.lines.Line-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">point1</span>,
+        <span class="summary-sig-arg">point2</span>)</span>
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <code class="summary-type">&nbsp;</code>
+  </td><td class="summary">
+    <span class="summary-sig"><a href="pyfeyn.lines.Line-class.html#addLabel" class="summary-sig-name">addLabel</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">text</span>,
+        <span class="summary-sig-arg">pos</span>=<span class="summary-sig-default">0.5</span>,
+        <span class="summary-sig-arg">displace</span>=<span class="summary-sig-default">-0.25</span>,
+        <span class="summary-sig-arg">angle</span>=<span class="summary-sig-default">0</span>)</span><br />
+      Add a LaTeX label to this line, either via parameters or actually 
+      as a TeXLable object.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <code class="summary-type">&nbsp;</code>
+  </td><td class="summary">
+    <span class="summary-sig"><a href="pyfeyn.lines.Line-class.html#addParallelArrow" class="summary-sig-name">addParallelArrow</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">pos</span>=<span class="summary-sig-default">0.5</span>,
+        <span class="summary-sig-arg">displace</span>=<span class="summary-sig-default">0.3</span>,
+        <span class="summary-sig-arg">length</span>=<span class="summary-sig-default">0.5*pyx.unit.v_cm</span>,
+        <span class="summary-sig-arg">size</span>=<span class="summary-sig-default">6*pyx.unit.v_pt</span>,
+        <span class="summary-sig-arg">angle</span>=<span class="summary-sig-default">45</span>,
+        <span class="summary-sig-arg">constriction</span>=<span class="summary-sig-default">0.8</span>,
+        <span class="summary-sig-arg">sense</span>=<span class="summary-sig-default">+1</span>)</span>
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <code class="summary-type">&nbsp;</code>
+  </td><td class="summary">
+    <span class="summary-sig"><a href="pyfeyn.lines.Line-class.html#removeLabels" class="summary-sig-name">removeLabels</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Remove the labels from this line.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <code class="summary-type">&nbsp;</code>
+  </td><td class="summary">
+    <span class="summary-sig"><a href="pyfeyn.lines.Line-class.html#fracpoint" class="summary-sig-name">fracpoint</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">frac</span>)</span><br />
+      Get a new Point representing the point at the given fraction along
+      the fundamental line (i.e.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <code class="summary-type">&nbsp;</code>
+  </td><td class="summary">
+    <span class="summary-sig"><a href="pyfeyn.lines.Line-class.html#setArrows" class="summary-sig-name">setArrows</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">arrows</span>)</span><br />
+      Define the arrows on this line.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <code class="summary-type">&nbsp;</code>
+  </td><td class="summary">
+    <span class="summary-sig"><a href="pyfeyn.lines.Line-class.html#addArrow" class="summary-sig-name">addArrow</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">position</span>=<span class="summary-sig-default">0.53</span>,
+        <span class="summary-sig-arg">arrow</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Add an arrow to the line at the specified position, which is a 
+      number between 0 and 1, representing the fraction along the line at 
+      which the arrow should be placed.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <code class="summary-type">&nbsp;</code>
+  </td><td class="summary">
+    <span class="summary-sig"><a href="pyfeyn.lines.Line-class.html#removeArrows" class="summary-sig-name">removeArrows</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Remove all arrows from this line.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <code class="summary-type">&nbsp;</code>
+  </td><td class="summary">
+    <span class="summary-sig"><a href="pyfeyn.lines.Line-class.html#arcThru" class="summary-sig-name">arcThru</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">arcpoint</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">x</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">y</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Set the point through which this line will arc.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <code class="summary-type">&nbsp;</code>
+  </td><td class="summary">
+    <span class="summary-sig"><a href="pyfeyn.lines.Line-class.html#straighten" class="summary-sig-name">straighten</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Make this line a straight line between start and end.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <code class="summary-type">&nbsp;</code>
+  </td><td class="summary">
+    <span class="summary-sig"><a href="pyfeyn.lines.Line-class.html#bend" class="summary-sig-name">bend</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">amount</span>)</span><br />
+      Bend the line to the right by a given distance.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <code class="summary-type">&nbsp;</code>
+  </td><td class="summary">
+    <span class="summary-sig"><a href="pyfeyn.lines.Line-class.html#set3D" class="summary-sig-name">set3D</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">choice</span>)</span><br />
+      Make this line display in '3D'.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <code class="summary-type">&nbsp;</code>
+  </td><td class="summary">
+    <span class="summary-sig"><a href="pyfeyn.lines.Line-class.html#getStyles" class="summary-sig-name">getStyles</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">stylelist</span>)</span><br />
+      Get the styles associated with this line.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <code class="summary-type">&nbsp;</code>
+  </td><td class="summary">
+    <span class="summary-sig"><a href="pyfeyn.lines.Line-class.html#setStyles" class="summary-sig-name">setStyles</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">stylelist</span>)</span><br />
+      Set the styles associated with this line.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <code class="summary-type">&nbsp;</code>
+  </td><td class="summary">
+    <span class="summary-sig"><a href="pyfeyn.lines.Line-class.html#addStyle" class="summary-sig-name">addStyle</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">style</span>)</span><br />
+      Add a style to this line.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <code class="summary-type">&nbsp;</code>
+  </td><td class="summary">
+    <span class="summary-sig"><a href="pyfeyn.lines.Line-class.html#addStyles" class="summary-sig-name">addStyles</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">stylelist</span>)</span><br />
+      Add some styles to this line.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <code class="summary-type">&nbsp;</code>
+  </td><td class="summary">
+    <span class="summary-sig"><a href="pyfeyn.lines.Line-class.html#getPath" class="summary-sig-name">getPath</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Get the path taken by this line.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <code class="summary-type">&nbsp;</code>
+  </td><td class="summary">
+    <span class="summary-sig"><a href="pyfeyn.lines.Line-class.html#getVisiblePath" class="summary-sig-name">getVisiblePath</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Find the subpath between the endpoints which isn't overshadowed by
+      a blob of some kind
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <code class="summary-type">&nbsp;</code>
+  </td><td class="summary">
+    <span class="summary-sig"><a href="pyfeyn.lines.Line-class.html#draw" class="summary-sig-name">draw</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">canvas</span>)</span><br />
+      Drwa this line on the given canvas.
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="pyfeyn.utils.Visible-class.html">utils.Visible</a></code></b>:
+      <code><a href="pyfeyn.utils.Visible-class.html#__cmp__">__cmp__</a></code>,
+      <code><a href="pyfeyn.utils.Visible-class.html#getDepth">getDepth</a></code>,
+      <code><a href="pyfeyn.utils.Visible-class.html#isVisible">isVisible</a></code>,
+      <code><a href="pyfeyn.utils.Visible-class.html#setDepth">setDepth</a></code>
+      </p>
+    </td>
+  </tr>
+</table>
+
+<br />
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="__init__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">point1</span>,
+        <span class="sig-arg">point2</span>)</span>
+    <br /><em class="fname">(Constructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  None
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="addLabel"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addLabel</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">text</span>,
+        <span class="sig-arg">pos</span>=<span class="sig-default">0.5</span>,
+        <span class="sig-arg">displace</span>=<span class="sig-default">-0.25</span>,
+        <span class="sig-arg">angle</span>=<span class="sig-default">0</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Add a LaTeX label to this line, either via parameters or actually as a
+  TeXLable object.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="addParallelArrow"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addParallelArrow</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">pos</span>=<span class="sig-default">0.5</span>,
+        <span class="sig-arg">displace</span>=<span class="sig-default">0.3</span>,
+        <span class="sig-arg">length</span>=<span class="sig-default">0.5*pyx.unit.v_cm</span>,
+        <span class="sig-arg">size</span>=<span class="sig-default">6*pyx.unit.v_pt</span>,
+        <span class="sig-arg">angle</span>=<span class="sig-default">45</span>,
+        <span class="sig-arg">constriction</span>=<span class="sig-default">0.8</span>,
+        <span class="sig-arg">sense</span>=<span class="sig-default">+1</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  None
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="removeLabels"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">removeLabels</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Remove the labels from this line.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="fracpoint"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">fracpoint</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">frac</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Get a new Point representing the point at the given fraction along the
+  fundamental line (i.e. no truncation or deformation). TODO: Handle units 
+  properly.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="setArrows"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setArrows</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">arrows</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Define the arrows on this line.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="addArrow"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addArrow</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">position</span>=<span class="sig-default">0.53</span>,
+        <span class="sig-arg">arrow</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Add an arrow to the line at the specified position, which is a number 
+  between 0 and 1, representing the fraction along the line at which the 
+  arrow should be placed. The default arrow style can be overridden by 
+  explicitly supplying an arrow object as the 'arrow' argument, in which 
+  case the position argument will be ignored.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="removeArrows"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">removeArrows</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Remove all arrows from this line.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="arcThru"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">arcThru</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">arcpoint</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">x</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">y</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Set the point through which this line will arc. Either pass a Point or
+  set x, y as floats.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="straighten"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">straighten</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Make this line a straight line between start and end.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="bend"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">bend</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">amount</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Bend the line to the right by a given distance.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="set3D"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">set3D</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">choice</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Make this line display in '3D'.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="getStyles"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getStyles</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">stylelist</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Get the styles associated with this line.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="setStyles"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setStyles</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">stylelist</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Set the styles associated with this line.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="addStyle"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addStyle</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">style</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Add a style to this line.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="addStyles"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addStyles</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">stylelist</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Add some styles to this line.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="getPath"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getPath</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Get the path taken by this line.
+  <dl><dt></dt><dd>
+    <dl><dt>Overrides:
+      <a href="pyfeyn.utils.Visible-class.html#getPath">utils.Visible.getPath</a>
+    </dt></dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="getVisiblePath"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getVisiblePath</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Find the subpath between the endpoints which isn't overshadowed by a 
+  blob of some kind
+  <dl><dt></dt><dd>
+    <dl><dt>Overrides:
+      <a href="pyfeyn.utils.Visible-class.html#getVisiblePath">utils.Visible.getVisiblePath</a>
+    </dt></dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="draw"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">draw</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">canvas</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Drwa this line on the given canvas.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyfeyn-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">Generated by Epydoc
+        3.0alpha3 on Thu Jun 21 20:09:01 2007</td>
+    <td align="right" class="footer">
+      <a href="http://epydoc.sourceforge.net">http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie()
+  // -->
+</script>
+  
+</body>
+</html>

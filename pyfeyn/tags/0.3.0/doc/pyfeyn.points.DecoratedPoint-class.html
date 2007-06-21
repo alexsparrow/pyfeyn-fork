@@ -1,0 +1,663 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>pyfeyn.points.DecoratedPoint</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyfeyn-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="pyfeyn-module.html">Package&nbsp;pyfeyn</a> ::
+        <a href="pyfeyn.points-module.html">Module&nbsp;points</a> ::
+        Class&nbsp;DecoratedPoint
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript: void(0);" class="privatelink"
+    onclick="toggle_private();">hide private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="pyfeyn.points.DecoratedPoint-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class DecoratedPoint</h1><br /><br />
+<center>
+<center>  <map id="uml_class_diagram_for_classdoc_20" name="uml_class_diagram_for_classdoc_20">
+<area shape="rect" href="pyfeyn.points.Point&#45;class.html#getXY" title="Return the x and y coordinates of this point as a 2&#45;tuple." alt="" coords="75,36,333,55" />
+<area shape="rect" href="pyfeyn.points.Point&#45;class.html#x" title="Alias for getX()." alt="" coords="75,55,333,73" />
+<area shape="rect" href="pyfeyn.points.Point&#45;class.html#tangent" title="Return the tangent of the straight line defined by this point and the  argument." alt="" coords="75,73,333,92" />
+<area shape="rect" href="pyfeyn.points.Point&#45;class.html#intercept" title="Return the y&#45;intercept of the straight line defined by this point and the  argument." alt="" coords="75,92,333,111" />
+<area shape="rect" href="pyfeyn.points.Point&#45;class.html#addLabel" title="Add a LaTeX label to this point, either via parameters or actually as a  PointLable object." alt="" coords="75,111,333,129" />
+<area shape="rect" href="pyfeyn.points.Point&#45;class.html#midpoint" title="Return the point midway between this point and the argument." alt="" coords="75,129,333,148" />
+<area shape="rect" href="pyfeyn.points.Point&#45;class.html#getX" title="Return the x&#45;coordinate of this point." alt="" coords="75,148,333,167" />
+<area shape="rect" href="pyfeyn.points.Point&#45;class.html#getY" title="Return the y&#45;coordinate of this point." alt="" coords="75,167,333,185" />
+<area shape="rect" href="pyfeyn.points.Point&#45;class.html#xy" title="Alias for getXY()." alt="" coords="75,185,333,204" />
+<area shape="rect" href="pyfeyn.points.Point&#45;class.html#setXY" title="Set the x and y coordinates of this point." alt="" coords="75,204,333,223" />
+<area shape="rect" href="pyfeyn.points.Point&#45;class.html#arg" title="Return the angle between the x&#45;axis and the straight line defined by this  point and the argument (cf." alt="" coords="75,223,333,241" />
+<area shape="rect" href="pyfeyn.points.Point&#45;class.html#y" title="Alias for getY()." alt="" coords="75,241,333,260" />
+<area shape="rect" href="pyfeyn.points.Point&#45;class.html#removeLabels" title="pyfeyn.points.Point.removeLabels" alt="" coords="75,260,333,279" />
+<area shape="rect" href="pyfeyn.points.Point&#45;class.html#distance" title="Calculate the distance between this point and the argument." alt="" coords="75,297,333,316" />
+<area shape="rect" href="pyfeyn.points.Point&#45;class.html" title="pyfeyn.points.Point" alt="" coords="63,5,345,323" />
+<area shape="rect" href="pyfeyn.points.DecoratedPoint&#45;class.html#addFillstyle" title="pyfeyn.points.DecoratedPoint.addFillstyle" alt="" coords="17,372,639,391" />
+<area shape="rect" href="pyfeyn.points.DecoratedPoint&#45;class.html#getFillstyles" title="pyfeyn.points.DecoratedPoint.getFillstyles" alt="" coords="17,391,639,409" />
+<area shape="rect" href="pyfeyn.points.DecoratedPoint&#45;class.html#getStrokestyles" title="pyfeyn.points.DecoratedPoint.getStrokestyles" alt="" coords="17,409,639,428" />
+<area shape="rect" href="pyfeyn.points.DecoratedPoint&#45;class.html#setMark" title="pyfeyn.points.DecoratedPoint.setMark" alt="" coords="17,428,639,447" />
+<area shape="rect" href="pyfeyn.points.DecoratedPoint&#45;class.html#getBlob" title="Get the attached blob." alt="" coords="17,447,639,465" />
+<area shape="rect" href="pyfeyn.points.DecoratedPoint&#45;class.html#setBlob" title="Set the attached blob." alt="" coords="17,465,639,484" />
+<area shape="rect" href="pyfeyn.points.DecoratedPoint&#45;class.html#addFillstyles" title="pyfeyn.points.DecoratedPoint.addFillstyles" alt="" coords="17,484,639,503" />
+<area shape="rect" href="pyfeyn.points.DecoratedPoint&#45;class.html#__init__" title="pyfeyn.points.DecoratedPoint.__init__" alt="" coords="17,503,639,521" />
+<area shape="rect" href="pyfeyn.points.DecoratedPoint&#45;class.html#addStrokestyles" title="pyfeyn.points.DecoratedPoint.addStrokestyles" alt="" coords="17,521,639,540" />
+<area shape="rect" href="pyfeyn.points.DecoratedPoint&#45;class.html#getPath" title="Return the path of the attached blob path, if there is one, otherwise None." alt="" coords="17,540,639,559" />
+<area shape="rect" href="pyfeyn.points.DecoratedPoint&#45;class.html#draw" title="Do nothing (abstract base class)." alt="" coords="17,559,639,577" />
+<area shape="rect" href="pyfeyn.points.DecoratedPoint&#45;class.html#getMark" title="pyfeyn.points.DecoratedPoint.getMark" alt="" coords="17,577,639,596" />
+<area shape="rect" href="pyfeyn.points.DecoratedPoint&#45;class.html#setFillstyles" title="pyfeyn.points.DecoratedPoint.setFillstyles" alt="" coords="17,596,639,615" />
+<area shape="rect" href="pyfeyn.points.DecoratedPoint&#45;class.html#addStrokestyle" title="pyfeyn.points.DecoratedPoint.addStrokestyle" alt="" coords="17,615,639,633" />
+<area shape="rect" href="pyfeyn.points.DecoratedPoint&#45;class.html#setStrokestyles" title="pyfeyn.points.DecoratedPoint.setStrokestyles" alt="" coords="17,633,639,652" />
+<area shape="rect" href="pyfeyn.points.DecoratedPoint&#45;class.html" title="pyfeyn.points.DecoratedPoint" alt="" coords="5,341,651,659" />
+<area shape="rect" href="pyfeyn.utils.Visible&#45;class.html#getDepth" title="pyfeyn.utils.Visible.getDepth" alt="" coords="387,129,517,148" />
+<area shape="rect" href="pyfeyn.utils.Visible&#45;class.html#getVisiblePath" title="pyfeyn.utils.Visible.getVisiblePath" alt="" coords="387,148,517,167" />
+<area shape="rect" href="pyfeyn.utils.Visible&#45;class.html#__cmp__" title="Compare with another visible class, just using layers." alt="" coords="387,167,517,185" />
+<area shape="rect" href="pyfeyn.utils.Visible&#45;class.html#isVisible" title="pyfeyn.utils.Visible.isVisible" alt="" coords="387,185,517,204" />
+<area shape="rect" href="pyfeyn.utils.Visible&#45;class.html#setDepth" title="pyfeyn.utils.Visible.setDepth" alt="" coords="387,204,517,223" />
+<area shape="rect" href="pyfeyn.utils.Visible&#45;class.html" title="pyfeyn.utils.Visible" alt="" coords="375,99,529,229" />
+</map>
+  <img src="uml_class_diagram_for_classdoc_20.gif" alt='' usemap="#uml_class_diagram_for_classdoc_20" ismap="ismap" class="graph-without-title">
+</center></center>
+<hr />
+Class for a point drawn with a marker<br /><br />
+
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <code class="summary-type">&nbsp;</code>
+  </td><td class="summary">
+    <span class="summary-sig"><a href="pyfeyn.points.DecoratedPoint-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">xpos</span>,
+        <span class="summary-sig-arg">ypos</span>,
+        <span class="summary-sig-arg">mark</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">blob</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">fill</span>=<span class="summary-sig-default">[pyx.color.rgb.black]</span>,
+        <span class="summary-sig-arg">stroke</span>=<span class="summary-sig-default">[pyx.color.rgb.black]</span>)</span>
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <code class="summary-type">&nbsp;</code>
+  </td><td class="summary">
+    <span class="summary-sig"><a href="pyfeyn.points.DecoratedPoint-class.html#getPath" class="summary-sig-name">getPath</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Return the path of the attached blob path, if there is one, 
+      otherwise None.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <code class="summary-type">&nbsp;</code>
+  </td><td class="summary">
+    <span class="summary-sig"><a href="pyfeyn.points.DecoratedPoint-class.html#getMark" class="summary-sig-name">getMark</a>(<span class="summary-sig-arg">self</span>)</span>
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <code class="summary-type">&nbsp;</code>
+  </td><td class="summary">
+    <span class="summary-sig"><a href="pyfeyn.points.DecoratedPoint-class.html#setMark" class="summary-sig-name">setMark</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">mark</span>)</span>
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <code class="summary-type">&nbsp;</code>
+  </td><td class="summary">
+    <span class="summary-sig"><a href="pyfeyn.points.DecoratedPoint-class.html#getBlob" class="summary-sig-name">getBlob</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Get the attached blob.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <code class="summary-type">&nbsp;</code>
+  </td><td class="summary">
+    <span class="summary-sig"><a href="pyfeyn.points.DecoratedPoint-class.html#setBlob" class="summary-sig-name">setBlob</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">blob</span>)</span><br />
+      Set the attached blob.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <code class="summary-type">&nbsp;</code>
+  </td><td class="summary">
+    <span class="summary-sig"><a href="pyfeyn.points.DecoratedPoint-class.html#getFillstyles" class="summary-sig-name">getFillstyles</a>(<span class="summary-sig-arg">self</span>)</span>
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <code class="summary-type">&nbsp;</code>
+  </td><td class="summary">
+    <span class="summary-sig"><a href="pyfeyn.points.DecoratedPoint-class.html#setFillstyles" class="summary-sig-name">setFillstyles</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">styles</span>)</span>
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <code class="summary-type">&nbsp;</code>
+  </td><td class="summary">
+    <span class="summary-sig"><a href="pyfeyn.points.DecoratedPoint-class.html#addFillstyles" class="summary-sig-name">addFillstyles</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">styles</span>)</span>
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <code class="summary-type">&nbsp;</code>
+  </td><td class="summary">
+    <span class="summary-sig"><a href="pyfeyn.points.DecoratedPoint-class.html#addFillstyle" class="summary-sig-name">addFillstyle</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">style</span>)</span>
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <code class="summary-type">&nbsp;</code>
+  </td><td class="summary">
+    <span class="summary-sig"><a href="pyfeyn.points.DecoratedPoint-class.html#getStrokestyles" class="summary-sig-name">getStrokestyles</a>(<span class="summary-sig-arg">self</span>)</span>
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <code class="summary-type">&nbsp;</code>
+  </td><td class="summary">
+    <span class="summary-sig"><a href="pyfeyn.points.DecoratedPoint-class.html#setStrokestyles" class="summary-sig-name">setStrokestyles</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">styles</span>)</span>
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <code class="summary-type">&nbsp;</code>
+  </td><td class="summary">
+    <span class="summary-sig"><a href="pyfeyn.points.DecoratedPoint-class.html#addStrokestyles" class="summary-sig-name">addStrokestyles</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">styles</span>)</span>
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <code class="summary-type">&nbsp;</code>
+  </td><td class="summary">
+    <span class="summary-sig"><a href="pyfeyn.points.DecoratedPoint-class.html#addStrokestyle" class="summary-sig-name">addStrokestyle</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">style</span>)</span>
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <code class="summary-type">&nbsp;</code>
+  </td><td class="summary">
+    <span class="summary-sig"><a href="pyfeyn.points.DecoratedPoint-class.html#draw" class="summary-sig-name">draw</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">canvas</span>)</span><br />
+      Do nothing (abstract base class).
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="pyfeyn.points.Point-class.html">Point</a></code></b>:
+      <code><a href="pyfeyn.points.Point-class.html#addLabel">addLabel</a></code>,
+      <code><a href="pyfeyn.points.Point-class.html#arg">arg</a></code>,
+      <code><a href="pyfeyn.points.Point-class.html#distance">distance</a></code>,
+      <code><a href="pyfeyn.points.Point-class.html#getX">getX</a></code>,
+      <code><a href="pyfeyn.points.Point-class.html#getXY">getXY</a></code>,
+      <code><a href="pyfeyn.points.Point-class.html#getY">getY</a></code>,
+      <code><a href="pyfeyn.points.Point-class.html#intercept">intercept</a></code>,
+      <code><a href="pyfeyn.points.Point-class.html#midpoint">midpoint</a></code>,
+      <code><a href="pyfeyn.points.Point-class.html#removeLabels">removeLabels</a></code>,
+      <code><a href="pyfeyn.points.Point-class.html#setX">setX</a></code>,
+      <code><a href="pyfeyn.points.Point-class.html#setXY">setXY</a></code>,
+      <code><a href="pyfeyn.points.Point-class.html#setY">setY</a></code>,
+      <code><a href="pyfeyn.points.Point-class.html#tangent">tangent</a></code>,
+      <code><a href="pyfeyn.points.Point-class.html#x">x</a></code>,
+      <code><a href="pyfeyn.points.Point-class.html#xy">xy</a></code>,
+      <code><a href="pyfeyn.points.Point-class.html#y">y</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="pyfeyn.utils.Visible-class.html">utils.Visible</a></code></b>:
+      <code><a href="pyfeyn.utils.Visible-class.html#__cmp__">__cmp__</a></code>,
+      <code><a href="pyfeyn.utils.Visible-class.html#getDepth">getDepth</a></code>,
+      <code><a href="pyfeyn.utils.Visible-class.html#getVisiblePath">getVisiblePath</a></code>,
+      <code><a href="pyfeyn.utils.Visible-class.html#isVisible">isVisible</a></code>,
+      <code><a href="pyfeyn.utils.Visible-class.html#setDepth">setDepth</a></code>
+      </p>
+    </td>
+  </tr>
+</table>
+
+<br />
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="__init__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">xpos</span>,
+        <span class="sig-arg">ypos</span>,
+        <span class="sig-arg">mark</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">blob</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">fill</span>=<span class="sig-default">[pyx.color.rgb.black]</span>,
+        <span class="sig-arg">stroke</span>=<span class="sig-default">[pyx.color.rgb.black]</span>)</span>
+    <br /><em class="fname">(Constructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  None
+  <dl><dt></dt><dd>
+    <dl><dt>Overrides:
+      <a href="pyfeyn.points.Point-class.html#__init__">Point.__init__</a>
+    </dt></dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="getPath"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getPath</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Return the path of the attached blob path, if there is one, otherwise 
+  None.
+  <dl><dt></dt><dd>
+    <dl><dt>Overrides:
+      <a href="pyfeyn.points.Point-class.html#getPath">Point.getPath</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt></dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="getMark"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getMark</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  None
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="setMark"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setMark</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">mark</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  None
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="getBlob"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getBlob</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Get the attached blob.
+  <dl><dt></dt><dd>
+    <dl><dt>Overrides:
+      <a href="pyfeyn.points.Point-class.html#getBlob">Point.getBlob</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt></dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="setBlob"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setBlob</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">blob</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Set the attached blob.
+  <dl><dt></dt><dd>
+    <dl><dt>Overrides:
+      <a href="pyfeyn.points.Point-class.html#setBlob">Point.setBlob</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt></dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="getFillstyles"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getFillstyles</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  None
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="setFillstyles"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setFillstyles</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">styles</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  None
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="addFillstyles"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addFillstyles</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">styles</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  None
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="addFillstyle"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addFillstyle</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">style</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  None
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="getStrokestyles"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getStrokestyles</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  None
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="setStrokestyles"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setStrokestyles</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">styles</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  None
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="addStrokestyles"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addStrokestyles</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">styles</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  None
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="addStrokestyle"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addStrokestyle</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">style</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  None
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="draw"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">draw</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">canvas</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Do nothing (abstract base class).
+  <dl><dt></dt><dd>
+    <dl><dt>Overrides:
+      <a href="pyfeyn.points.Point-class.html#draw">Point.draw</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt></dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyfeyn-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">Generated by Epydoc
+        3.0alpha3 on Thu Jun 21 20:09:03 2007</td>
+    <td align="right" class="footer">
+      <a href="http://epydoc.sourceforge.net">http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie()
+  // -->
+</script>
+  
+</body>
+</html>
