@@ -21,14 +21,16 @@ the <a href="examples">examples page.
 
 <h3>Getting PyFeyn</h3>
 <p>
-  The current PyFeyn version is <strong>0.3b1</strong> &mdash; the
-  final 0.3 release should happen soon. You can get it from the
+  Our first stable release has finally happened! The current
+  PyFeyn version is <strong>0.3</strong>.
+  You can get it from the
   <a href="http://www.hepforge.org/downloads/pyfeyn">HepForge
-  downloads area</a> either as a tarball or a Python Egg. You can
+  downloads area</a> as a source tarball. You can
   also use the Python "easy install" system - see the
   <a href="http://cheeseshop.python.org/pypi/pyfeyn/">PyFeyn
-  entry on PyPI</a>. Or you can check it out directly from HepForge
-  Subversion if you fancy following the bleeding edge releases.
+  entry on PyPI</a>. Or you can check it out directly from
+  <a href="http://svn.hepforge.org/pyfeyn/trunk">HepForge
+  Subversion</a> if you fancy following the bleeding edge releases.
 </p>
 <p>
   Please see the <a href="install">installation guide page</a> for
@@ -41,21 +43,37 @@ the <a href="examples">examples page.
 
 <h3>Using PyFeyn</h3>
 <p>
-  PyFeyn is almost ready for a public beta version. Thanks to Georg von Hippel
-  for providing some very nice functionality when I was too busy (for months!)
-  to do any work on it. You can try using the code from the Subversion
-  trunk now, but we'll have a "proper" release soon.
+  PyFeyn is used primarily as a Python package, i.e. a class library
+  of useful object types and operations for drawing diagrams. Thanks
+  to Georg von Hippel's work on our FeynML interface, we also have
+  a command line program called <kbd>mkfeyndiag</kbd> which will build
+  diagrams direct from <a href="/feynml">FeynML</a> XML files without
+  having to write any Python at all.
 </p>
 <p>
   There's currently no "proper" manual, but there is automatically generated
-  <a href="doc/">code documentation</a> which should hopefully be enough. Hopefully
-  most of the examples above are fairly self-explanatory &mdash; please let us know
-  by email if you get confused.
-</ul>
-
+  <a href="doc/">code documentation</a> which should hopefully be enough
+  to work as a library reference. A more amenable introduction may be to
+  have a look at the <a href="examples">gallery examples</a> to get a feel
+  for how it works - hopefully these are fairly self-explanatory, please
+  let us know by email (to professor-AT-projects.hepforge.org) if you get
+  confused.
+</p>
+<p>
+  A few things that might not be so obvious are the options, which can be
+  set via command line switches: any Python script that uses PyFeyn can
+  add the PyFeyn options to its option parser by using the <kbd>optparse</kbd>
+  standard module and the <kbd>pyfeyn.config</kbd> module. In particular, for
+  examples with lots of cut-out line crossings, such as 3D gluons, gluinos etc.,
+  you may want to make use of the "draft mode" <kbd>-d</kbd> switch when
+  not building the final version &mdash; this will speed things up no end.
+</p>
+<p>
+  Lastly, have fun: it was (mostly) fun to write!
+</p>
 
 <p style="font-size:small; color:darkgrey;">
-  PyFeyn was written by
+  PyFeyn is written by
   <a href="http://www.ippp.dur.ac.uk/~buckley/">Andy Buckley</a>
   and Georg von Hippel.
 </p>
