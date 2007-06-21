@@ -1,4 +1,3 @@
-from pyfeyn import *
 from pyfeyn.user import *
 
 fd = FeynDiagram()
