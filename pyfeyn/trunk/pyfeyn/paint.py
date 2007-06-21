@@ -79,8 +79,8 @@ YELLOWGREEN = pyx.color.cmyk.YellowGreen
 YELLOWORANGE = pyx.color.cmyk.YellowOrange
 
 ## Patterns
-CROSSHATCHED0 = pyx.pattern.crosshatched0 
-CROSSHATCHED45 = pyx.pattern.crosshatched45
+CROSSHATCHED0 = pyx.pattern.crosshatched(0.1, 0) 
+CROSSHATCHED45 = pyx.pattern.crosshatched(0.1, 45)
 HATCHED0 = pyx.pattern.hatched0
 HATCHED45 = pyx.pattern.hatched45
 HATCHED90 = pyx.pattern.hatched90

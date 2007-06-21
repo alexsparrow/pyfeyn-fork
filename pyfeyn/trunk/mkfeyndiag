@@ -8,7 +8,6 @@ import sys, re
 
 
 ## Parse command line options
-print config.getOptions().DEBUG
 _usage = "Usage: %prog [options] hepmlfile"
 _version = "%prog " + __version__
 _parser = OptionParser(usage=_usage, version=_version)
@@ -20,7 +19,6 @@ _parser.add_option("--eps", action="store_false", dest="PDF_OUTPUT",
 _parser.add_option("-o", "--out", dest="OUTPUT_FILE",
                    default=None, help="file to write the output to. An appropriate file extension will be appended if needed")
 (_opts, _args) = config.processOptions(_parser)
-print config.getOptions().DEBUG
 
 
 ## Check right number of arguments
