@@ -1,3 +1,13 @@
+2007-12-17  Andy Buckley  <andy@insectnation.org>
+
+	* Fixed bug with the curvature determination for gluino, gaugino
+	and graviton lines: the max *radius* was being determined,
+	i.e. minimum curvature! Also, there was no protection against the
+	divergent radius for straight lines, as pointed out by Sue Ann
+	Koay - thanks!
+
+	* Added #! lines to all the examples.
+
 2007-06-21  Andy Buckley  <andy@insectnation.org>
 
 	* 0.3 release!
@@ -38,10 +48,10 @@
 
 	* Incremented version number to 0.3b2 - approaching 0.3 stable release.
 
-	* Made number of curves per half loop scale with the maximum sampled 
+	* Made number of curves per half loop scale with the maximum sampled
 	curvature of the underlying line.
 
-	* Added draft mode, so that rapid turnaround of diagrams with complex 3D 
+	* Added draft mode, so that rapid turnaround of diagrams with complex 3D
 	constructions is possible without changing any code.
 
 2007-05-17  Georg von Hippel <gmv22@cantab.net>
@@ -66,8 +76,8 @@
 
 2007-05-13  Andy Buckley  <andy@insectnation.org>
 
-	* paint.py: now colours, patterns and line thicknesses are defined here 
-	as upper-case constants (via import from PyX). The import * has been removed. 
+	* paint.py: now colours, patterns and line thicknesses are defined here
+	as upper-case constants (via import from PyX). The import * has been removed.
 	The examples have been updated to match.
 
 2007-05-02  Georg von Hippel <gmv22@cantab.net>
@@ -189,10 +199,10 @@
 	photons.
 
 	* Added test1 program (e+ e- -> q q~).
-	
+
         * Various other interface hacks... too many changes this evening
 	to remember them all!
-	
+
 	* Changed bend() to use a displacement which is always on the left
 	of the line, as viewed from start to end.
 
@@ -208,9 +218,9 @@
 
 	* Made visible objects add themselves to the current diagram.
 
-	* Made fd.draw() take a filename argument: PyX canvases are now 
+	* Made fd.draw() take a filename argument: PyX canvases are now
 	hidden from the user.
-	
+
 	* Added get/set/add methods to Lines for labels and arrows, so
 	that the Element.style([...]) methods don't need to be exposed to
 	the user.
@@ -223,11 +233,11 @@
 	* Added command line option handling as class property of
 	FeynDiagram. -D enables text-based debugging statements, -V
 	enables visual debugging. Accessed via FeynDiagram.options.
-	
+
 	* Made it possible for Blobs to be attached to Points.
-	
+
 	* Added	"visible line" functionality, so that lines whose ends are
-	attached to Blobs will only be deformed and drawn for the portion 
+	attached to Blobs will only be deformed and drawn for the portion
 	outside the blobs.
 
 2006-09-25  Andy Buckley  <andy@insectnation.org>
@@ -238,51 +248,51 @@
 2006-06-30  Georg von Hippel <gmv22@cantab.net>, <vonhippg@uregina.ca>
 
 	* Added rudimentary style support to feynML read/write functions
-	
+
         * Added label support to feynML read/write functions
-	
+
         * Added a new class for labels attached to points rather than lines
-	
+
 	* Improved interface of DecoratedPoint class
 
 2006-06-29  Georg von Hippel <gmv22@cantab.net>, <vonhippg@uregina.ca>
 
 	* Improved feynML Schema to look more like proposed
-	
+
 	* Corresponding changes to feynML code
-	
+
 	* Added bend method to lines (autmoatically finds an arcpoint)
 
 2006-06-28  Georg von Hippel <gmv22@cantab.net>, <vonhippg@uregina.ca>
 
 	* Fixed some divide-by-zero bugs in points.py
-	
+
 	* Added feynML as a W3C XML Schema
-	
+
 	* Added feynML reader support module
-	
+
 	* Added rudimentary feynML writing support to feyn submodules
 
 2006-06-22  Georg von Hippel <gmv22@cantab.net>, <vonhippg@uregina.ca>
 
         * Fixed Arrow code to work with PyX 0.9
-	
+
         * Split code into submodules for convenience
-	
+
 	* Removed StraightLine class, moved trig. code into Point class
-	
+
         * Added hepnames module
-	
+
         * Added Photon line class
-	
+
 	* Added Support for tadpole-type loops into Line class
-	
+
 	* Added TexLabel decorator
-	
+
 	* Added DecoratedPoint class
 
 2005-09-23  Andy Buckley  <andy@insectnation.org>
 
         * Start of ChangeLog. Basic functionality aready exists.
-	
+
 	* Added Arrow class, courtest of Andre Wobst.

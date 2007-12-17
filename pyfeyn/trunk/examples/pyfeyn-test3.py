@@ -1,3 +1,5 @@
+#! /usr/bin/env python
+
 ## A B-meson colour-suppressed penguin decay diagram
 #            _
 # in1 ------(_)------() out1a

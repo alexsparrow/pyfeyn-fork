@@ -633,18 +633,22 @@ class Graviton(DecoratedLine):
                           pyx.unit.tocm(self.arcradius))
 
         vispath = self.getVisiblePath()
-        curvatures = vispath.curveradius([i/10.0 for i in range(0,11)])
-        maxcurvature = None
-        for curvature in curvatures:
-            if curvature is not None:
-                curvature = abs(curvature/pyx.unit.m)
+        curveradii = vispath.curveradius([i/10.0 for i in range(0,11)])
+        mincurveradius = None
+        for mincurveradius in curveradii:
+            try:
+                curveradius = abs(curveradius/pyx.unit.m)
                 #if config.getOptions().DEBUG:
-                #    print self.__class__, "- curvature = ", curvature
-                if (maxcurvature is None or curvature > maxcurvature):
-                    maxcurvature = curvature
-        numhloopcurves = 5 + int(0.1/maxcurvature)
+                #    print self.__class__, "- curve radius = ", curveradius
+                if (mincurveradius is None or curveradius < mincurveradius):
+                    mincurveradius = curveradius
+            except: 
+                pass
+        numhloopcurves = 5
+        if mincurveradius is not None:
+            numhloopcurves += int(0.1/mincurveradius)
         if config.getOptions().DEBUG:
-            print self.__class__, "- max curvature = ", maxcurvature, "->", numhloopcurves, "curves/hloop"                    
+            print self.__class__, "- min curvature radius = ", mincurveradius, "->", numhloopcurves, "curves/hloop"                    
 
         defo = pyx.deformer.cycloid(self.arcradius, intwindings, curvesperhloop=numhloopcurves,
                                     skipfirst=0.0, skiplast=0.0, turnangle=0, sign=sign)
@@ -747,18 +751,24 @@ class Gaugino(DecoratedLine):
         if self.inverted: sign = -1
         
         vispath = self.getVisiblePath()
-        curvatures = vispath.curveradius([i/10.0 for i in range(0,11)])
-        maxcurvature = None
-        for curvature in curvatures:
-            if curvature is not None:
-                curvature = abs(curvature/pyx.unit.m)
+        curveradii = vispath.curveradius([i/10.0 for i in range(0,11)])
+        mincurveradius = None
+        for curveradius in mincurveradius:
+            try:
+                curveradius = abs(mincurveradius/pyx.unit.m)
                 #if config.getOptions().DEBUG:
-                #    print self.__class__, "- curvature = ", curvature
-                if (maxcurvature is None or curvature > maxcurvature):
-                    maxcurvature = curvature
-        numhloopcurves = 5 + int(0.1/maxcurvature)
+                #    print self.__class__, "- curvature radius = ", curveradius
+                if (mincurveradius is None or curveradius < mincurveradius):
+                    mincurveradius = curveradius
+            except: 
+                pass
+
+        ## Use curvature info to increase number of curve sections
+        numhloopcurves = 5
+        if mincurveradius is not None:
+            numhloopcurves += int(0.1/mincurveradius)
         if config.getOptions().DEBUG:
-            print self.__class__, "- max curvature = ", maxcurvature, "->", numhloopcurves, "curves/hloop"
+            print self.__class__, "- min curve radius = ", mincurveradius, "->", numhloopcurves, "curves/hloop"
 
         defo = pyx.deformer.cycloid(self.arcradius, intwindings, curvesperhloop=numhloopcurves,
                                     skipfirst=0.0, skiplast=0.0, turnangle=0, sign=sign)
@@ -859,19 +869,28 @@ class Gluino(DecoratedLine):
         sign = 1
         if self.inverted: sign = -1
 
+        ## Get list of curvature radii in the visible path
         vispath = self.getVisiblePath()
-        curvatures = vispath.curveradius([i/10.0 for i in range(0,11)])
-        maxcurvature = None
-        for curvature in curvatures:
-            if curvature is not None:
-                curvature = abs(curvature/pyx.unit.m)
+        curveradii = vispath.curveradius([i/10.0 for i in range(0,11)])
+        mincurveradius = None
+
+        ## Find the maximum curvature (set None if straight line)
+        for curveradius in curveradii:
+            try:
+                curveradius = abs(curvature/pyx.unit.m)
                 #if config.getOptions().DEBUG:
-                #    print self.__class__, "- curvature = ", curvature
-                if (maxcurvature is None or curvature > maxcurvature):
-                    maxcurvature = curvature
-        numhloopcurves = 10 + int(0.2/maxcurvature)
+                #    print self.__class__, "- curvature radius = ", curveradius
+                if (mincurveradius is None or curveradius < mincurveradius):
+                    mincurveradius = curveradius
+            except: 
+                pass
+
+        ## Use curvature info to increase number of curve sections
+        numhloopcurves = 10 
+        if mincurveradius is not None:
+            numhloopcurves += int(0.2/mincurveradius)
         if config.getOptions().DEBUG:
-            print self.__class__, "- max curvature = ", maxcurvature, "->", numhloopcurves, "curves/hloop"
+            print self.__class__, "- min curve radius = ", mincurveradius, "->", numhloopcurves, "curves/hloop"
 
         defo = pyx.deformer.cycloid(self.arcradius, intwindings, curvesperhloop=numhloopcurves,
                                     skipfirst=0.0, skiplast=0.0, sign=sign)

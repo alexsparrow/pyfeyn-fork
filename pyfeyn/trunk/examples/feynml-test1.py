@@ -1,3 +1,5 @@
+#! /usr/bin/env python
+
 from pyfeyn import *
 from pyfeyn.feynml import *
 
