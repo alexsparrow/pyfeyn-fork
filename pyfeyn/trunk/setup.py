@@ -20,6 +20,7 @@ is based around."""
 setup(name = 'pyfeyn',
       version = __version__,
       packages = ['pyfeyn'],
+      include_package_data = True,
       install_requires = ['pyx >= 0.9'],
       scripts = ['mkfeyndiag'],
       author = 'Andy Buckley',

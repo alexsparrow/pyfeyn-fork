@@ -1,1 +1,2 @@
-epydoc2.4 --graph=all --no-sourcecode --no-frames --output=doc/ pyfeyn
+mkdir -p doc
+epydoc --graph=all --no-sourcecode --no-frames --output=doc/ pyfeyn
