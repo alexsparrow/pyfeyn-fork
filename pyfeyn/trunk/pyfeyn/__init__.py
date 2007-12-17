@@ -2,7 +2,7 @@
 PyFeyn - a simple Python interface for making Feynman diagrams.
 """
 
-__author__ = "Andy Buckley (andy@insectnation.org)"
+__author__ = "Andy Buckley & Georg von Hippel (pyfeyn@projects.hepforge.org)"
 __version__ = "0.3.1"
 __date__ = "$Date$"
 __copyright__ = "Copyright (c) 2007 Andy Buckley"

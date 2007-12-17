@@ -1,2 +1,2 @@
 mkdir -p doc
-epydoc --graph=all --no-sourcecode --no-frames --output=doc/ pyfeyn
+epydoc --html --pdf --graph=all --no-sourcecode --no-frames --output=doc/ pyfeyn
