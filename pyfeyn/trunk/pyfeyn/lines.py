@@ -635,7 +635,7 @@ class Graviton(DecoratedLine):
         vispath = self.getVisiblePath()
         curveradii = vispath.curveradius([i/10.0 for i in range(0,11)])
         mincurveradius = None
-        for mincurveradius in curveradii:
+        for curveradius in curveradii:
             try:
                 curveradius = abs(curveradius/pyx.unit.m)
                 #if config.getOptions().DEBUG:
@@ -753,7 +753,7 @@ class Gaugino(DecoratedLine):
         vispath = self.getVisiblePath()
         curveradii = vispath.curveradius([i/10.0 for i in range(0,11)])
         mincurveradius = None
-        for curveradius in mincurveradius:
+        for curveradius in curveradii:
             try:
                 curveradius = abs(mincurveradius/pyx.unit.m)
                 #if config.getOptions().DEBUG:
