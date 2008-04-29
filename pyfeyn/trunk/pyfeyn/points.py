@@ -203,7 +203,7 @@ class DecoratedPoint(Point, Visible):
     def setBlob(self, blob):
         self.blob = blob
         if self.blob is not None:
-            self.blob.setPoint(self)
+            self.blob.setPoints([self])
         return self
 
     def getFillstyles(self):
