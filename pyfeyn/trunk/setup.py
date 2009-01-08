@@ -1,7 +1,5 @@
 #! /usr/bin/env python
 
-"""PyFeyn: an easy-to-use Python library to help high-energy physicists draw Feynman diagrams."""
-
 ## Get setuptools
 import ez_setup
 ez_setup.use_setuptools()
@@ -21,7 +19,7 @@ setup(name = 'pyfeyn',
       version = __version__,
       packages = ['pyfeyn'],
       include_package_data = True,
-      install_requires = ['pyx >= 0.9'],
+      install_requires = ['PyX >= 0.9'],
       scripts = ['mkfeyndiag'],
       author = ['Andy Buckley', 'Georg von Hippel'],
       author_email = 'pyfeyn@projects.hepforge.org',

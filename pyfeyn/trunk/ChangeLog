@@ -1,3 +1,7 @@
+2009-01-08  Andy Buckley  <andy@insectnation.org>
+
+	* Corrected capitalisation of PyX installation requirement.
+
 2008-04-29  Andy Buckley  <andy@insectnation.org>
 
 	* Fixed bug in points.py, pointed out by Sue Ann Koay.
