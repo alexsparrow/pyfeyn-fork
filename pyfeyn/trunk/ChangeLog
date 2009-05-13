@@ -1,3 +1,10 @@
+2009-05-13  Georg von Hippel <gmv22@cantab.net>
+
+	* Fixed variable name "as" in lines.py to "ass"
+	("as" is a reserved word in Python 2.6.x and 3.x).
+
+	* Changed ElementTree import in feynml.py to use xml.etree package.
+
 2009-01-08  Andy Buckley  <andy@insectnation.org>
 
 	* Corrected capitalisation of PyX installation requirement.
