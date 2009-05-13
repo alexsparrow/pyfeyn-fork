@@ -185,8 +185,8 @@ class Line(Visible):
             line = pyx.path.line( self.p1.x(), self.p1.y(), arccenter.x(), arccenter.y())
             if config.getOptions().VDEBUG:
                 FeynDiagram.currentCanvas.stroke(line, [color.rgb.green])
-            as, bs = circle.intersect(line)
-            subpaths = circle.split(as[0])
+            ass, bs = circle.intersect(line)
+            subpaths = circle.split(ass[0])
             cpath = subpaths[0]
             return cpath
 
@@ -272,7 +272,7 @@ class Line(Visible):
         if config.getOptions().VDEBUG:
             FeynDiagram.currentCanvas.stroke(vispath, [color.rgb.green])
         if p1path:
-            as, bs = p1path.intersect(vispath)
+            ass, bs = p1path.intersect(vispath)
             for b in bs:
                 subpaths = vispath.split(b)
                 if len(subpaths) > 1:
@@ -286,12 +286,12 @@ class Line(Visible):
                     if config.getOptions().VDEBUG:
                         FeynDiagram.currentCanvas.stroke(subpaths[0], [color.rgb.blue])
                 if config.getOptions().VDEBUG:
-                    for a in as:
+                    for a in ass:
                         ix, iy = p1path.at(a)
                         FeynDiagram.currentCanvas.fill(pyx.path.circle(ix, iy, 0.05),
                                                        [color.rgb.green])
         if p2path: 
-            as, bs = p2path.intersect(vispath)
+            ass, bs = p2path.intersect(vispath)
             for b in bs:
                 subpaths = vispath.split(b)
                 if len(subpaths) > 1:
@@ -305,7 +305,7 @@ class Line(Visible):
                     if config.getOptions().VDEBUG:
                         FeynDiagram.currentCanvas.stroke(subpaths[0], [color.rgb.red])
                 if config.getOptions().VDEBUG:
-                    for a in as:
+                    for a in ass:
                         ix, iy = p2path.at(a)
                         FeynDiagram.currentCanvas.fill(pyx.path.circle(ix, iy, 0.05),
                                                        [color.rgb.blue])
@@ -497,7 +497,7 @@ class Gluon(DecoratedLine):
             canvas.stroke(mypath, styles)
         else:
             para = pyx.deformer.parallel(0.001)
-            as, bs, cs = para.normpath_selfintersections(mypath.normpath(), epsilon=0.01)
+            ass, bs, cs = para.normpath_selfintersections(mypath.normpath(), epsilon=0.01)
             coil_params = []
             for b in bs:
                 coil_params.append(b[self.parity3D] - self.skipsize3D)
@@ -670,13 +670,13 @@ class Graviton(DecoratedLine):
             canvas.stroke(mypath1, styles)
             canvas.stroke(mypath2, styles)
         else:
-            as, bs = mypath1.intersect(mypath2)
+            ass, bs = mypath1.intersect(mypath2)
             params1, params2 = [], []
 
             parity1 = True
             if self.parity3D == 0:
                 parity1 = False
-            for a in as[1:]: ## TODO: better endpoint cut vetoing
+            for a in ass[1:]: ## TODO: better endpoint cut vetoing
                 if parity1:
                     params1.append(a - self.skipsize3D)
                     params1.append(a + self.skipsize3D)
@@ -786,13 +786,13 @@ class Gaugino(DecoratedLine):
             canvas.stroke(mypath1, styles)
             canvas.stroke(mypath2, styles)
         else:
-            as, bs = mypath1.intersect(mypath2)
+            ass, bs = mypath1.intersect(mypath2)
             params1, params2 = [], []
 
             parity1 = True
             if self.parity3D == 0:
                 parity1 = False
-            for a in as:
+            for a in ass:
                 if parity1:
                     params1.append(a - self.skipsize3D)
                     params1.append(a + self.skipsize3D)
@@ -908,13 +908,13 @@ class Gluino(DecoratedLine):
             canvas.stroke(mypath1, styles)
             canvas.stroke(mypath2, styles)
         else:
-            as, bs = mypath1.intersect(mypath2)
+            ass, bs = mypath1.intersect(mypath2)
             params1, params2 = [], []
 
             parity1 = True
             if self.parity3D == 0:
                 parity1 = False
-            for a in as:
+            for a in ass:
                 if parity1:
                     params1.append(a - self.skipsize3D)
                     params1.append(a + self.skipsize3D)

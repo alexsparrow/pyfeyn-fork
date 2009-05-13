@@ -1,7 +1,7 @@
 """PyFeyn interface to the proposed FeynML XML dialect."""
 
 import math, pyx, md5
-from elementtree.ElementTree import *
+from xml.etree.ElementTree import *
 from pyfeyn.diagrams import FeynDiagram
 from pyfeyn.lines import *
 from pyfeyn.points import *
@@ -9,7 +9,7 @@ from pyfeyn.deco import *
 from pyfeyn.blobs import *
 
 
-NamedMark = { "none" : lambda:None, "circle" : CircleMark, "square" : SquareMark }
+NamedMark = { "none" : lambda size:None, "circle" : CircleMark, "square" : SquareMark }
 
 
 class FeynMLWriter:
