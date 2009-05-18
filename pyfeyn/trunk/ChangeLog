@@ -1,3 +1,8 @@
+2009-05-18  Georg von Hippel <gmv22@cantab.net>
+
+	* Added XSLT stylesheet for rudimentary FeynML to FeynMF
+	transformation.
+
 2009-05-13  Georg von Hippel <gmv22@cantab.net>
 
 	* Fixed variable name "as" in lines.py to "ass"
