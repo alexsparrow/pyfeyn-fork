@@ -1,3 +1,13 @@
+2009-05-19  Georg von Hippel <gmv22@cantab.net>
+
+	* Changed feynml.py to use hashlib instead of deprecated md5.
+
+	* Added all FeynML linetypes to NamedLines in lines.py.
+
+	* Added a "math" string attribute to FeynML objects and created
+	a stylesheet to extract those and just multiply them together
+	(using no particular syntax).
+
 2009-05-18  Georg von Hippel <gmv22@cantab.net>
 
 	* Added XSLT stylesheet for rudimentary FeynML to FeynMF

@@ -1,6 +1,6 @@
 """PyFeyn interface to the proposed FeynML XML dialect."""
 
-import math, pyx, md5
+import math, pyx, hashlib
 from xml.etree.ElementTree import *
 from pyfeyn.diagrams import FeynDiagram
 from pyfeyn.lines import *
@@ -108,7 +108,7 @@ class FeynMLWriter:
                               (hasattr(b,"xrad") and "%s %s"%(b.xrad,b.yrad)) \
                               or "0"}
         ele = Element("blob", attribs)
-        self.ids[md5.md5(str((b.xpos, b.ypos))).hexdigest()] = attribs["id"]
+        self.ids[hashlib.md5(str((b.xpos, b.ypos))).hexdigest()] = attribs["id"]
         style = ""
         fills = ""
         for x in b.fillstyles:
@@ -136,14 +136,14 @@ class FeynMLWriter:
 
     def lineToXML(self, l):
         """Create FeynML code for a line."""
-        source = md5.md5(str((l.p1.xpos, l.p1.ypos))).hexdigest()
+        source = hashlib.md5(str((l.p1.xpos, l.p1.ypos))).hexdigest()
         if source not in self.ids:
             s1 = self.pointToXML(l.p1)
         else:
             s1 = None
             if self.ids[source] in self.singletons:
                del self.singletons[self.singletons.index(self.ids[source])] 
-        target = md5.md5(str((l.p2.xpos, l.p2.ypos))).hexdigest()
+        target = hashlib.md5(str((l.p2.xpos, l.p2.ypos))).hexdigest()
         if target not in self.ids:
             s2 = self.pointToXML(l.p2)
         else:
@@ -178,7 +178,7 @@ class FeynMLWriter:
         if labels:
             attribs["label"] = labels[0]
         ele = Element("propagator", attribs)
-        self.ids[md5.md5(str((l.p1.xpos,l.p1.ypos,l.p2.xpos,l.p2.ypos,
+        self.ids[hashlib.md5(str((l.p1.xpos,l.p1.ypos,l.p2.xpos,l.p2.ypos,
                               l.arcthrupoint and (l.arcthrupoint.xpos,
                        l.arcthrupoint.ypos)))).hexdigest()] = attribs["id"]
         self.linecount += 1
@@ -190,7 +190,7 @@ class FeynMLWriter:
                    "x" : str(p.xpos),
                    "y" : str(p.ypos)}
         ele = Element("vertex", attribs)
-        self.ids[md5.md5(str((p.xpos, p.ypos))).hexdigest()] = attribs["id"]
+        self.ids[hashlib.md5(str((p.xpos, p.ypos))).hexdigest()] = attribs["id"]
         self.singletons.append(attribs["id"])
         self.vertexcount += 1
         return ele
@@ -235,7 +235,7 @@ class FeynMLWriter:
                    "x": str(l.x),
                    "y": str(l.y)}
         ele = Element("label", attribs)
-        self.ids[md5.md5(str((l.x, l.y, l.text))).hexdigest()] = attribs["id"]
+        self.ids[hashlib.md5(str((l.x, l.y, l.text))).hexdigest()] = attribs["id"]
         self.labelcount += 1
         return ele
 

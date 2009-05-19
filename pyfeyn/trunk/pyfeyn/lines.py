@@ -959,8 +959,14 @@ class Gluino(DecoratedLine):
 # A dictionary for mapping FeynML line types to line classes
 NamedLine = { "higgs"    : Higgs,
               "photon"   : Photon,
+              "vector"   : Photon,
               "gluon"    : Gluon,
               "fermion"  : Fermion,
               "graviton" : Graviton,
               "gaugino"  : Gaugino,
-              "gluino"   : Gluino }
+              "gluino"   : Gluino,
+              "scalar"   : Higgs,
+              "ghost"    : Higgs,     # Should be its own style
+              "phantom"  : Higgs      # Should be invisible
+             }
+
