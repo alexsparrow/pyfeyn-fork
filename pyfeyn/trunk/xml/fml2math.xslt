@@ -1,4 +1,4 @@
-<!-- XSLT stylesheet to (roughly) convert FeynML to FeynMF -->
+<!-- XSLT stylesheet to extract math attributes from FeynML -->
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 <xsl:output method="text" />
 <xsl:template match="/feynml">
@@ -15,10 +15,4 @@
 </xsl:for-each>
 </xsl:template>
 </xsl:stylesheet>
-<!--
- NOTES:
- (1) Positional attributes are not converted. FeynMF's autopositioning is used.
- (2) Some FeynML line types (graviton, gaugino, gluino) are invalid for FeynMF.
- (3) Anisotropic blobs are not available in straight FeynMF.
--->
 
