@@ -6,9 +6,9 @@
 \usepackage{feynmf,hepnames}
 \begin{document}
 \begin{fmffile}{output-from-feynmf}
-%% Transformation: fml2fmf.xslt
-<xsl:for-each select="head">
-<xsl:for-each select="meta">%% <xsl:value-of select="@name" />: <xsl:value-of select="@value" />
+%% Transformation: fml2fmf.xslt<xsl:for-each select="head">
+<xsl:for-each select="meta">
+%% <xsl:value-of select="@name" />: <xsl:value-of select="@value" />
 </xsl:for-each>
 <xsl:value-of select="description" />
 </xsl:for-each>
