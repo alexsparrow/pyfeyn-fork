@@ -1,3 +1,9 @@
+2009-10-01  Georg von Hippel <gmv22@cantab.net>
+
+	* Added size support for labels, contributed by Matt Bellis.
+
+	* Minor improvements to XSLT stylesheets.
+
 2009-05-19  Georg von Hippel <gmv22@cantab.net>
 
 	* Changed feynml.py to use hashlib instead of deprecated md5.

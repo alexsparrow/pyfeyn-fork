@@ -14,9 +14,9 @@
 </xsl:for-each>
 <xsl:for-each select="diagram">
  \begin{fmfgraph*}(100,100)
-   \fmfleft{<xsl:for-each select="leg"><xsl:if test="@sense='incoming' or @sense='anti-incoming'"><xsl:if test="position()!=1">,</xsl:if><xsl:value-of select="@id" /></xsl:if></xsl:for-each>}
-   \fmfright{<xsl:for-each select="leg"><xsl:if test="@sense='outgoing' or @sense='anti-outgoing'"><xsl:if test="position()!=1">,</xsl:if><xsl:value-of select="@id" /></xsl:if></xsl:for-each>}
-<xsl:for-each select="leg">   \fmf{<xsl:value-of select="@type" /><xsl:if test="@label!=''">,label=<xsl:value-of select="@label" /></xsl:if>}{<xsl:if test="@sense='incoming' or @sense='anti-outgoing'"><xsl:value-of select="@id" />,<xsl:value-of select="@target" /></xsl:if><xsl:if test="@sense='outgoing' or @sense='anti-incoming'"><xsl:value-of select="@target" />,<xsl:value-of select="@id" /></xsl:if>}
+   \fmfleft{<xsl:for-each select="leg"><xsl:if test="@sense='incoming' or @sense='anti-incoming' or @sense='in' or @sense='anti-in'"><xsl:if test="position()!=1">,</xsl:if><xsl:value-of select="@id" /></xsl:if></xsl:for-each>}
+   \fmfright{<xsl:for-each select="leg"><xsl:if test="@sense='outgoing' or @sense='anti-outgoing' or @sense='out' or @sense='anti-out'"><xsl:if test="position()!=1">,</xsl:if><xsl:value-of select="@id" /></xsl:if></xsl:for-each>}
+<xsl:for-each select="leg">   \fmf{<xsl:value-of select="@type" /><xsl:if test="@label!=''">,label=<xsl:value-of select="@label" /></xsl:if>}{<xsl:if test="@sense='incoming' or @sense='anti-outgoing' or @sense='in' or @sense='anti-out'"><xsl:value-of select="@id" />,<xsl:value-of select="@target" /></xsl:if><xsl:if test="@sense='outgoing' or @sense='anti-incoming'  or @sense='out' or @sense='anti-in'"><xsl:value-of select="@target" />,<xsl:value-of select="@id" /></xsl:if>}
 </xsl:for-each>
 <xsl:for-each select="vertex">   \fmfv{<xsl:if test="@label!=''">label=<xsl:value-of select="@label" /></xsl:if>}{<xsl:value-of select="@id" />}
 </xsl:for-each>

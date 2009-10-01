@@ -27,7 +27,7 @@ class Line(Visible):
         FeynDiagram.currentDiagram.add(self)
 
 
-    def addLabel(self, text, pos=0.5, displace=-0.25, angle = 0):
+    def addLabel(self, text, pos=0.5, displace=-0.25, angle = 0, size=pyx.text.size.normalsize):
         """Add a LaTeX label to this line, either via parameters or actually as
         a TeXLable object."""
         if config.getOptions().DEBUG:
@@ -35,7 +35,7 @@ class Line(Visible):
         #if text.__class__ == "Label":
         #    self.labels.append(label)
         #else:
-        self.labels.append(LineLabel(text=text, line=self, pos=pos, displace=displace, angle=angle))
+        self.labels.append(LineLabel(text=text, line=self, pos=pos, displace=displace, angle=angle, size=size))
         if config.getOptions().DEBUG:
             print "Labels = " + str(self.labels)
         return self

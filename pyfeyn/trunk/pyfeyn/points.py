@@ -30,12 +30,12 @@ class Point:
         self.labels = []
 
 
-    def addLabel(self, text, displace=0.3, angle = 0):
+    def addLabel(self, text, displace=0.3, angle = 0, size=pyx.text.size.normalsize):
         """Add a LaTeX label to this point, either via parameters or actually as
         a PointLable object."""
         if config.getOptions().DEBUG:
             print "Adding label: " + text
-        self.labels.append(PointLabel(text=text, point=self, displace=displace, angle=angle))
+        self.labels.append(PointLabel(text=text, point=self, displace=displace, angle=angle, size=size))
         if config.getOptions().DEBUG:
             print "Labels = " + str(self.labels)
         return self

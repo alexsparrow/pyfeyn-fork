@@ -131,13 +131,13 @@ class ParallelArrow(Visible):
 ## Label
 class Label(Visible):
     """General label, unattached to any diagram elements"""
-    def __init__(self, text, pos=None, x=None, y=None):
+    def __init__(self, text, pos=None, x=None, y=None, size=pyx.text.size.normalsize):
         self.x, self.y = 0, 0
         if x is not None:
             self.x = x
         if y is not None:
             self.y = y
-        self.size = pyx.text.size.normalsize
+        self.size = size
         self.text = text
         self.textattrs = []
         self.pos = pos
@@ -158,8 +158,8 @@ class Label(Visible):
 ## PointLabel
 class PointLabel(Label):
     """Label attached to points on the diagram"""
-    def __init__(self, point, text, displace=0.3, angle=0):
-        self.size = pyx.text.size.normalsize
+    def __init__(self, point, text, displace=0.3, angle=0, size=pyx.text.size.normalsize):
+        self.size = size
         self.displace = pyx.unit.length(displace)
         self.angle = angle
         self.text = text
@@ -196,9 +196,9 @@ class PointLabel(Label):
 ## LineLabel
 class LineLabel(Label):
     """Label for Feynman diagram lines"""
-    def __init__(self, line, text, pos=0.5, displace=0.3, angle=0):
+    def __init__(self, line, text, pos=0.5, displace=0.3, angle=0, size=pyx.text.size.normalsize):
         self.pos = pos
-        self.size = pyx.text.size.normalsize
+        self.size = size
         self.displace = pyx.unit.length(displace)
         self.angle = angle
         self.text = text
