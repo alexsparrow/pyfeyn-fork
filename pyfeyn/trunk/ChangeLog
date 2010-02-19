@@ -1,3 +1,11 @@
+2010-01-19  Georg von Hippel <gmv22@cantab.net>
+
+	* Added docstrings to methods missing them.
+
+	* Added PolygonalMark class and constants for triangular,
+          diamond-shaped, pentagonal, hexagonal, heptagonal and octogonal
+          vertex markers.
+
 2009-10-01  Georg von Hippel <gmv22@cantab.net>
 
 	* Added size support for labels, contributed by Matt Bellis.

@@ -15,6 +15,7 @@ class Line(Visible):
     "Base class for all objects which connect points in Feynman diagrams"
     
     def __init__(self, point1, point2):
+        """Constructor."""
         self.p1 = point1
         self.p2 = point2
         self.styles = []
@@ -42,6 +43,7 @@ class Line(Visible):
 
     def addParallelArrow(self, pos=0.5, displace=0.3, length=0.5*pyx.unit.v_cm,
                  size=6*pyx.unit.v_pt, angle=45, constriction=0.8, sense=+1):
+        """Add an arrow pointing along the line."""
         self.labels.append(ParallelArrow(self, pos=pos, displace=displace,
                                          length=length, size=size, angle=angle,
                                          constriction=constriction,
@@ -334,6 +336,7 @@ Fermion = Line
 class MultiLine(Line):
     """A class for drawing multiple parallel straight lines."""
     def __init__(self, point1, point2, n=5, dist=0.2):
+        """Constructor."""
         self.p1 = point1
         self.p2 = point2
         self.styles = []
@@ -409,6 +412,7 @@ class DecoratedLine(Line):
 class Gluon(DecoratedLine):
     """A line with a cycloid deformation"""
     def __init__(self, point1, point2):
+        """Constructor."""
         self.p1 = point1
         self.p2 = point2
         self.styles = []
@@ -428,6 +432,7 @@ class Gluon(DecoratedLine):
 
 
     def set3D(self, is3D=True, skipsize=pyx.unit.length(0.04), parity=0):
+        """Make this line display in '3D'."""
         self.is3D = is3D
         self.skipsize3D = skipsize
         self.parity3D = parity
@@ -518,6 +523,7 @@ class Gluon(DecoratedLine):
 class Vector(DecoratedLine):
     """A line with a sinoid deformation"""
     def __init__(self, point1, point2, amplitude=0.25, frequency=1.0):
+        """Constructor."""
         self.p1 = point1
         self.p2 = point2
         self.styles = []
@@ -598,6 +604,7 @@ Photon = Vector
 class Graviton(DecoratedLine):
     """A line with a double sinoid deformation"""
     def __init__(self, point1, point2):
+        """Constructor."""
         self.p1 = point1
         self.p2 = point2
         self.styles = []
@@ -615,6 +622,7 @@ class Graviton(DecoratedLine):
 
 
     def set3D(self, is3D=True, skipsize=pyx.unit.length(0.04), parity=0):
+        """Make this line display in '3D'."""
         self.is3D = is3D
         self.skipsize3D = skipsize
         self.parity3D = parity
@@ -713,6 +721,7 @@ class Gaugino(DecoratedLine):
     """A line with a sinoid deformation and a normal line"""
     
     def __init__(self, point1, point2):
+        """Constructor."""
         self.p1 = point1
         self.p2 = point2
         self.styles = []
@@ -826,6 +835,7 @@ class Gaugino(DecoratedLine):
 class Gluino(DecoratedLine):
     """A line with a cycloid deformation and a normal line"""
     def __init__(self, point1, point2):
+        """Constructor."""
         self.p1 = point1
         self.p2 = point2
         self.styles = []
@@ -843,6 +853,7 @@ class Gluino(DecoratedLine):
 
 
     def set3D(self, is3D=True, skipsize=pyx.unit.length(0.04), parity=0):
+        """Make this line display in '3D'."""
         self.is3D = is3D
         self.skipsize3D = skipsize
         self.parity3D = parity

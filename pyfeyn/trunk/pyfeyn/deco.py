@@ -11,6 +11,7 @@ class Arrow(pyx.deco.deco, pyx.attr.attr):
     """Arrow for Feynman diagram lines"""
     def __init__(self, pos=0.5, size=6*pyx.unit.v_pt,
                  angle=45, constriction=0.8):
+        """Constructor."""
         self.pos = pos
         self.size = size
         self.angle = angle
@@ -34,6 +35,7 @@ class FreeArrow(Visible):
     def __init__(self, length=0.5*pyx.unit.v_cm, size=6*pyx.unit.v_pt,
                  angle=45, constriction=0.8, pos=None, x=None, y=None,
                  direction=0):
+        """Constructor."""
         self.x, self.y = 0, 0
         if x is not None:
             self.x = x
@@ -65,6 +67,7 @@ class ParallelArrow(Visible):
     """Arrow running parallel to a line, for momenta, helicities etc."""
     def __init__(self, line, pos=0.5, displace=0.3, length=0.5*pyx.unit.v_cm,
                  size=6*pyx.unit.v_pt, angle=45, constriction=0.8, sense=+1):
+        """Constructor."""
         self.line = line
         self.pos = pos
         self.displace = pyx.unit.length(displace)
@@ -132,6 +135,7 @@ class ParallelArrow(Visible):
 class Label(Visible):
     """General label, unattached to any diagram elements"""
     def __init__(self, text, pos=None, x=None, y=None, size=pyx.text.size.normalsize):
+        """Constructor."""
         self.x, self.y = 0, 0
         if x is not None:
             self.x = x
@@ -159,6 +163,7 @@ class Label(Visible):
 class PointLabel(Label):
     """Label attached to points on the diagram"""
     def __init__(self, point, text, displace=0.3, angle=0, size=pyx.text.size.normalsize):
+        """Constructor."""
         self.size = size
         self.displace = pyx.unit.length(displace)
         self.angle = angle
@@ -197,6 +202,7 @@ class PointLabel(Label):
 class LineLabel(Label):
     """Label for Feynman diagram lines"""
     def __init__(self, line, text, pos=0.5, displace=0.3, angle=0, size=pyx.text.size.normalsize):
+        """Constructor."""
         self.pos = pos
         self.size = size
         self.displace = pyx.unit.length(displace)

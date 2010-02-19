@@ -747,52 +747,65 @@ hepnames_dict.update(SUSYparticles_dict)
 ## Gauge boson type testing
 
 def is_photon(name):
+    """Check if the given name refers to the photon."""
     return Photon_dict.has_key(name)
 
 def is_gluon(name):
+    """Check if the given name refers to the gluon."""
     return Gluon_dict.has_key(name)
 
 def is_weakboson(name):
+    """Check if the given name refers to a weak vector boson."""
     return VectorBosons_dict.has_key(name)
 
 def is_gauge(name):
+    """Check if the given name refers to a gauge boson."""
     return is_photon(name) or is_gluon(name) or is_weakboson(name)
 
 ## Higgs boson type testing
 
 def is_higgs(name):
+    """Check if the given name refers to a Higgs boson."""
     return Higgses_dict.has_key(name)
 
 ## Fermion type testing
 
 def is_quark(name):
+    """Check if the given name refers to a quark."""
     return Quarks_dict.has_key(name)
 
 def is_lepton(name):
+    """Check if the given name refers to a lepton."""
     return Leptons_dict.has_key(name)
 
 def is_quark_lepton(name):
+    """Check if the given name refers to a quark or lepton."""
     return is_quark(name) or is_lepton(name)
 
 ## Hadron type testing
 
 def is_meson(name):
+    """Check if the given name refers to a meson."""
     return mesons_dict.has_key(name)
 
 def is_baryon(name):
+    """Check if the given name refers to a baryon."""
     return Baryons_dict.has_key(name)
 
 def is_hadron(name):
+    """Check if the given name refers to a hadron."""
     return Hadrons_dict.has_key(name)
 
 ## Other type tests
 
 def is_ghost(name):
+    """Check if the given name refers to a ghost particle."""
     return Ghost_dict.has_key(name)
 
 ## Classify particle according to its coarse physical type
 
 def hep_classify(name):
+    """Return a coarse classification of the particle referred to by the given name."""
     if is_ghost(name):
         return "ghost"
     elif is_meson(name):
@@ -813,6 +826,7 @@ def hep_classify(name):
 ## Classify particle according to the linestyle to use when drawing
 
 def hep_linestyle(name):
+    """Return the linestyle to be used with a particle referred to by the given name."""
     if is_ghost(name):
         return "ghost" # dotted or dashed
     elif is_meson(name):

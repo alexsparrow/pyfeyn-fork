@@ -4,6 +4,7 @@ from optparse import OptionParser
 
 
 def addPyfeynOptions(parser):
+    """Add the PyFeyn options to the options parser's option set."""
     parser.add_option("-V", "--visual-debug", dest="VDEBUG", action = "store_true",
                       default = False, help="produce visual debug output")
     parser.add_option("-D", "--debug", dest="DEBUG", action = "store_true",
@@ -14,6 +15,7 @@ def addPyfeynOptions(parser):
 
 
 def processOptions(parser=None):
+    """Process the given options."""
     global _opts
     if parser is None:
         parser = OptionParser()
@@ -35,4 +37,5 @@ _opts = OptionSet()
 
 
 def getOptions():
+    """Return the (unique) option set."""
     return _opts

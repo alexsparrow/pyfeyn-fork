@@ -22,19 +22,24 @@ def sign(x):
 
 class Visible:
     def isVisible(self):
+        """Check if this instance is visible."""
         return True
 
     def getPath(self):
+        """Return the path of this instance."""
         return None
 
     def getVisiblePath(self):
+        """Return the visible path of this instance."""
         return self.getPath()
 
     def setDepth(self, depth):
+        """Set the depth at which this instance lives."""
         self.depth = depth
         return self
 
     def getDepth(self):
+        """Return the depth at which this instance lives."""
         if self.__dict__.has_key("depth"):
             return self.depth
         else:
@@ -51,3 +56,4 @@ class Visible:
                   other.__class__, "->", other.getDepth()
         else:
             return cmp(self.getDepth(), other.getDepth())
+

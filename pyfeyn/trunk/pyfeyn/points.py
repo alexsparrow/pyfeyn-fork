@@ -25,6 +25,7 @@ class Point:
     """Base class for all pointlike objects in Feynman diagrams."""
 
     def __init__(self, x, y, blob = None):
+        """Constructor."""
         self.setXY(x, y)
         self.setBlob(blob)
         self.labels = []
@@ -42,6 +43,7 @@ class Point:
 
             
     def removeLabels(self):
+        """Remove all labels from this point."""
         self.labels = []
         return self
 
@@ -168,6 +170,7 @@ class DecoratedPoint(Point, Visible):
                  blob = None,
                  fill = [pyx.color.rgb.black],
                  stroke = [pyx.color.rgb.black]):
+        """Constructor."""
         self.setXY(xpos, ypos)
         self.labels = []
         self.setMark(copy(mark))
@@ -179,6 +182,7 @@ class DecoratedPoint(Point, Visible):
         FeynDiagram.currentDiagram.add(self)
 
     def getPath(self):
+        """Return the path belonging to the blob or marker attached to this point, if any."""
         if self.blob:
             return self.getBlob().getPath()
         elif self.marker:
@@ -187,9 +191,11 @@ class DecoratedPoint(Point, Visible):
             return None
 
     def getMark(self):
+        """Return the marker attached to this point."""
         return self.marker
 
     def setMark(self, mark):
+        """Set the marker attached to this point."""
         self.marker = mark
         if self.marker is not None:
             self.marker.setPoint(self)
@@ -198,45 +204,56 @@ class DecoratedPoint(Point, Visible):
         return self
 
     def getBlob(self):
+        """Return the blob attached to this point."""
         return self.blob
 
     def setBlob(self, blob):
+        """Set the blob attached to this point."""
         self.blob = blob
         if self.blob is not None:
             self.blob.setPoints([self])
         return self
 
     def getFillstyles(self):
+        """Return the fillstyles for the marker or blob attached to this point."""
         return self.fillstyles
 
     def setFillstyles(self, styles):
+        """Set the fillstyles for the marker or blob attached to this point."""
         self.fillstyles = styles
         return self
 
     def addFillstyles(self, styles):
+        """Add fillstyles to the marker or blob attached to this point."""
         self.fillstyles.add(styles)
         return self
 
     def addFillstyle(self, style):
+        """Add a fillstyle to the marker or blob attached to this point."""
         self.fillstyles.append(style)
         return self
 
     def getStrokestyles(self):
+        """Return the stroke styles for the marker or blob attached to this point."""
         return self.strokestyles
 
     def setStrokestyles(self, styles):
+        """Set the stroke styles for the marker or blob attached to this point."""
         self.strokestyles = styles
         return self
 
     def addStrokestyles(self, styles):
+        """Add stroke styles to the marker or blob attached to this point."""
         self.strokestyles.add(styles)
         return self
 
     def addStrokestyle(self, style):
+        """Add a stroke style to the marker or blob attached to this point."""
         self.strokestyles.append(style)
         return self
     
     def draw(self, canvas):
+        """Draw the marker or blob attached to this point."""
         if self.getPath():
             canvas.fill(self.getPath(), self.fillstyles)
             canvas.stroke(self.getPath(), self.strokestyles)
@@ -250,9 +267,11 @@ Vertex = DecoratedPoint
 
 class Mark:
     def getPoint(self):
+        """Return the point to which this marker is attached."""
         return self.point
 
     def setPoint(self, point):
+        """Attach this marker to a new point."""
         self.point = point
         return self
 
@@ -260,10 +279,12 @@ class Mark:
 class SquareMark(Mark):
     def __init__(self,
                  size = 0.075):
+        """A square mark."""
         self.size = size
         self.point = None
         
     def getPath(self):
+        """Return the path for this marker."""
         if self.getPoint() is not None:
             x, y = self.point.getXY()
             return pyx.box.rect(x-self.size, y-self.size, 2*self.size, 2*self.size).path()
@@ -273,15 +294,43 @@ class SquareMark(Mark):
 class CircleMark(Mark):
     def __init__(self,
                  size = 0.075):
+        """A circular mark."""
         self.radius = size
         self.point = None
         
     def getPath(self):
+        """Return the path for this marker."""
         if self.point is not None:
             x, y = self.point.getXY()
             return pyx.path.circle(x, y, self.radius).path()
         return None
 
+class PolygonalMark(Mark):
+    def __init__(self,
+                 size = 0.075, corners = 3):
+        """A polygonal mark."""
+        self.radius = size
+        self.n = corners
+        self.point = None
+
+    def getPath(self):
+        """Return the path for this marker."""
+        if self.point is not None:
+            x, y = self.point.getXY()
+            return pyx.box.polygon([(x-self.radius*math.sin(i*2*math.pi/self.n),
+                                     y+self.radius*math.cos(i*2*math.pi/self.n))
+                      for i in range(self.n)]).path()
+        return None
+
+
+
 ## Convenience constants
 CIRCLE = CircleMark()
 SQUARE = SquareMark()
+TRIANGLE = PolygonalMark(corners=3)
+DIAMOND = PolygonalMark(corners=4)
+PENTAGON = PolygonalMark(corners=5)
+HEXAGON = PolygonalMark(corners=6)
+HEPTAGON = PolygonalMark(corners=7)
+OCTAGON = PolygonalMark(corners=8)
+

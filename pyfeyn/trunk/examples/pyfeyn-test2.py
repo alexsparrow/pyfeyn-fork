@@ -6,7 +6,7 @@ fd = FeynDiagram()
 
 p1 = Point(2, -2)
 p2 = Point(-2, 2)
-p3 = Vertex(1.25, 1.25, mark=CIRCLE)
+p3 = Vertex(1.25, 1.25, mark=HEPTAGON)
 p4 = p1.midpoint(p2)
 p5 = p4.midpoint(p1)
 p6 = p4.midpoint(p2)
