@@ -322,15 +322,40 @@ class PolygonalMark(Mark):
                       for i in range(self.n)]).path()
         return None
 
+class StarshapeMark(Mark):
+    def __init__(self,
+                 size = 0.075, raysize = 0.05, rays = 3):
+        """A star-shaped mark."""
+        self.radius = size
+        self.wiggle = raysize
+        self.n = rays
+        self.point = None
+
+    def getPath(self):
+        """Return the path for this marker."""
+        if self.point is not None:
+            x, y = self.point.getXY()
+            return pyx.box.polygon([(x-(self.radius-self.wiggle*(i%2))*math.sin(i*math.pi/self.n),
+                                     y+(self.radius-self.wiggle*(i%2))*math.cos(i*math.pi/self.n))
+                      for i in range(2*self.n)]).path()
+        return None
+
 
 
 ## Convenience constants
 CIRCLE = CircleMark()
 SQUARE = SquareMark()
+
 TRIANGLE = PolygonalMark(corners=3)
 DIAMOND = PolygonalMark(corners=4)
 PENTAGON = PolygonalMark(corners=5)
 HEXAGON = PolygonalMark(corners=6)
 HEPTAGON = PolygonalMark(corners=7)
 OCTAGON = PolygonalMark(corners=8)
+
+TETRASTAR = StarshapeMark(rays=4)
+STAR = StarshapeMark(rays=5)
+HEXASTAR = StarshapeMark(rays=6)
+OCTOSTAR = StarshapeMark(rays=8)
+
 
