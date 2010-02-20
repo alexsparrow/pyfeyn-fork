@@ -391,6 +391,23 @@ Sfermion = Scalar
 
 
 
+class Ghost(Line):
+    """A dotted scalar particle line, like a Yang-Mills ghost particle."""
+
+    def draw(self, canvas):
+        """Draw this scalar line on the given canvas."""
+        path = self.getVisiblePath()
+        styles = self.styles + [pyx.style.linestyle.dotted] + self.arrows
+        ## TODO: call base class method?
+        if config.getOptions().DEBUG:
+            print "Drawing " + str(self.__class__) + " with styles = " + str(styles)
+            print path
+        canvas.stroke(path, styles)
+        for l in self.labels:
+            l.draw(canvas)
+
+
+
 ## DecoratedLine base class
 class DecoratedLine(Line):
     """Base class for spring and sine-like lines"""
@@ -979,7 +996,7 @@ class Gravitino(DecoratedLine):
         self.arrows = []
         self.labels = []
         self.arcradius = pyx.unit.length(0.25)
-        self.linetype = "graviton"
+        self.linetype = "gravitino"
         ## Add this to the current diagram automatically
         FeynDiagram.currentDiagram.add(self)
 
@@ -1060,6 +1077,17 @@ class Gravitino(DecoratedLine):
 
 
 
+class Phantom(DecoratedLine):
+    """An invisible line."""
+    def __init__(self,  point1, point2):
+        """Constructor."""
+        self.p1 = point1
+        self.p2 = point2
+        self.linetype = "phantom"
+
+    def draw(self, canvas):
+        """Draw the line on the supplied canvas (does nothing for a phantom)."""
+        return
 
 # A dictionary for mapping FeynML line types to line classes
 NamedLine = { "higgs"    : Higgs,
@@ -1072,7 +1100,7 @@ NamedLine = { "higgs"    : Higgs,
               "gluino"   : Gluino,
               "gravitino": Gravitino,
               "scalar"   : Higgs,
-              "ghost"    : Higgs,     # Should be its own style
-              "phantom"  : Higgs      # Should be invisible
+              "ghost"    : Ghost,
+              "phantom"  : Phantom
              }
 

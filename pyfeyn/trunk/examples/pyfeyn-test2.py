@@ -23,6 +23,7 @@ l2 = NamedLine["gravitino"](p1, p2).arcThru(x=0, y=-3).set3D(True)
 l3 = Gluon(p2, p3)
 l4 = Photon(p1, p3)
 l5 = Gluon(p5, p6).bend(-p5.distance(p6)/2.0)
+l6 = NamedLine["phantom"](p3,p4)
 loop1 = Line(p3, p3).arcThru(x=1.75, y=1.75).addArrow(0.55)
 
 l1.addLabel(r"\Pgluon")

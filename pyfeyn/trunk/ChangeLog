@@ -5,6 +5,10 @@
 
 	* Added Gravitino line class.
 
+	* Added Phantom line class for invisible lines.
+
+	* Added Ghost line class for dotted lines (like in YM ghost loops)
+
 2010-01-19  Georg von Hippel <gmv22@cantab.net>
 
 	* Added docstrings to methods missing them.
