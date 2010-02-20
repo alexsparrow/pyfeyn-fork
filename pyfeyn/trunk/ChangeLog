@@ -3,6 +3,8 @@
 	* Added StarshapeMark class and constants for four-, five-,
 	six- and eight-pointed stars as vertex markers.
 
+	* Added Gravitino line class.
+
 2010-01-19  Georg von Hippel <gmv22@cantab.net>
 
 	* Added docstrings to methods missing them.

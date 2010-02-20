@@ -19,7 +19,7 @@ e1 = Ellipse(center=p4, xradius=0.5, yradius=1.0,
 l0a = Fermion(p1, p4)
 l0b = Fermion(p2, p4)
 l1 = NamedLine["gluon"](p2, p1).arcThru(x=3, y=0)
-l2 = NamedLine["photon"](p1, p2).arcThru(x=0, y=-3)
+l2 = NamedLine["gravitino"](p1, p2).arcThru(x=0, y=-3).set3D(True)
 l3 = Gluon(p2, p3)
 l4 = Photon(p1, p3)
 l5 = Gluon(p5, p6).bend(-p5.distance(p6)/2.0)

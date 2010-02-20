@@ -711,7 +711,6 @@ class Graviton(DecoratedLine):
                     canvas.stroke(pathbit, styles)
                 on = not on
 
-
         for l in self.labels:
             l.draw(canvas)
 
@@ -965,6 +964,101 @@ class Gluino(DecoratedLine):
             l.draw(canvas)
 
 
+class Gravitino(DecoratedLine):
+    """A line with a double sinoid deformation and a simple line"""
+    def __init__(self, point1, point2):
+        """Constructor."""
+        self.p1 = point1
+        self.p2 = point2
+        self.styles = []
+        self.arcthrupoint = None
+        self.is3D = False
+        self.skipsize3D = pyx.unit.length(0.04)
+        self.parity3D = 0
+        self.inverted = False
+        self.arrows = []
+        self.labels = []
+        self.arcradius = pyx.unit.length(0.25)
+        self.linetype = "graviton"
+        ## Add this to the current diagram automatically
+        FeynDiagram.currentDiagram.add(self)
+
+
+    def set3D(self, is3D=True, skipsize=pyx.unit.length(0.04), parity=0):
+        """Make this line display in '3D'."""
+        self.is3D = is3D
+        self.skipsize3D = skipsize
+        self.parity3D = parity
+        return self
+
+
+    def invert(self):
+        """Reflect the decoration in the line itself."""
+        self.inverted = not self.inverted
+        return self
+
+
+    def getDeformedPath(self, sign = 1):
+        """Get the path with the decorative deformation."""
+        intwindings = int(0.6 * pyx.unit.tocm(self.getVisiblePath().arclen()) /
+                          pyx.unit.tocm(self.arcradius))
+
+        vispath = self.getVisiblePath()
+        curveradii = vispath.curveradius([i/10.0 for i in range(0,11)])
+        mincurveradius = None
+        for curveradius in curveradii:
+            try:
+                curveradius = abs(curveradius/pyx.unit.m)
+                #if config.getOptions().DEBUG:
+                #    print self.__class__, "- curve radius = ", curveradius
+                if (mincurveradius is None or curveradius < mincurveradius):
+                    mincurveradius = curveradius
+            except: 
+                pass
+        numhloopcurves = 5
+        if mincurveradius is not None:
+            numhloopcurves += int(0.1/mincurveradius)
+        if config.getOptions().DEBUG:
+            print self.__class__, "- min curvature radius = ", mincurveradius, "->", numhloopcurves, "curves/hloop"                    
+
+        defo = pyx.deformer.cycloid(self.arcradius, intwindings, curvesperhloop=numhloopcurves,
+                                    skipfirst=0.0, skiplast=0.0, turnangle=0, sign=sign)
+        return defo.deform(vispath)
+
+        
+    def draw(self, canvas):
+        """Draw the line on the supplied canvas."""
+        styles = self.styles + self.arrows
+        if config.getOptions().DEBUG:
+            print "Drawing " + str(self.__class__) + " with styles = " + str(styles)
+        mypath = [self.getVisiblePath(), self.getDeformedPath(+1), self.getDeformedPath(-1)]
+        if self.inverted:
+            mypath = mypath[::-1]
+        if config.getOptions().DRAFT or not self.is3D:
+            for i in range(3):
+                canvas.stroke(mypath[i], styles)
+        else:
+            ass, bs = mypath[0].intersect(mypath[1])
+            ass, cs = mypath[0].intersect(mypath[2])
+            ps = [ass[:], bs[:], cs[:]]
+
+            for i in range(3):
+                params = []
+                for a in range(len(ps[i])): ## TODO: better endpoint cut vetoing
+                    if (a%3)!=i:
+                        params.append(ps[i][a] - self.skipsize3D)
+                        params.append(ps[i][a] + self.skipsize3D)
+                pathbits = mypath[i].split(params)
+                on = True
+                for pathbit in pathbits:
+                    if on:
+                        canvas.stroke(pathbit, styles)
+                    on = not on
+
+        for l in self.labels:
+            l.draw(canvas)
+
+
 
 
 # A dictionary for mapping FeynML line types to line classes
@@ -976,6 +1070,7 @@ NamedLine = { "higgs"    : Higgs,
               "graviton" : Graviton,
               "gaugino"  : Gaugino,
               "gluino"   : Gluino,
+              "gravitino": Gravitino,
               "scalar"   : Higgs,
               "ghost"    : Higgs,     # Should be its own style
               "phantom"  : Higgs      # Should be invisible
