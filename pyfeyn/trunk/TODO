@@ -5,8 +5,6 @@ PyFeyn TODO
 
  * Write a manual.
 
- * Make/allow parallel arrows to curve like the curve at that point.
-
  * Transparently pass single options and lists of them using isinstance(foo,
    list).
 

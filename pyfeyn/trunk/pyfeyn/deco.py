@@ -66,7 +66,8 @@ class FreeArrow(Visible):
 class ParallelArrow(Visible):
     """Arrow running parallel to a line, for momenta, helicities etc."""
     def __init__(self, line, pos=0.5, displace=0.3, length=0.5*pyx.unit.v_cm,
-                 size=6*pyx.unit.v_pt, angle=45, constriction=0.8, sense=+1):
+                 size=6*pyx.unit.v_pt, angle=45, constriction=0.8, sense=+1,
+                 curved=False):
         """Constructor."""
         self.line = line
         self.pos = pos
@@ -76,6 +77,7 @@ class ParallelArrow(Visible):
         self.angle = angle
         self.constriction = constriction
         self.sense = sense
+        self.curved = curved
 
     def draw(self, canvas):
         """Draw this arrow on the supplied canvas."""
@@ -122,12 +124,24 @@ class ParallelArrow(Visible):
         if self.sense<0.:
            arrx, arry, endx, endy = endx, endy, arrx, arry
 
-        linepath = pyx.deco.decoratedpath(
-                       pyx.path.path(pyx.path.moveto(endx,endy),
-                                     pyx.path.lineto(arrx,arry)))
-        styles = [pyx.deco.earrow(size=self.size, angle=self.angle,
-                        constriction=self.constriction)]
-        canvas.stroke(linepath.path,styles)
+        if not self.curved:
+            linepath = pyx.deco.decoratedpath(
+                           pyx.path.path(pyx.path.moveto(endx,endy),
+                                         pyx.path.lineto(arrx,arry)))
+            styles = [pyx.deco.earrow(size=self.size, angle=self.angle,
+                            constriction=self.constriction)]
+            canvas.stroke(linepath.path,styles)
+        else:
+            curvepiece = self.line.getPath().split([
+                     (self.pos*p.arclen()-self.length/2.),
+                     (self.pos*p.arclen()+self.length/2.)])
+            arrpiece = curvepiece[1]
+            if self.sense<0:
+               arrpiece = arrpiece.reversed()
+            linepath = pyx.deco.decoratedpath(pyx.deformer.parallel(displacement).deform(arrpiece))
+            styles = [pyx.deco.earrow(size=self.size, angle=self.angle,
+                            constriction=self.constriction)]
+            canvas.stroke(linepath.path,styles)
 
 
 

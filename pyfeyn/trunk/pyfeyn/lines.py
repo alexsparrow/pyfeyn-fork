@@ -42,12 +42,13 @@ class Line(Visible):
         return self
 
     def addParallelArrow(self, pos=0.5, displace=0.3, length=0.5*pyx.unit.v_cm,
-                 size=6*pyx.unit.v_pt, angle=45, constriction=0.8, sense=+1):
+                 size=6*pyx.unit.v_pt, angle=45, constriction=0.8, sense=+1,
+                 curved=False):
         """Add an arrow pointing along the line."""
         self.labels.append(ParallelArrow(self, pos=pos, displace=displace,
                                          length=length, size=size, angle=angle,
                                          constriction=constriction,
-                                         sense=sense))
+                                         sense=sense,curved=curved))
         return self
 
             

@@ -169,7 +169,7 @@ class FeynMLWriter:
             style += "arrow-size:%f; arrow-angle:%f; arrow-constrict:%f; arrow-pos:%f; "%(arr.size/pyx.unit.v_cm,arr.angle,arr.constriction,arr.pos)
         for lab in l.labels:
             if isinstance(lab,LineLabel):
-               style += "label-pos:%f; label-displace:%f; label-angle:%f; "%(lab.pos,lab.displace/pyx.unit.v_cm,lab.angle,lab.size)
+               style += "label-pos:%f; label-displace:%f; label-angle:%f; label-size:%s; "%(lab.pos,lab.displace/pyx.unit.v_cm,lab.angle,lab.size.size)
                labels.append(lab.text)
             elif isinstance(lab,ParallelArrow):
                style += "parallel-arrow-size:%f; parallel-arrow-angle:%f; parallel-arrow-constrict:%f; parallel-arrow-pos:%f; parallel-arrow-displace:%f; parallel-arrow-sense:%s; "%(lab.size,lab.angle,lab.constriction,lab.pos,lab.displace/pyx.unit.v_cm,lab.sense)
