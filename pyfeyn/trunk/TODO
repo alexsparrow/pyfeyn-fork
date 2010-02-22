@@ -8,8 +8,6 @@ PyFeyn TODO
  * Transparently pass single options and lists of them using isinstance(foo,
    list).
 
- * Add => type arrows for helicities.
-
  * Add defaults mechanism for 3Dness, thicknesses, colours, fancy bosons...
 
  * Introduce unit testing

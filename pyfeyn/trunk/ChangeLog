@@ -1,3 +1,7 @@
+2010-01-22  Georg von Hippel <gmv22@cantab.net>
+
+	* Added support for helicity-style (=>) arrows. This still needs work.
+
 2010-01-21  Georg von Hippel <gmv22@cantab.net>
 
 	* Added curved attribute to ParallelArrow class to allow

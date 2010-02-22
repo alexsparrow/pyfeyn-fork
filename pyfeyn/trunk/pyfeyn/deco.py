@@ -17,7 +17,7 @@ class Arrow(pyx.deco.deco, pyx.attr.attr):
         self.angle = angle
         self.constriction = constriction
         
-    def decorate(self, dp, texrunner):
+    def decorate(self, dp, texrunner=pyx.text.defaulttexrunner):
         """Attach arrow to a path (usually a line)."""
         dp.ensurenormpath()
         constrictionlen = self.size * self.constriction * \
@@ -67,7 +67,7 @@ class ParallelArrow(Visible):
     """Arrow running parallel to a line, for momenta, helicities etc."""
     def __init__(self, line, pos=0.5, displace=0.3, length=0.5*pyx.unit.v_cm,
                  size=6*pyx.unit.v_pt, angle=45, constriction=0.8, sense=+1,
-                 curved=False):
+                 curved=False, stems=1, stemsep=0.03):
         """Constructor."""
         self.line = line
         self.pos = pos
@@ -78,6 +78,8 @@ class ParallelArrow(Visible):
         self.constriction = constriction
         self.sense = sense
         self.curved = curved
+        self.stems = stems
+        self.stemsep = stemsep
 
     def draw(self, canvas):
         """Draw this arrow on the supplied canvas."""
@@ -125,13 +127,29 @@ class ParallelArrow(Visible):
            arrx, arry, endx, endy = endx, endy, arrx, arry
 
         if not self.curved:
-            linepath = pyx.deco.decoratedpath(
-                           pyx.path.path(pyx.path.moveto(endx,endy),
-                                         pyx.path.lineto(arrx,arry)))
+            linepath = pyx.path.path(pyx.path.moveto(endx,endy),
+                                     pyx.path.lineto(arrx,arry))
             styles = [pyx.deco.earrow(size=self.size, angle=self.angle,
-                            constriction=self.constriction)]
-            canvas.stroke(linepath.path,styles)
-        else:
+                                      constriction=self.constriction)]
+            dist = self.stemsep
+            n = self.stems
+            if n>1: # helicity style arrow
+                arrowtopath = linepath.split(0.8*linepath.arclen())[0]
+                constrictionlen = self.size * self.constriction * \
+                                  math.cos(self.angle*math.pi/360.0)
+                arrowpath = pyx.deco._arrowhead(arrowtopath,
+                                                linepath.arclen(),
+                                                1, self.size, 45,
+                                                constrictionlen)
+                canvas.fill(arrowpath)
+                path = pyx.deformer.parallel(-(n+1)/2. * dist).deform(arrowtopath)
+                defo = pyx.deformer.parallel(dist)
+                for m in range(n):
+                    path = defo.deform(path)
+                    canvas.stroke(path, [])
+            else: # ordinary (momentum) arrow
+                canvas.stroke(linepath, styles)
+        else: # curved arrow (always momentum-style)
             curvepiece = self.line.getPath().split([
                      (self.pos*p.arclen()-self.length/2.),
                      (self.pos*p.arclen()+self.length/2.)])
