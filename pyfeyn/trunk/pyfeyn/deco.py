@@ -117,7 +117,7 @@ class ParallelArrow(Visible):
             normal = normal.transformed(pyx.trafo.rotate(180, x, y))
             nx, ny = normal.atend()
         if config.getOptions().VDEBUG:
-            FeynDiagram.currentCanvas.stroke(normal)
+            FeynDiagram.currentDiagram.currentCanvas.stroke(normal)
 
         ## Displace the arrow by this normal vector
         endx, endy = endx + (nx-x), endy + (ny-y)
@@ -290,7 +290,7 @@ class LineLabel(Label):
             normal = normal.transformed(pyx.trafo.rotate(180, x, y)) 
             nx, ny = normal.atend()
         if config.getOptions().VDEBUG:
-            FeynDiagram.currentCanvas.stroke(normal)
+            FeynDiagram.currentDiagram.currentCanvas.stroke(normal)
 
         ## Displace the label by this normal vector
         x, y = nx, ny

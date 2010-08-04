@@ -1,3 +1,8 @@
+2010-07-29  Georg von Hippel <gmv22@cantab.net>
+
+	* Fixed bug reported by Jesse Dunietz; each diagram now gets its
+	own canvas, which can be set in the constructor.
+
 2010-01-22  Georg von Hippel <gmv22@cantab.net>
 
 	* Added support for helicity-style (=>) arrows. This still needs work.

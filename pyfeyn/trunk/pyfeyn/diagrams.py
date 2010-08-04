@@ -8,15 +8,17 @@ from pyfeyn import config
 class FeynDiagram:
     """The main PyFeyn diagram class."""    
     currentDiagram = None
-    currentCanvas = pyx.canvas.canvas()
 
-    def __init__(self, objects=None):
+    def __init__(self, objects=None, canvas=None):
         """Objects for holding a set of Feynman diagram components."""
         self.__objs = objects
         if self.__objs is None:
             self.__objs = []
         self.highestautolayer = 0
-        FeynDiagram.currentCanvas = pyx.canvas.canvas()
+        if canvas is None:
+           self.currentCanvas = pyx.canvas.canvas()
+        else:
+           self.currentCanvas = canvas
         FeynDiagram.currentDiagram = self
 
 
@@ -56,9 +58,9 @@ class FeynDiagram:
         for obj in drawingobjs:
             if config.getOptions().DEBUG:
                 print "Depth = ", obj.getDepth()
-            obj.draw(FeynDiagram.currentCanvas)
+            obj.draw(self.currentCanvas)
 
-        return FeynDiagram.currentCanvas
+        return self.currentCanvas
 
 
     def draw(self, outfile):
