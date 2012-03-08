@@ -44,7 +44,13 @@ class Visible:
             return self.depth
         else:
             return None
-        
+
+    def setCustomStyles(self, stylelist):
+        self.custom_styles = stylelist
+
+    def getCustomStyles(self):
+        return getattr(self, "custom_styles", [])
+
     def __cmp__(self, other):
         """Compare with another visible class, just using layers."""
         if other is None:
@@ -56,4 +62,3 @@ class Visible:
                   other.__class__, "->", other.getDepth()
         else:
             return cmp(self.getDepth(), other.getDepth())
-

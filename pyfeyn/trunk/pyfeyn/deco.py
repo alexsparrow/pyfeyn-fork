@@ -16,7 +16,7 @@ class Arrow(pyx.deco.deco, pyx.attr.attr):
         self.size = size
         self.angle = angle
         self.constriction = constriction
-        
+
     def decorate(self, dp, texrunner=pyx.text.defaulttexrunner):
         """Attach arrow to a path (usually a line)."""
         dp.ensurenormpath()
@@ -49,7 +49,7 @@ class FreeArrow(Visible):
         self.angle = angle
         self.constriction = constriction
         ## Add this to the current diagram automatically
-        FeynDiagram.currentDiagram.add(self)        
+        FeynDiagram.currentDiagram.add(self)
 
     def draw(self, canvas):
         """Draw this arrow on the supplied canvas."""
@@ -67,7 +67,7 @@ class ParallelArrow(Visible):
     """Arrow running parallel to a line, for momenta, helicities etc."""
     def __init__(self, line, pos=0.5, displace=0.3, length=0.5*pyx.unit.v_cm,
                  size=6*pyx.unit.v_pt, angle=45, constriction=0.8, sense=+1,
-                 curved=False, stems=1, stemsep=0.03):
+                 curved=False, stems=1, stemsep=0.03, rotation=0):
         """Constructor."""
         self.line = line
         self.pos = pos
@@ -80,14 +80,16 @@ class ParallelArrow(Visible):
         self.curved = curved
         self.stems = stems
         self.stemsep = stemsep
+        self.rotation = rotation
 
     def draw(self, canvas):
         """Draw this arrow on the supplied canvas."""
         p = self.line.getPath()
-        posparam = p.begin() + self.pos * p.arclen() 
+
         x, y = self.line.fracpoint(self.pos).getXY()
+        posparam = p.begin() + self.pos * p.arclen()
         arrx, arry = self.line.fracpoint(self.pos+self.length/2./p.arclen()).getXY()
-        endx, endy = self.line.fracpoint(self.pos-self.length/2./p.arclen()).getXY() 
+        endx, endy = self.line.fracpoint(self.pos-self.length/2./p.arclen()).getXY()
 
         ## Calculate the displacement from the line
         displacement = self.displace
@@ -129,8 +131,14 @@ class ParallelArrow(Visible):
         if not self.curved:
             linepath = pyx.path.path(pyx.path.moveto(endx,endy),
                                      pyx.path.lineto(arrx,arry))
+            if self.rotation:
+                rotx, roty = 0.5*(endx+arrx), 0.5*(endy+arry)
+                linepath = linepath.transformed(pyx.trafo.rotate(self.rotation, rotx, roty))
             styles = [pyx.deco.earrow(size=self.size, angle=self.angle,
                                       constriction=self.constriction)]
+            # Allow us to add colouring etc. to the line
+            styles.extend(self.getCustomStyles())
+
             dist = self.stemsep
             n = self.stems
             if n>1: # helicity style arrow
@@ -141,12 +149,12 @@ class ParallelArrow(Visible):
                                                 linepath.arclen(),
                                                 1, self.size, 45,
                                                 constrictionlen)
-                canvas.fill(arrowpath)
+                canvas.fill(arrowpath, self.getCustomStyles())
                 path = pyx.deformer.parallel(-(n+1)/2. * dist).deform(arrowtopath)
                 defo = pyx.deformer.parallel(dist)
                 for m in range(n):
                     path = defo.deform(path)
-                    canvas.stroke(path, [])
+                    canvas.stroke(path, self.getCustomStyles())
             else: # ordinary (momentum) arrow
                 canvas.stroke(linepath, styles)
         else: # curved arrow (always momentum-style)
@@ -159,6 +167,8 @@ class ParallelArrow(Visible):
             linepath = pyx.deco.decoratedpath(pyx.deformer.parallel(displacement).deform(arrpiece))
             styles = [pyx.deco.earrow(size=self.size, angle=self.angle,
                             constriction=self.constriction)]
+            # Allow us to add colouring etc. to the line
+            styles.extend(self.getCustomStyles())
             canvas.stroke(linepath.path,styles)
 
 
@@ -287,7 +297,7 @@ class LineLabel(Label):
             normal = normal.transformed(pyx.trafo.rotate(180, x, y))
             nx, ny = normal.atend()
         if displacement < 0:
-            normal = normal.transformed(pyx.trafo.rotate(180, x, y)) 
+            normal = normal.transformed(pyx.trafo.rotate(180, x, y))
             nx, ny = normal.atend()
         if config.getOptions().VDEBUG:
             FeynDiagram.currentDiagram.currentCanvas.stroke(normal)
@@ -303,4 +313,3 @@ class LineLabel(Label):
         #            math.cos(self.angle * math.pi/180),
         #            math.sin(self.angle * math.pi/180))
         canvas.insert(t)
-
